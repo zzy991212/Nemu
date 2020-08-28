@@ -1,0 +1,11 @@
+*.*
+*
+!*/
+!Makefile*
+!*.[cSh]
+!test.sh
+!.gitignore
+!README.md
+!lib-common/uclibc/lib/*
+!kernel/src/memory/mm_malloc.o
+!testcase/user.ld
