@@ -68,8 +68,8 @@ static int cmd_x(char *args){
                 printf("Wrong Command!\n");
                 return 0;
         }
-	int num,exprs;
-	sscanf(args,"%d%x",&num,&exprs);
+	int N,exprs;
+	sscanf(args,"%d%x",&N,&exprs);
 	int i;
 	for (i=0;i<N;i++){
 		printf("0x%8x  0x%x\n",exprs+i*32,swaddr_read(exprs+i*32,32));
