@@ -49,12 +49,30 @@ static int cmd_si(char *args){
 }
 
 static int cmd_info(char *args){
+	if (args == NULL) {
+		printf("Wrong Command!\n");
+		return 0;
+	}
 	if (args[0] == 'r'){
 		int i;
 		for (i = R_EAX; i <= R_EDI ;i++){
 			printf("%s  0x%08x\n",regsl[i],reg_l(i));
 		}
 		printf("eip  0x%08x\n",cpu.eip);
+	}
+	return 0;
+}
+
+static int cmd_x(char *args){
+	if (args == NULL) {
+                printf("Wrong Command!\n");
+                return 0;
+        }
+	int num,exprs;
+	sscanf(args,"%d%x",&num,&exprs);
+	int i;
+	for (i=0;i<N;i++){
+		printf("0x%8x  0x%x\n",exprs+i*32,swaddr_read(exprs+i*32,32));
 	}
 	return 0;
 }
@@ -68,6 +86,7 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 	{ "si", "Execute some steps, initial -> 1 step", cmd_si},
 	{ "info", "Print values of all registers", cmd_info},
+	{ "x", "Calculate expressions, let it be the starting memery address, print continuous N 4 bytes.",cmd_x},
 	/* TODO: Add more commands */
 
 };
