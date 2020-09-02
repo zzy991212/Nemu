@@ -85,10 +85,10 @@ static bool make_token(char *e) {
 				switch(rules[i].token_type) {
 					case NOTYPE: break;
 					default: {
-						tokens[nr_token].type=rules[i].token_type;
-						strncpy(tokens[nr_token].str,substr_start,substr_len);
-						printf("%s\n",tokens[nr_token].str);
-						nr_token++;
+						tokens[nr_token].type = rules[i].token_type;
+						strncpy(tokens[nr_token].str, substr_start, substr_len);
+						printf("%s\n", tokens[nr_token].str);
+						nr_token ++;
 					}
 				}
 
@@ -103,7 +103,6 @@ static bool make_token(char *e) {
 			return false;
 		}
 	}
-
 	return true; 
 }
 
@@ -115,6 +114,7 @@ uint32_t expr(char *e, bool *success) {
 
 	/* TODO: Insert codes to evaluate the expression. */
 //	panic("please implement me");
+	*success = true;
 	return 0;
 }
 
