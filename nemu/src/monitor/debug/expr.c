@@ -113,8 +113,19 @@ uint32_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
-
-
+	int i,brack=0;
+	for (i = 0; i < nr_token ; i++){
+		if (tokens[i].type=='(') brack++;
+		if (tokens[i].type==')') brack--;
+		if (brack < 0){
+			*success = false;
+			return 0;
+		}
+	}
+	if (brack != 0){
+		*success = false;
+		return 0;
+	}
 //	panic("please implement me");
 	*success = true;
 	return 0;
