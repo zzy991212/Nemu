@@ -106,6 +106,11 @@ static bool make_token(char *e) {
 	return true; 
 }
 
+uint32_t eval(int l,int r){
+	Assert(l<r,"Wrong!");
+	return 0;
+}
+
 uint32_t expr(char *e, bool *success) {
 	if(!make_token(e)) {
 		*success = false;
@@ -113,6 +118,7 @@ uint32_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
+	/*check whether brackets are matched*/
 	int i,brack=0;
 	for (i = 0; i < nr_token ; i++){
 		if (tokens[i].type=='(') brack++;
@@ -128,6 +134,6 @@ uint32_t expr(char *e, bool *success) {
 	}
 //	panic("please implement me");
 	*success = true;
-	return 0;
+	return eval(0,nr_token-1);
 }
 
