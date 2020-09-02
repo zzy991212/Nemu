@@ -65,14 +65,30 @@ static int cmd_info(char *args){
 
 static int cmd_x(char *args){
 	if (args == NULL) {
-                printf("Wrong Command!\n");
-                return 0;
-        }
+        printf("Wrong Command!\n");
+        return 0;
+    }
 	int N,exprs;
 	sscanf(args,"%d%x",&N,&exprs);
 	int i;
 	for (i=0;i<N;i++){
 		printf("0x%x  0x%08x\n",exprs+i*4,swaddr_read(exprs+i*4,4));
+	}
+	return 0;
+}
+static int cmd_p(char *args){
+	if (args == NULL) {
+        printf("Wrong Command!\n");
+        return 0;
+    }
+    uint32_t ans;
+    bool flag;
+	ans = expr(args, &flag);
+	if (!flag) {
+		printf("Wrong Command!\n");
+        return 0;
+	}else {
+		printf("%d\n",ans);
 	}
 	return 0;
 }
@@ -87,6 +103,7 @@ static struct {
 	{ "si", "Execute some steps, initial -> 1 step", cmd_si},
 	{ "info", "Print values of all registers", cmd_info},
 	{ "x", "Calculate expressions, let it be the starting memery address, print continuous N 4 bytes.",cmd_x},
+	{ "p", "Calculate expressions", cmd_p}
 	/* TODO: Add more commands */
 
 };

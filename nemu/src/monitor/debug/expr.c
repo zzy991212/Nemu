@@ -1,5 +1,4 @@
 #include "nemu.h"
-
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -7,7 +6,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ
+	NOTYPE = 256, EQ, NUMBER
 
 	/* TODO: Add more token types */
 
@@ -24,7 +23,13 @@ static struct rule {
 
 	{" +",	NOTYPE},				// spaces
 	{"\\+", '+'},					// plus
-	{"==", EQ}						// equal
+	{"==", EQ},						// equal
+	{"[0-9]+", NUMBER},				// number
+	{"-",'.'},						// minus
+	{"\\*",'*'},					// multiply
+	{"/",'/'},						// divide
+	{"\\(",'('},					// left bracket
+	{"\\)",')'},					// right bracket
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -71,7 +76,6 @@ static bool make_token(char *e) {
 				int substr_len = pmatch.rm_eo;
 
 				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
-				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
 				 * to record the token in the array `tokens'. For certain types
@@ -79,8 +83,16 @@ static bool make_token(char *e) {
 				 */
 
 				switch(rules[i].token_type) {
-					default: panic("please implement me");
+					case NOTYPE: break;
+					default: {
+						tokens[nr_token].type=rules[i].token_type;
+						strncpy(tokens[nr_token].str,substr_start,substr_len);
+						printf("%s\n",tokens[nr_token].str);
+						nr_token++;
+					}
 				}
+
+				position += substr_len;
 
 				break;
 			}
