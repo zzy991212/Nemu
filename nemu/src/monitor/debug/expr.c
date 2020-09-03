@@ -106,9 +106,84 @@ static bool make_token(char *e) {
 	return true; 
 }
 
+bool check_bracket(int l,int r){
+	if (tokens[l].type != '(' || tokens[r].type != ')') return false;
+	int b_num = 0,i;
+	for (i = l; i <= r; i ++){
+		if (tokens[i].type == '(') b_num ++;
+		if (tokens[i].type == ')') b_num --;
+		if (b_num < 0) return false;
+	}
+	if (b_num == 0) return true;
+	return false;
+}
+
+int dominant_op(int l,int r){
+	int i;
+	int pos = l;
+	int pri = 10;
+	for (i = l; i <= r; i ++){
+		switch(tokens[i].type){
+			case '+':{// pri = 2
+				if (pri >= 2){
+					pos = i;
+					pri = 2;
+				}
+				break; 
+			}
+			case '-':{// pri = 2
+				if (pri >= 2){
+					pos = i;
+					pri = 2;
+				}
+				break; 
+			}
+			case '*':{// pri = 8
+				if (pri >= 8) {
+					pos = i;
+					pri = 8;
+				}
+				break; 
+			}
+			case '/':{// pri = 8
+				if (pri >= 8) {
+					pos = i;
+					pri = 8;
+				}
+				break; 
+			}
+		}
+	}
+	if (pos == l) assert(0);
+	return pos;
+}
 uint32_t eval(int l,int r){
-	Assert(l<r,"Wrong!");
-	return 0;
+	if (l>r){
+		Assert(l<r,"Wrong!");
+		return 0;
+	}
+	if (l==r){
+		uint32_t num=0;
+		if (tokens[l].type == NUMBER){
+			sscanf(tokens[l].str,"%d",&num);
+		}
+		return num;
+	}
+	uint32_t ans=0;
+
+	if (check_bracket(l,r)) return eval(l+1,r-1);
+	else {
+		int pos = dominant_op(l,r);
+		uint32_t l_ans = eval(l,pos-1),r_ans =  eval(pos+1,r);
+		switch(tokens[pos].type){
+			case '+':ans = l_ans + r_ans;break;
+			case '-':ans = l_ans - r_ans;break;
+			case '*':ans = l_ans * r_ans;break;
+			case '/':ans = l_ans / r_ans;break;
+			default:assert(0);
+ 		} 
+	}
+	return ans;
 }
 
 uint32_t expr(char *e, bool *success) {
