@@ -4,7 +4,6 @@
  */
 #include <sys/types.h>
 #include <regex.h>
-
 enum {
 	NOTYPE = 256, EQ, NUMBER, HEXNUMBER, REGISTER, NEQ, AND, OR, NOT
 
@@ -96,13 +95,18 @@ static bool make_token(char *e) {
 						if (rules[i].token_type == REGISTER){
 							char* reg_start = e + (position-substr_len) + 1; 
 							strncpy(tokens[nr_token].str, reg_start, substr_len - 1);
+							int t;
+							for (t = 0; t <= strlen(tokens[nr_token].str);t++){
+								int x = tokens[nr_token].str[t];
+								if (x >= 'A' && x <= 'Z') x += ('a'-'A');
+								tokens[nr_token].str[t] = (char)x;
+							}
 						}else
 							strncpy(tokens[nr_token].str, substr_start, substr_len);
-						printf("%s\n", tokens[nr_token].str);
+//						printf("%s\n", tokens[nr_token].str);
 						nr_token ++;
 					}
 				}
-
 
 				break;
 			}
@@ -170,6 +174,39 @@ uint32_t eval(int l,int r){
 		uint32_t num = 0;
 		if (tokens[l].type == NUMBER){
 			sscanf(tokens[l].str,"%d",&num);
+		}else if (tokens[l].type == HEXNUMBER){
+			sscanf(tokens[l].str,"%x",&num);
+		}else if (tokens[l].type == REGISTER){
+			if (strlen(tokens[l].str) == 3) { //length = 3
+				int i;
+				for (i = R_EAX; i <= R_EDI ;i ++){
+					if (strcmp(tokens[l].str,regsl[i]) == 0){
+						break;
+					}
+				}
+				if (i > R_EDI){
+					if (strcmp(tokens[l].str,"eip") == 0){
+						num = cpu.eip;
+					}else Assert(0,"Wrong Register Name!");
+				}else return num=reg_l(i);
+			}
+			else if (strlen(tokens[l].str) == 2){ //length = 2
+				int i;
+				for (i = R_AX; i <= R_DI; i ++){
+					if (strcmp(tokens[l].str,regsw[i]) == 0){
+						break;
+					}
+				}
+				if (i <= R_DI) return num = reg_w(i);
+				for (i = R_AL; i <= R_BH; i ++){
+					if (strcmp(tokens[l].str,regsb[i]) == 0){
+						break;
+					}
+				}
+				if (i <= R_BH) return num = reg_b(i);
+				Assert(0,"Wrong Register Name!");
+			}
+			else Assert(0,"Wrong Expression!");
 		}
 		return num;
 	}
