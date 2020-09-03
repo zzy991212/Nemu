@@ -156,6 +156,7 @@ int dominant_op(int l,int r){
 				}
 				break; 
 			}
+			default:break;
 		}
 	}
 	printf("%d-%d %d %d\n",l,r,pos,pri);
