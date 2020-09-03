@@ -154,6 +154,7 @@ int dominant_op(int l,int r){
 			}
 		}
 	}
+	printf("%d %d\n",pos,pri);
 	if (pos == l) assert(0);
 	return pos;
 }
