@@ -259,7 +259,7 @@ uint32_t eval(int l,int r){
 	if (check_bracket(l,r)) return eval(l + 1, r - 1);
 	else {
 		int pos = dominant_op(l,r);
-		printf("%d-%d %d",l,r,pos);
+		printf("%d-%d %d\n",l,r,pos);
 		if (l==pos || tokens[pos].type == NOT || tokens[pos].type == MINUS){//wait
 			uint32_t r_ans = eval(pos+1,r);
 			switch(tokens[pos].type){
@@ -300,7 +300,7 @@ uint32_t expr(char *e, bool *success) {
 			*success = false;
 			return 0;
 		}
-		if (tokens[i].type == '-' && (i == 0 || tokens[i-1].type != ')' )) {
+		if (tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != ')' && tokens[i-1].type != NUMBER && tokens[i-1].type != HEXNUMBER && tokens[i-1].type != REGISTER))) {
 			tokens[i].type = MINUS;
 		}
 	}
