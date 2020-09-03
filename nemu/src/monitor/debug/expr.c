@@ -92,18 +92,19 @@ static bool make_token(char *e) {
 					case NOTYPE: break;
 					default: {
 						tokens[nr_token].type = rules[i].token_type;
-						if (rules[i].token_type == REGISTER){
+						if (rules[i].token_type == REGISTER){ //Register
 							char* reg_start = e + (position-substr_len) + 1; 
 							strncpy(tokens[nr_token].str, reg_start, substr_len - 1);
 							int t;
-							for (t = 0; t <= strlen(tokens[nr_token].str);t++){
+							for (t = 0; t <= strlen(tokens[nr_token].str);t++){ // tolower
 								int x = tokens[nr_token].str[t];
 								if (x >= 'A' && x <= 'Z') x += ('a'-'A');
 								tokens[nr_token].str[t] = (char)x;
 							}
 						}else
 							strncpy(tokens[nr_token].str, substr_start, substr_len);
-						printf("%s\n", tokens[nr_token].str);
+
+//						printf("%s\n", tokens[nr_token].str);
 						nr_token ++;
 					}
 				}
@@ -135,34 +136,54 @@ bool check_bracket(int l,int r){
 int dominant_op(int l,int r){
 	int i;
 	int pos = l;
-	int pri = 10;
+	int pri = 0;
 	int b_num = 0;
 	for (i = l; i <= r; i ++){
 		if (tokens[i].type == '(') b_num++;
 		if (tokens[i].type == ')') b_num--;
 		if (b_num != 0) continue;
 		switch(tokens[i].type){
-			case '+':{// pri = 2
-				if (pri >= 2) pos = i,pri = 2;
+			case '+':{// pri = 4
+				if (pri <= 4) pos = i,pri = 4;
 				break; 
 			}
-			case '-':{// pri = 2
-				if (pri >= 2) pos = i,pri = 2;
+			case '-':{// pri = 4
+				if (pri <= 4) pos = i,pri = 4;
 				break; 
 			}
-			case '*':{// pri = 8
-				if (pri >= 8) pos = i,pri = 8;
+			case '*':{// pri = 3
+				if (pri <= 3) pos = i,pri = 3;
 				break; 
 			}
-			case '/':{// pri = 8
-				if (pri >= 8) pos = i,pri = 8;
+			case '/':{// pri = 3
+				if (pri <= 3) pos = i,pri = 3;
+				break; 
+			}
+			case NOT:{// pri = 2
+				if (pri <= 2) pos = i,pri = 2;
+				break; 
+			}
+			case EQ:{// pri = 7
+				if (pri <= 7) pos = i,pri = 7;
+				break; 
+			}
+			case NEQ:{// pri = 7
+				if (pri <= 7) pos = i,pri = 7;
+				break; 
+			}
+			case AND:{// pri = 11
+				if (pri <= 11) pos = i,pri = 11;
+				break; 
+			}
+			case OR:{// pri = 12
+				if (pri <= 12) pos = i,pri = 12;
 				break; 
 			}
 			default:break;
 		}
 	}
 //	printf("%d-%d %d %d\n",l,r,pos,pri);
-	if (pos == l) assert(0);
+	if (pri == 0) assert(0);
 	return pos;
 }
 uint32_t eval(int l,int r){
@@ -215,12 +236,19 @@ uint32_t eval(int l,int r){
 	if (check_bracket(l,r)) return eval(l + 1, r - 1);
 	else {
 		int pos = dominant_op(l,r);
+		if (tokens[pos].type == NOT){
+			return (!eval(pos+1,r));
+		}
 		uint32_t l_ans = eval(l,pos - 1),r_ans =  eval(pos + 1,r);
 		switch(tokens[pos].type){
 			case '+':ans = l_ans + r_ans;break;
 			case '-':ans = l_ans - r_ans;break;
 			case '*':ans = l_ans * r_ans;break;
 			case '/':ans = l_ans / r_ans;break;
+			case EQ :ans = l_ans == r_ans;break;
+			case NEQ:ans = l_ans != r_ans;break;
+			case AND:ans = l_ans && r_ans;break;
+			case OR :ans = l_ans && r_ans;break;
 			default:assert(0);
  		} 
 	}
