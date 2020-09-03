@@ -6,7 +6,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ, NUMBER
+	NOTYPE = 256, EQ, NUMBER, HEXNUMBER, REGISTER, NEQ, AND, OR, NOT
 
 	/* TODO: Add more token types */
 
@@ -20,11 +20,17 @@ static struct rule {
 	/* TODO: Add more rules.
 	 * Pay attention to the precedence level of different rules.
 	 */
-
+	
 	{" +",	NOTYPE},				// spaces
 	{"\\+", '+'},					// plus
 	{"==", EQ},						// equal
-	{"[0-9]+", NUMBER},				// number
+	{"!=", NEQ},
+	{"!", NOT},
+	{"&&", AND},
+	{"\\|\\|", OR},
+	{"\\$[a-zA-z]+",REGISTER},		// register
+	{"\\b0[xX][0-9a-fA-F]+\\b",HEXNUMBER},// hexnumber
+	{"\\b[0-9]+\\b", NUMBER},				// number
 	{"-",'-'},						// minus
 	{"\\*",'*'},					// multiply
 	{"/",'/'},						// divide
@@ -87,8 +93,12 @@ static bool make_token(char *e) {
 					case NOTYPE: break;
 					default: {
 						tokens[nr_token].type = rules[i].token_type;
-						strncpy(tokens[nr_token].str, substr_start, substr_len);
-//						printf("%s\n", tokens[nr_token].str);
+						if (rules[i].token_type == REGISTER){
+							char* reg_start = e + (position-substr_len) + 1; 
+							strncpy(tokens[nr_token].str, reg_start, substr_len - 1);
+						}else
+							strncpy(tokens[nr_token].str, substr_start, substr_len);
+						printf("%s\n", tokens[nr_token].str);
 						nr_token ++;
 					}
 				}
