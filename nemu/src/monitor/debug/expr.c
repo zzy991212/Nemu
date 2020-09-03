@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include <regex.h>
 enum {
-	NOTYPE = 256, EQ, NUMBER, HEXNUMBER, REGISTER, NEQ, AND, OR, NOT, MINUS
+	NOTYPE = 256, EQ, NUMBER, HEXNUMBER, REGISTER, NEQ, AND, OR, NOT, MINUS, POINTER
 
 	/* TODO: Add more token types */
 
@@ -183,6 +183,10 @@ int dominant_op(int l,int r){
 				if (pri < 2) pos = i,pri = 2;
 				break; 
 			}
+			case POINTER:{// pri = 2
+				if (pri < 2) pos = i,pri = 2;
+				break; 
+			}
 			default:break;
 		}
 	}
@@ -201,6 +205,10 @@ int dominant_op(int l,int r){
 					break; 
 				}
 				case NOT:{// pri = 2
+					if (pri < 2) pos = i,pri = 2;
+					break; 
+				}
+				case POINTER:{// pri = 2
 					if (pri < 2) pos = i,pri = 2;
 					break; 
 				}
@@ -259,9 +267,10 @@ uint32_t eval(int l,int r){
 	if (check_bracket(l,r)) return eval(l + 1, r - 1);
 	else {
 		int pos = dominant_op(l,r);
-		if (l==pos || tokens[pos].type == NOT || tokens[pos].type == MINUS){//wait
+		if (l==pos || tokens[pos].type == NOT || tokens[pos].type == MINUS || tokens[pos].type == POINTER){//wait
 			uint32_t r_ans = eval(pos+1,r);
 			switch(tokens[pos].type){
+				case POINTER: return swaddr_read(r_ans,4);
 				case NOT:return !r_ans;
 				case MINUS:return -r_ans;
 				default:assert(0);
@@ -291,7 +300,7 @@ uint32_t expr(char *e, bool *success) {
 
 	/* TODO: Insert codes to evaluate the expression. */
 	/*check whether brackets are matched*/
-	int i,brack=0;
+	int i,brack = 0;
 	for (i = 0; i < nr_token ; i++){
 		if (tokens[i].type == '(') brack ++;
 		if (tokens[i].type == ')') brack --;
@@ -301,6 +310,9 @@ uint32_t expr(char *e, bool *success) {
 		}
 		if (tokens[i].type == '-' && (i == 0 || (tokens[i-1].type != ')' && tokens[i-1].type != NUMBER && tokens[i-1].type != HEXNUMBER && tokens[i-1].type != REGISTER))) {
 			tokens[i].type = MINUS;
+		}
+		if (tokens[i].type == '*' && (i == 0 || (tokens[i-1].type != ')' && tokens[i-1].type != NUMBER && tokens[i-1].type != HEXNUMBER && tokens[i-1].type != REGISTER))) {
+			tokens[i].type = POINTER;
 		}
 	}
 	if (brack != 0){
