@@ -112,7 +112,7 @@ bool check_bracket(int l,int r){
 	for (i = l; i <= r; i ++){
 		if (tokens[i].type == '(') b_num ++;
 		if (tokens[i].type == ')') b_num --;
-		if (b_num < 0) return false;
+		if (b_num == 0 && i != r) return false;
 	}
 	if (b_num == 0) return true;
 	return false;
