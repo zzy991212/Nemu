@@ -122,7 +122,11 @@ int dominant_op(int l,int r){
 	int i;
 	int pos = l;
 	int pri = 10;
+	int b_num = 0;
 	for (i = l; i <= r; i ++){
+		if (tokens[i].type == '(') b_num++;
+		if (tokens[i].type == ')') b_num--;
+		if (b_num != 0) continue;
 		switch(tokens[i].type){
 			case '+':{// pri = 2
 				if (pri >= 2){
