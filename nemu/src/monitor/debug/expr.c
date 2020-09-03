@@ -259,7 +259,6 @@ uint32_t eval(int l,int r){
 	if (check_bracket(l,r)) return eval(l + 1, r - 1);
 	else {
 		int pos = dominant_op(l,r);
-		printf("%d-%d %d\n",l,r,pos);
 		if (l==pos || tokens[pos].type == NOT || tokens[pos].type == MINUS){//wait
 			uint32_t r_ans = eval(pos+1,r);
 			switch(tokens[pos].type){
