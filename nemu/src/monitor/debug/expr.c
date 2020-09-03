@@ -129,31 +129,19 @@ int dominant_op(int l,int r){
 		if (b_num != 0) continue;
 		switch(tokens[i].type){
 			case '+':{// pri = 2
-				if (pri >= 2){
-					pos = i;
-					pri = 2;
-				}
+				if (pri >= 2) pos = i,pri = 2;
 				break; 
 			}
 			case '-':{// pri = 2
-				if (pri >= 2){
-					pos = i;
-					pri = 2;
-				}
+				if (pri >= 2) pos = i,pri = 2;
 				break; 
 			}
 			case '*':{// pri = 8
-				if (pri >= 8) {
-					pos = i;
-					pri = 8;
-				}
+				if (pri >= 8) pos = i,pri = 8;
 				break; 
 			}
 			case '/':{// pri = 8
-				if (pri >= 8) {
-					pos = i;
-					pri = 8;
-				}
+				if (pri >= 8) pos = i,pri = 8;
 				break; 
 			}
 			default:break;
@@ -164,23 +152,23 @@ int dominant_op(int l,int r){
 	return pos;
 }
 uint32_t eval(int l,int r){
-	if (l>r){
-		Assert(l<r,"Wrong!");
+	if (l > r){
+		Assert(l < r,"Wrong!");
 		return 0;
 	}
-	if (l==r){
-		uint32_t num=0;
+	if (l == r){
+		uint32_t num = 0;
 		if (tokens[l].type == NUMBER){
 			sscanf(tokens[l].str,"%d",&num);
 		}
 		return num;
 	}
-	uint32_t ans=0;
+	uint32_t ans = 0;
 
-	if (check_bracket(l,r)) return eval(l+1,r-1);
+	if (check_bracket(l,r)) return eval(l + 1, r - 1);
 	else {
 		int pos = dominant_op(l,r);
-		uint32_t l_ans = eval(l,pos-1),r_ans =  eval(pos+1,r);
+		uint32_t l_ans = eval(l,pos - 1),r_ans =  eval(pos + 1,r);
 		switch(tokens[pos].type){
 			case '+':ans = l_ans + r_ans;break;
 			case '-':ans = l_ans - r_ans;break;
@@ -202,8 +190,8 @@ uint32_t expr(char *e, bool *success) {
 	/*check whether brackets are matched*/
 	int i,brack=0;
 	for (i = 0; i < nr_token ; i++){
-		if (tokens[i].type=='(') brack++;
-		if (tokens[i].type==')') brack--;
+		if (tokens[i].type == '(') brack ++;
+		if (tokens[i].type == ')') brack --;
 		if (brack < 0){
 			*success = false;
 			return 0;
@@ -215,6 +203,6 @@ uint32_t expr(char *e, bool *success) {
 	}
 //	panic("please implement me");
 	*success = true;
-	return eval(0,nr_token-1);
+	return eval(0,nr_token - 1);
 }
 
