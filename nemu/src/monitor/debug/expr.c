@@ -75,7 +75,7 @@ static bool make_token(char *e) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
-				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+//				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
 				position += substr_len;
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -159,7 +159,7 @@ int dominant_op(int l,int r){
 			default:break;
 		}
 	}
-	printf("%d-%d %d %d\n",l,r,pos,pri);
+//	printf("%d-%d %d %d\n",l,r,pos,pri);
 	if (pos == l) assert(0);
 	return pos;
 }
