@@ -281,7 +281,7 @@ uint32_t eval(int l,int r){
 			case '+':ans = l_ans + r_ans;break;
 			case '-':ans = l_ans - r_ans;break;
 			case '*':ans = l_ans * r_ans;break;
-			case '/':ans = l_ans / r_ans;break;
+			case '/':{if (r_ans==0) Assert(0,"Divisor cannot be 0!");else ans = l_ans / r_ans;break;}
 			case EQ :ans = l_ans == r_ans;break;
 			case NEQ:ans = l_ans != r_ans;break;
 			case AND:ans = l_ans && r_ans;break;
