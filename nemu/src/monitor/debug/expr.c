@@ -224,6 +224,7 @@ uint32_t eval(int l,int r){
 	}
 	if (l == r){
 		uint32_t num = 0;
+		printf("%d\n",l);
 		if (tokens[l].type == NUMBER){
 			sscanf(tokens[l].str,"%d",&num);
 		}else if (tokens[l].type == HEXNUMBER){
