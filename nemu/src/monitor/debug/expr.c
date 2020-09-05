@@ -224,7 +224,6 @@ uint32_t eval(int l,int r){
 	}
 	if (l == r){
 		uint32_t num = 0;
-		printf("%d\n",l);
 		if (tokens[l].type == NUMBER){
 			sscanf(tokens[l].str,"%d",&num);
 		}else if (tokens[l].type == HEXNUMBER){
@@ -260,7 +259,7 @@ uint32_t eval(int l,int r){
 				Assert(0,"Wrong Register Name!");
 			}
 			else Assert(0,"Wrong Expression!");
-		}
+		}else Assert(0,"Wrong Expression!");
 		return num;
 	}
 	uint32_t ans = 0;
