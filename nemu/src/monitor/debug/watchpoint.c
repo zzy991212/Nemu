@@ -75,6 +75,6 @@ WP* delete_wp(int id,bool* f){
 	while (ret != NULL && ret -> NO != id){
 		ret = ret -> next;
 	}
-	if (ret == NULL) f=false;
+	if (ret == NULL) *f=false;
 	return ret;
 }
