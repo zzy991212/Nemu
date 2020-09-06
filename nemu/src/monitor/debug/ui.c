@@ -131,7 +131,7 @@ static int cmd_d(char* args){
 	bool flag=true;
 	WP* wp = delete_wp(id,&flag);
 	if (!flag){
-		printf("Cannot Find!");
+		printf("Cannot Find!\n");
 		return 0;
 	}
 	free_wp(wp);
