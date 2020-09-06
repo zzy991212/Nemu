@@ -88,5 +88,6 @@ void check_wp(bool* f){
 			h -> val = nxtv;
 			*f = true;
 		}
+		h = h -> next;
 	}
 }
