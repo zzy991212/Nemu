@@ -21,3 +21,38 @@ void init_wp_pool() {
 /* TODO: Implement the functionality of watchpoint */
 
 
+WP* new_wp(){
+	
+	if (free_ == NULL) Assert(0,"No Space!");
+	
+	WP *f_top,*h_tail;
+	f_top = free_;
+	h_tail = head;
+	free_ = free_ -> next;
+
+	f_top -> next = NULL;
+
+	while (h_tail -> next != NULL)
+		h_tail = h_tail -> next;
+	h_tail -> next = f_top;
+	return f_top;
+}
+
+void free_wp(WP *wp){
+
+	WP *h,*f;
+	h = head;
+	f = free_;
+	while (h != NULL && h -> NO == wp -> NO){
+		h = h -> next;
+	}
+	if (h == NULL) Assert(0,"Cannot find!");
+	WP *tmp;
+	h -> next = h -> next -> next;
+	tmp = f -> next;
+	f -> next = wp;
+	wp -> next = tmp;
+
+	wp -> val = 0;
+	wp -> exprs = NULL;
+}
