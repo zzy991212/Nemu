@@ -116,7 +116,7 @@ static int cmd_w(char* args){
     	return 0;
     }
     WP *wp = new_wp();
-    wp -> exprs = args;
+    strcpy(wp -> exprs,args);
     wp -> val = v;
     return 0;
 }
