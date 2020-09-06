@@ -65,7 +65,7 @@ typedef struct token {
 
 Token tokens[32];
 int nr_token;
-
+bool* cando;
 static bool make_token(char *e) {
 	int position = 0;
 	int i;
@@ -134,6 +134,7 @@ bool check_bracket(int l,int r){
 }
 
 int dominant_op(int l,int r){
+	if (*cando==false) return 0;
 	int i;
 	int pos = l;
 	int pri = 0;
@@ -191,7 +192,7 @@ int dominant_op(int l,int r){
 		}
 	}
 //	printf("%d-%d %d %d\n",l,r,pos,pri);
-	if (pri == 0) assert(0);
+	if (pri == 0) {*cando=false;return 0;}
 
 	if (pri == 2){
 		pri = 0;
@@ -218,8 +219,9 @@ int dominant_op(int l,int r){
 	return pos;
 }
 uint32_t eval(int l,int r){
+	if (*cando==false) return 0;
 	if (l > r){
-		Assert(l < r,"Wrong!");
+		*cando=false;
 		return 0;
 	}
 	if (l == r){
@@ -239,7 +241,7 @@ uint32_t eval(int l,int r){
 				if (i > R_EDI){
 					if (strcmp(tokens[l].str,"eip") == 0){
 						num = cpu.eip;
-					}else Assert(0,"Wrong Register Name!");
+					}else {*cando=false;return 0;}
 				}else return num=reg_l(i);
 			}
 			else if (strlen(tokens[l].str) == 2){ //length = 2
@@ -256,10 +258,10 @@ uint32_t eval(int l,int r){
 					}
 				}
 				if (i <= R_BH) return num = reg_b(i);
-				Assert(0,"Wrong Register Name!");
+				*cando=false;return 0;
 			}
-			else Assert(0,"Wrong Expression!");
-		}else Assert(0,"Wrong Expression!");
+			else {*cando=false;return 0;}
+		}else {*cando=false;return 0;}
 		return num;
 	}
 	uint32_t ans = 0;
@@ -273,7 +275,7 @@ uint32_t eval(int l,int r){
 				case POINTER: return swaddr_read(r_ans,4);
 				case NOT:return !r_ans;
 				case MINUS:return -r_ans;
-				default:assert(0);
+				default:{*cando=false;return 0;}
 			}
 		}
 		uint32_t l_ans = eval(l,pos - 1),r_ans =  eval(pos + 1,r);
@@ -281,12 +283,12 @@ uint32_t eval(int l,int r){
 			case '+':ans = l_ans + r_ans;break;
 			case '-':ans = l_ans - r_ans;break;
 			case '*':ans = l_ans * r_ans;break;
-			case '/':{if (r_ans==0) Assert(0,"Divisor cannot be 0!");else ans = l_ans / r_ans;break;}
+			case '/':{if (r_ans==0) {*cando=false;return 0;}else ans = l_ans / r_ans;break;}
 			case EQ :ans = l_ans == r_ans;break;
 			case NEQ:ans = l_ans != r_ans;break;
 			case AND:ans = l_ans && r_ans;break;
 			case OR :ans = l_ans && r_ans;break;
-			default:assert(0);
+			default:{*cando=false;return 0;}
  		} 
 	}
 	return ans;
@@ -297,7 +299,7 @@ uint32_t expr(char *e, bool *success) {
 		*success = false;
 		return 0;
 	}
-
+	cando = success;
 	/* TODO: Insert codes to evaluate the expression. */
 	/*check whether brackets are matched*/
 	int i,brack = 0;

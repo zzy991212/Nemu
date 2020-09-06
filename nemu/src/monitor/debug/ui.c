@@ -84,6 +84,7 @@ static int cmd_x(char *args){
 	}
 	return 0;
 }
+
 static int cmd_p(char *args){
 	if (args == NULL) {
         printf("Wrong Command!\n");
@@ -100,6 +101,7 @@ static int cmd_p(char *args){
 	}
 	return 0;
 }
+
 static struct {
 	char *name;
 	char *description;
