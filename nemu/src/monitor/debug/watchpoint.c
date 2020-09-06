@@ -32,9 +32,12 @@ WP* new_wp(){
 
 	f_top -> next = NULL;
 
-	while (h_tail -> next != NULL)
-		h_tail = h_tail -> next;
-	h_tail -> next = f_top;
+	if (h_tail == NULL) head = f_top;
+	else {
+		while (h_tail -> next != NULL)
+			h_tail = h_tail -> next;
+		h_tail -> next = f_top;
+	}
 	return f_top;
 }
 
@@ -43,16 +46,26 @@ void free_wp(WP *wp){
 	WP *h,*f;
 	h = head;
 	f = free_;
-	while (h != NULL && h -> NO == wp -> NO){
+
+	if (h == NULL) Assert(0,"Cannot find!");
+	if (h == wp){
+		head = wp -> next;
+	}else {
+		while (h != NULL && h -> next != wp){
+			h = h -> next;
+		}
+		h -> next = h -> next -> next;
+	}
+	wp -> next = free_;
+	free_ = wp;
+	wp -> val = 0;
+	wp -> exprs[0] = '\0';
+}
+
+void print_w(){
+	WP *h = head;
+	while (h != NULL){
+		printf("Watchpoint NO.%d\t Expression: %s\t Value: %d\n",h -> NO,h -> exprs,h -> val);
 		h = h -> next;
 	}
-	if (h == NULL) Assert(0,"Cannot find!");
-	WP *tmp;
-	h -> next = h -> next -> next;
-	tmp = f -> next;
-	f -> next = wp;
-	wp -> next = tmp;
-
-	wp -> val = 0;
-	wp -> exprs = NULL;
 }

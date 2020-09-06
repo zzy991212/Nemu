@@ -59,6 +59,8 @@ static int cmd_info(char *args){
 			printf("%s  0x%08x\n",regsl[i],reg_l(i));
 		}
 		printf("eip  0x%08x\n",cpu.eip);
+	}else if (args[0] == 'w'){
+		print_w();
 	}
 	return 0;
 }
@@ -102,6 +104,22 @@ static int cmd_p(char *args){
 	return 0;
 }
 
+static int cmd_w(char* args){
+	if (args == NULL) {
+        printf("Wrong Command!\n");
+        return 0;
+    }
+    bool flag=true;
+    uint32_t v = expr(args, &flag);
+    if (!flag){
+    	printf("Wrong Expression!");
+    	return 0;
+    }
+    WP *wp = new_wp();
+    wp -> exprs = args;
+    wp -> val = v;
+    return 0;
+}
 static struct {
 	char *name;
 	char *description;
@@ -113,7 +131,8 @@ static struct {
 	{ "si", "Execute some steps, initial -> 1 step", cmd_si},
 	{ "info", "Print values of all registers", cmd_info},
 	{ "x", "Calculate expressions, let it be the starting memery address, print continuous N 4 bytes.",cmd_x},
-	{ "p", "Calculate expressions", cmd_p}
+	{ "p", "Calculate expressions", cmd_p},
+	{ "w", "Add watchpoint",cmd_w},
 	/* TODO: Add more commands */
 
 };
