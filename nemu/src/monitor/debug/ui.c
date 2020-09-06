@@ -112,7 +112,7 @@ static int cmd_w(char* args){
     bool flag=true;
     uint32_t v = expr(args, &flag);
     if (!flag){
-    	printf("Wrong Expression!");
+    	printf("Wrong Expression!\n");
     	return 0;
     }
     WP *wp = new_wp();
