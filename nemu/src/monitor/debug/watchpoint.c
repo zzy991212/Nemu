@@ -85,6 +85,7 @@ void check_wp(bool* f){
 		uint32_t nxtv=expr(h->exprs,&tmp);
 		if (nxtv != h -> val){
 			printf("Watchpoint NO.%d\t Expression: %s\t Origin Value: %d\t New Value: %d\n",h -> NO,h -> exprs,h -> val,nxtv);
+			h -> val = nxtv;
 			*f = true;
 		}
 	}
