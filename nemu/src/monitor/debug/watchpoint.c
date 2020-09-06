@@ -78,3 +78,14 @@ WP* delete_wp(int id,bool* f){
 	if (ret == NULL) *f=false;
 	return ret;
 }
+void check_wp(bool* f){
+	WP* h = head;
+	while (h != NULL){
+		bool tmp=true;
+		uint32_t nxtv=expr(h->exprs,&tmp);
+		if (nxtv != h -> val){
+			printf("Watchpoint NO.%d\t Expression: %s\t Origin Value: %d\t New Value: %d\n",h -> NO,h -> exprs,h -> val,nxtv);
+			*f = true;
+		}
+	}
+}
