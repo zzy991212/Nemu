@@ -80,7 +80,7 @@ static int cmd_x(char *args){
 	}
 	int i;
 	for (i=0;i<N;i++){
-		printf("0x%x  0x%08x\n",exprs+i*4,swaddr_read(exprs+i*4,4));
+		printf("0x%08x  0x%08x\n",exprs+i*4,swaddr_read(exprs+i*4,4));
 	}
 	return 0;
 }
