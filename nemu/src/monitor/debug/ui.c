@@ -118,7 +118,25 @@ static int cmd_w(char* args){
     WP *wp = new_wp();
     strcpy(wp -> exprs,args);
     wp -> val = v;
+    printf("Succefully add watchpoint NO.%d\n",wp -> NO);
     return 0;
+}
+static int cmd_d(char* args){
+	if (args == NULL) {
+        printf("Wrong Command!\n");
+        return 0;
+    }
+	int id;
+	sscanf(args,"%d",&id);
+	bool flag=true;
+	WP* wp = delete_wp(id,&flag);
+	if (!flag){
+		printf("Cannot Find!");
+		return 0;
+	}
+	free_wp(wp);
+	printf("Succefully Delete!\n");
+	return 0;
 }
 static struct {
 	char *name;
@@ -133,6 +151,7 @@ static struct {
 	{ "x", "Calculate expressions, let it be the starting memery address, print continuous N 4 bytes.",cmd_x},
 	{ "p", "Calculate expressions", cmd_p},
 	{ "w", "Add watchpoint",cmd_w},
+	{ "d", "Delete watchpoint",cmd_d},
 	/* TODO: Add more commands */
 
 };

@@ -69,3 +69,12 @@ void print_w(){
 		h = h -> next;
 	}
 }
+
+WP* delete_wp(int id,bool* f){
+	WP* ret = head;
+	while (ret != NULL && ret -> NO != id){
+		ret = ret -> next;
+	}
+	if (ret == NULL) f=false;
+	return ret;
+}
