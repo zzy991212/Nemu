@@ -39,98 +39,98 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 /*New*/
-static int cmd_si(char *args){
+static int cmd_si(char *args) {
 	int step;
 	if (args == NULL) step = 1;
-	else sscanf(args,"%d",&step);
+	else sscanf(args, "%d", &step);
 //	printf("%d\n",step);
 	cpu_exec(step);
 	return 0;
 }
 
-static int cmd_info(char *args){
+static int cmd_info(char *args) {
 	if (args == NULL) {
-		printf("Wrong Command!\n");
+		printf("Invalid Command!\n");
 		return 0;
 	}
-	if (args[0] == 'r'){
+	if (args[0] == 'r') {
 		int i;
-		for (i = R_EAX; i <= R_EDI ;i++){
-			printf("%s  0x%08x\n",regsl[i],reg_l(i));
+		for (i = R_EAX; i <= R_EDI ; i++) {
+			printf("$%s\t0x%08x\n", regsl[i], reg_l(i));
 		}
-		printf("eip  0x%08x\n",cpu.eip);
-	}else if (args[0] == 'w'){
+		printf("$eip\t0x%08x\n", cpu.eip);
+	} else if (args[0] == 'w') {
 		print_w();
 	}
 	return 0;
 }
 
-static int cmd_x(char *args){
+static int cmd_x(char *args) {
 	if (args == NULL) {
-        printf("Wrong Command!\n");
-        return 0;
-    }
-    char* tokens=strtok(args," ");
-	int N,exprs;
-	sscanf(tokens,"%d",&N);
-	char* eps=tokens+strlen(tokens)+1;
-	bool flag=true;
-	exprs = expr(eps,&flag);
-	if (!flag){
-		printf("Wrong Command!\n");
+		printf("Invalid Command!\n");
+		return 0;
+	}
+	char* tokens = strtok(args, " ");
+	int N, exprs;
+	sscanf(tokens, "%d", &N);
+	char* eps = tokens + strlen(tokens) + 1;
+	bool flag = true;
+	exprs = expr(eps, &flag);
+	if (!flag) {
+		printf("Invalid Command!\n");
 		return 0;
 	}
 	int i;
-	for (i=0;i<N;i++){
-		printf("0x%08x  0x%08x\n",exprs+i*4,swaddr_read(exprs+i*4,4));
+	for (i = 0; i < N; i++) {
+		printf("0x%08x\t0x%08x\n", exprs + i * 4, swaddr_read(exprs + i * 4, 4));
 	}
 	return 0;
 }
 
-static int cmd_p(char *args){
+static int cmd_p(char *args) {
 	if (args == NULL) {
-        printf("Wrong Command!\n");
-        return 0;
-    }
-    uint32_t ans;
-    bool flag;
+		printf("Invalid Command!\n");
+		return 0;
+	}
+	uint32_t ans;
+	bool flag;
 	ans = expr(args, &flag);
 	if (!flag) {
-		printf("Wrong Command!\n");
-        return 0;
-	}else {
-		printf("%d\n",ans);
+		printf("Invalid Command!\n");
+		return 0;
+	} else {
+		printf("%d\n", ans);
 	}
 	return 0;
 }
 
-static int cmd_w(char* args){
+static int cmd_w(char* args) {
 	if (args == NULL) {
-        printf("Wrong Command!\n");
-        return 0;
-    }
-    bool flag=true;
-    uint32_t v = expr(args, &flag);
-    if (!flag){
-    	printf("Wrong Expression!\n");
-    	return 0;
-    }
-    WP *wp = new_wp();
-    strcpy(wp -> exprs,args);
-    wp -> val = v;
-    printf("Succefully add watchpoint NO.%d\n",wp -> NO);
-    return 0;
+		printf("Invalid Command!\n");
+		return 0;
+	}
+	bool flag = true;
+	uint32_t v = expr(args, &flag);
+	if (!flag) {
+		printf("Invalid Expression!\n");
+		return 0;
+	}
+	WP *wp = new_wp();
+	strcpy(wp -> exprs, args);
+	wp -> val = v;
+	printf("Succefully add watchpoint NO.%d\n", wp -> NO);
+	return 0;
 }
-static int cmd_d(char* args){
+static int cmd_d(char* args) {
 	if (args == NULL) {
-        printf("Wrong Command!\n");
-        return 0;
-    }
+		printf("Invalid Command!\n");
+		return 0;
+	}
 	int id;
-	sscanf(args,"%d",&id);
-	bool flag=true;
-	WP* wp = delete_wp(id,&flag);
-	if (!flag){
+	sscanf(args, "%d", &id);
+	bool flag = true;
+	WP* wp = delete_wp(id, &flag);
+	if (!flag) {
 		printf("Cannot Find!\n");
 		return 0;
 	}
@@ -148,10 +148,10 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 	{ "si", "Execute some steps, initial -> 1 step", cmd_si},
 	{ "info", "Print values of all registers", cmd_info},
-	{ "x", "Calculate expressions, let it be the starting memery address, print continuous N 4 bytes.",cmd_x},
+	{ "x", "Calculate expressions, let it be the starting memery address, print continuous N 4 bytes.", cmd_x},
 	{ "p", "Calculate expressions", cmd_p},
-	{ "w", "Add watchpoint",cmd_w},
-	{ "d", "Delete watchpoint",cmd_d},
+	{ "w", "Add watchpoint", cmd_w},
+	{ "d", "Delete watchpoint", cmd_d},
 	/* TODO: Add more commands */
 
 };
@@ -163,15 +163,15 @@ static int cmd_help(char *args) {
 	char *arg = strtok(NULL, " ");
 	int i;
 
-	if(arg == NULL) {
+	if (arg == NULL) {
 		/* no argument given */
-		for(i = 0; i < NR_CMD; i ++) {
+		for (i = 0; i < NR_CMD; i ++) {
 			printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
 		}
 	}
 	else {
-		for(i = 0; i < NR_CMD; i ++) {
-			if(strcmp(arg, cmd_table[i].name) == 0) {
+		for (i = 0; i < NR_CMD; i ++) {
+			if (strcmp(arg, cmd_table[i].name) == 0) {
 				printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
 				return 0;
 			}
@@ -182,19 +182,19 @@ static int cmd_help(char *args) {
 }
 
 void ui_mainloop() {
-	while(1) {
+	while (1) {
 		char *str = rl_gets();
 		char *str_end = str + strlen(str);
 
 		/* extract the first token as the command */
 		char *cmd = strtok(str, " ");
-		if(cmd == NULL) { continue; }
+		if (cmd == NULL) { continue; }
 
 		/* treat the remaining string as the arguments,
 		 * which may need further parsing
 		 */
 		char *args = cmd + strlen(cmd) + 1;
-		if(args >= str_end) {
+		if (args >= str_end) {
 			args = NULL;
 		}
 
@@ -204,13 +204,13 @@ void ui_mainloop() {
 #endif
 
 		int i;
-		for(i = 0; i < NR_CMD; i ++) {
-			if(strcmp(cmd, cmd_table[i].name) == 0) {
-				if(cmd_table[i].handler(args) < 0) { return; }
+		for (i = 0; i < NR_CMD; i ++) {
+			if (strcmp(cmd, cmd_table[i].name) == 0) {
+				if (cmd_table[i].handler(args) < 0) { return; }
 				break;
 			}
 		}
 
-		if(i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
+		if (i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
 	}
 }
