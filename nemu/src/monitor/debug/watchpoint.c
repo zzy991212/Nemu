@@ -23,7 +23,7 @@ void init_wp_pool() {
 
 WP* new_wp() {
 
-	if (free_ == NULL) Assert(0, "No Space!");
+	if (free_ == NULL) return NULL;
 
 	WP *f_top, *h_tail;
 	f_top = free_;
@@ -46,8 +46,6 @@ void free_wp(WP *wp) {
 	WP *h, *f;
 	h = head;
 	f = free_;
-
-	if (h == NULL) Assert(0, "Cannot find!");
 	if (h == wp) {
 		head = wp -> next;
 	} else {

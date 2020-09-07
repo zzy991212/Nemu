@@ -97,6 +97,10 @@ static int cmd_w(char* args) {
 	uint32_t v = expr(args, &flag);
 	TestCorrect(!flag);
 	WP *wp = new_wp();
+	if (wp == NULL) {
+		printf("No space to add an extra watchpoint!");
+		return 0;
+	}
 	strcpy(wp -> exprs, args);
 	wp -> val = v;
 	printf("Succefully add watchpoint NO.%d\n", wp -> NO);
