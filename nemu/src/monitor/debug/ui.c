@@ -7,6 +7,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+#define TestCorrect(x) if(x){printf("Invalid Command!\n");return 0;}
 void cpu_exec(uint32_t);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
@@ -49,10 +50,7 @@ static int cmd_si(char *args) {
 }
 
 static int cmd_info(char *args) {
-	if (args == NULL) {
-		printf("Invalid Command!\n");
-		return 0;
-	}
+	TestCorrect(args == NULL);
 	if (args[0] == 'r') {
 		int i;
 		for (i = R_EAX; i <= R_EDI ; i++) {
