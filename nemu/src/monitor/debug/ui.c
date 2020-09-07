@@ -64,20 +64,14 @@ static int cmd_info(char *args) {
 }
 
 static int cmd_x(char *args) {
-	if (args == NULL) {
-		printf("Invalid Command!\n");
-		return 0;
-	}
+	TestCorrect(args == NULL);
 	char* tokens = strtok(args, " ");
 	int N, exprs;
 	sscanf(tokens, "%d", &N);
 	char* eps = tokens + strlen(tokens) + 1;
 	bool flag = true;
 	exprs = expr(eps, &flag);
-	if (!flag) {
-		printf("Invalid Command!\n");
-		return 0;
-	}
+	TestCorrect(!flag);
 	int i;
 	for (i = 0; i < N; i++) {
 		printf("0x%08x\t0x%08x\n", exprs + i * 4, swaddr_read(exprs + i * 4, 4));
@@ -86,33 +80,22 @@ static int cmd_x(char *args) {
 }
 
 static int cmd_p(char *args) {
-	if (args == NULL) {
-		printf("Invalid Command!\n");
-		return 0;
-	}
+	TestCorrect(args == NULL);
 	uint32_t ans;
 	bool flag;
 	ans = expr(args, &flag);
-	if (!flag) {
-		printf("Invalid Command!\n");
-		return 0;
-	} else {
+	TestCorrect(!flag) 
+	else {
 		printf("%d\n", ans);
 	}
 	return 0;
 }
 
 static int cmd_w(char* args) {
-	if (args == NULL) {
-		printf("Invalid Command!\n");
-		return 0;
-	}
+	TestCorrect(args == NULL);
 	bool flag = true;
 	uint32_t v = expr(args, &flag);
-	if (!flag) {
-		printf("Invalid Expression!\n");
-		return 0;
-	}
+	TestCorrect(!flag);
 	WP *wp = new_wp();
 	strcpy(wp -> exprs, args);
 	wp -> val = v;
@@ -120,10 +103,7 @@ static int cmd_w(char* args) {
 	return 0;
 }
 static int cmd_d(char* args) {
-	if (args == NULL) {
-		printf("Invalid Command!\n");
-		return 0;
-	}
+	TestCorrect(args == NULL);
 	int id;
 	sscanf(args, "%d", &id);
 	bool flag = true;
