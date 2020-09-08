@@ -89,26 +89,26 @@ static bool make_token(char *e) {
 				 */
 
 				switch (rules[i].token_type) {
-					case NOTYPE: break;
-					default: {
-						tokens[nr_token].type = rules[i].token_type;
-						if (rules[i].token_type == REGISTER) { //Register
-							char* reg_start = e + (position - substr_len) + 1;
-							strncpy(tokens[nr_token].str, reg_start, substr_len - 1);
-							int t;
-							for (t = 0; t <= strlen(tokens[nr_token].str); t++) { // tolower
-								int x = tokens[nr_token].str[t];
-								if (x >= 'A' && x <= 'Z') x += ('a' - 'A');
-								tokens[nr_token].str[t] = (char)x;
-							}
-						} else
-							strncpy(tokens[nr_token].str, substr_start, substr_len);
+				case NOTYPE: break;
+				default: {
+					tokens[nr_token].type = rules[i].token_type;
+					if (rules[i].token_type == REGISTER) { //Register
+						char* reg_start = e + (position - substr_len) + 1;
+						strncpy(tokens[nr_token].str, reg_start, substr_len - 1);
+						int t;
+						for (t = 0; t <= strlen(tokens[nr_token].str); t++) { // tolower
+							int x = tokens[nr_token].str[t];
+							if (x >= 'A' && x <= 'Z') x += ('a' - 'A');
+							tokens[nr_token].str[t] = (char)x;
+						}
+					} else
+						strncpy(tokens[nr_token].str, substr_start, substr_len);
 
-						tokens[nr_token].str[substr_len]='\0';
+					tokens[nr_token].str[substr_len] = '\0';
 
-						//						printf("%s\n", tokens[nr_token].str);
-						nr_token ++;
-					}
+					//						printf("%s\n", tokens[nr_token].str);
+					nr_token ++;
+				}
 				}
 
 				break;
