@@ -7,6 +7,7 @@
 
 #include "call-jump-ret/call.h"
 #include "call-jump-ret/je.h"
+#include "call-jump-ret/ret.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
