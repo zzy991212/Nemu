@@ -12,7 +12,7 @@ static void do_execute () {
     cpu.CF = (ret < op_dest -> val);
     int tmp1 = (op_dest -> val) >> ((DATA_BYTE << 3) - 1);
     int tmp2 = (op_src -> val) >> ((DATA_BYTE << 3) - 1);
-    cpu.OF = (tmp1 != tmp2 && tmp2 == cpu.SF);
+    cpu.OF = (tmp1 == tmp2 && tmp1 != cpu.SF);
     ret ^= ret >> 4;
     ret ^= ret >> 2;
     ret ^= ret >> 1;

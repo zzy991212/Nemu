@@ -3,11 +3,18 @@
 #define instr inc
 
 static void do_execute () {
-	DATA_TYPE result = op_src->val + 1;
-	OPERAND_W(op_src, result);
+	DATA_TYPE ret = op_src->val + 1;
+	OPERAND_W(op_src, ret);
 
 	/* TODO: Update EFLAGS. */
-	panic("please implement me");
+	cpu.ZF = !ret;
+    cpu.SF = ret >> ((DATA_BYTE << 3) - 1);
+    cpu.OF = (ret < op_src -> val);
+    ret ^= ret >> 4;
+    ret ^= ret >> 2;
+    ret ^= ret >> 1;
+    ret &= 1;
+    cpu.PF = !ret;
 
 	print_asm_template1();
 }
