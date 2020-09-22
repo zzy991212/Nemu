@@ -4,7 +4,7 @@
 
 static void do_execute () {
 	DATA_TYPE_S imm = op_src -> val;
-    print_asm("jg\t%x", cpu.eip + 1 + DATA_BYTE + imm);
+    print_asm("jge\t%x", cpu.eip + 1 + DATA_BYTE + imm);
     if (cpu.ZF == 1 && cpu.SF == cpu.OF) cpu.eip += imm;
 }
 
