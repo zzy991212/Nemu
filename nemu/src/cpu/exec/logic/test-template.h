@@ -3,7 +3,7 @@
 #define instr test
 
 static void do_execute () {
-	DATA_TYPE ret = op_dest -> val & op_src ->val;
+	DATA_TYPE ret = op_dest -> val & op_src -> val;
     cpu.SF = ret >> ((DATA_BYTE << 3) - 1);
     cpu.ZF = !ret;
     cpu.CF = 0;
@@ -13,7 +13,6 @@ static void do_execute () {
     ret ^= ret >> 1;
     ret &= 1;
     cpu.PF = !ret;
-    printf("%d ZF:%d\n",ret,cpu.ZF);
     print_asm_template2();
 }
 
