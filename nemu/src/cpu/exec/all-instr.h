@@ -18,6 +18,7 @@
 #include "call-jump-ret/jle.h"
 #include "call-jump-ret/jg.h"
 #include "call-jump-ret/jl.h"
+#include "call-jump-ret/jge.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
