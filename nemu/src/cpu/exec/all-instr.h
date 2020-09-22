@@ -4,6 +4,9 @@
 #include "data-mov/xchg.h"
 #include "data-mov/push.h"
 #include "data-mov/pop.h"
+#include "data-mov/cltd.h"
+#include "data-mov/leave.h"
+#include "data-mov/movext.h"
 
 #include "call-jump-ret/call.h"
 #include "call-jump-ret/je.h"
@@ -17,6 +20,7 @@
 #include "arith/idiv.h"
 #include "arith/div.h"
 #include "arith/cmp.h"
+#include "arith/add.h"
 
 #include "logic/and.h"
 #include "logic/or.h"
