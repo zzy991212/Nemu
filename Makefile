@@ -53,7 +53,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/sub-longlong
+USERPROG := obj/testcase/sum
 ENTRY := $(USERPROG)
 
 entry: $(ENTRY)
