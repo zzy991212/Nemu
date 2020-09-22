@@ -1,9 +1,9 @@
 #include "cpu/exec/template-start.h"
 
-#define instr add
+#define instr adc
 
 static void do_execute () {
-	DATA_TYPE ret = op_dest -> val + op_src -> val;
+	DATA_TYPE ret = op_dest -> val + op_src -> val + cpu.CF;
 	OPERAND_W(op_dest, ret);
 
 	/* TODO: Update EFLAGS. */

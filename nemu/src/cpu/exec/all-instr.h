@@ -21,6 +21,7 @@
 #include "arith/div.h"
 #include "arith/cmp.h"
 #include "arith/add.h"
+#include "arith/adc.h"
 
 #include "logic/and.h"
 #include "logic/or.h"
