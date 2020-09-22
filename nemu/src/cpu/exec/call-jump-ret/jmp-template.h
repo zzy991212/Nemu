@@ -10,6 +10,7 @@ static void do_execute () {
         // int len = concat(decode_i_, SUFFIX)(cpu.eip + 1);
 
     }
+    print_asm_template1();
 }
 
 make_instr_helper(i)
