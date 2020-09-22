@@ -13,6 +13,7 @@ static void do_execute () {
     ret ^= ret >> 1;
     ret &= 1;
     cpu.PF = !ret;
+    printf("%d ZF:%d\n",ret,cpu.ZF);
     print_asm_template2();
 }
 
