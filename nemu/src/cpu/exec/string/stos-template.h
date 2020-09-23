@@ -12,5 +12,4 @@ make_helper(concat(stos_m_, SUFFIX)) {
 }
 
 
-
 #include "cpu/exec/template-end.h"
