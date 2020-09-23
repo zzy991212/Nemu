@@ -3,10 +3,10 @@
 #define instr scas
 
 make_helper(concat(scas_m_, SUFFIX)) {
-    op_dest -> val = MEM_R(reg_l(R_EDI));
-    op_src -> val = REG(R_EAX);
+    op_dest -> val = (DATA_TYPE_S)MEM_R(reg_l(R_EDI));
+    op_src -> val = (DATA_TYPE_S)REG(R_EAX);
 
-    DATA_TYPE ret = op_dest -> val - op_src -> val;
+    DATA_TYPE_S ret = op_dest -> val - op_src -> val;
 
 	/* TODO: Update EFLAGS. */
     cpu.ZF = !ret;
