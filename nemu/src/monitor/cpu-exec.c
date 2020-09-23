@@ -73,7 +73,7 @@ void cpu_exec(volatile uint32_t n) {
 			printf("%s\n", asm_buf);
 		}
 #endif
-		printf("eax: 0x%x\tesp: 0x%x\n",cpu.eax,cpu.esp);
+		printf("eax: 0x%x\tecx: 0x%x\n",cpu.eax,cpu.ecx);
 		/* TODO: check watchpoints here. */
 		bool check_flag=false;
 		check_wp(&check_flag);
