@@ -5,7 +5,6 @@
 
 static void do_movzx_b() {
 	DATA_TYPE ret = (op_src -> val) & 0xff;
-    ret = (uint32_t)ret;
 	OPERAND_W(op_dest, ret);
 	print_asm_template2();
 }
@@ -13,7 +12,6 @@ static void do_movzx_b() {
 
 static void do_movzx_w() {
 	DATA_TYPE ret = (op_src -> val) & 0xffff;
-    ret = (uint32_t)ret;
 	OPERAND_W(op_dest, ret);
 	print_asm_template2();
 }
