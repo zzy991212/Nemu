@@ -13,7 +13,7 @@ make_helper(concat(movs_n_, SUFFIX)) {
         REG(R_ESI) -= DATA_BYTE;
     }
 	print_asm("movs");
-    return 1;
+    return 0;
 }
 
 
