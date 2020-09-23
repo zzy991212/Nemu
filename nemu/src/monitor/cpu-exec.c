@@ -50,6 +50,7 @@ void cpu_exec(volatile uint32_t n) {
 	setjmp(jbuf);
 
 	for(; n > 0; n --) {
+
 #ifdef DEBUG
 		swaddr_t eip_temp = cpu.eip;
 		if((n & 0xffff) == 0) {
@@ -57,7 +58,7 @@ void cpu_exec(volatile uint32_t n) {
 			fputc('.', stderr);
 		}
 #endif
-
+		printf("eip: 0x%x\n",cpu.eip);
 		/* Execute one instruction, including instruction fetch,
 		 * instruction decode, and the actual execution. */
 		int instr_len = exec(cpu.eip);
