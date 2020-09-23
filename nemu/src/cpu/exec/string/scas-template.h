@@ -3,9 +3,27 @@
 #define instr scas
 
 make_helper(concat(scas_m_, SUFFIX)) {
+    op_dest -> val = MEM_R(reg_l(R_EDI));
+    op_src -> val = REG(R_EAX);
 
-    if (!reg_l(R_ECX) && cpu.ZF == 0)
-        reg_l(R_EDI) += DATA_BYTE;
+    DATA_TYPE ret = op_dest -> val - op_src -> val;
+
+	/* TODO: Update EFLAGS. */
+    cpu.ZF = !ret;
+    cpu.SF = ret >> ((DATA_BYTE << 3) - 1);
+    cpu.CF = (op_dest -> val < op_src -> val);
+    int tmp1 = (op_dest -> val) >> ((DATA_BYTE << 3) - 1);
+    int tmp2 = (op_src -> val) >> ((DATA_BYTE << 3) - 1);
+    cpu.OF = (tmp1 != tmp2 && tmp2 == cpu.SF);
+    ret ^= ret >> 4;
+    ret ^= ret >> 2;
+    ret ^= ret >> 1;
+    ret &= 1;
+    cpu.PF = !ret;
+
+    int op = 1;
+    if (cpu.DF == 1) op = -1;
+    reg_l(R_EDI) += op * DATA_BYTE;
 	print_asm("scas");
     return 1;
 }
