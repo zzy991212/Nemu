@@ -23,6 +23,6 @@ make_helper(concat(ret_i_,SUFFIX)) {
 	
     REG (R_ESP) += val;
 	print_asm("ret\t$0x%x",val);
-	return 1;
+	return 0;
 }
 #include "cpu/exec/template-end.h"
