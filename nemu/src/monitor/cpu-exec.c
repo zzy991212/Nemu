@@ -88,4 +88,5 @@ void cpu_exec(volatile uint32_t n) {
 	}
 
 	if(nemu_state == RUNNING) { nemu_state = STOP; }
+	printf("eax: 0x%x\tedx: 0x%x\n",cpu.eax,cpu.edx);
 }
