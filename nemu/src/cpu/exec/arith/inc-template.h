@@ -9,7 +9,7 @@ static void do_execute () {
 	/* TODO: Update EFLAGS. */
 	cpu.ZF = !ret;
     cpu.SF = ret >> ((DATA_BYTE << 3) - 1);
-    cpu.OF = (ret < op_src -> val);
+    cpu.OF = (ret < op_dest -> val);
     ret ^= ret >> 4;
     ret ^= ret >> 2;
     ret ^= ret >> 1;
