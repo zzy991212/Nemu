@@ -3,8 +3,8 @@
 #define instr scas
 
 make_helper(concat(scas_m_, SUFFIX)) {
-    op_dest -> val = (uint32_t)MEM_R(reg_l(R_EDI));
-    op_src -> val = (uint32_t)REG(R_EAX);
+    op_src -> val = (uint32_t)MEM_R(reg_l(R_EDI));
+    op_dest -> val = (uint32_t)REG(R_EAX);
 
     uint32_t ret = op_dest -> val - op_src -> val;
 
