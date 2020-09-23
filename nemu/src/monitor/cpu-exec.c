@@ -73,7 +73,7 @@ void cpu_exec(volatile uint32_t n) {
 			printf("%s\n", asm_buf);
 		}
 #endif
-
+		printf("eax: 0x%x\tedx: 0x%x\n",cpu.eax,cpu.edx);
 		/* TODO: check watchpoints here. */
 		bool check_flag=false;
 		check_wp(&check_flag);
@@ -85,8 +85,8 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		if(nemu_state != RUNNING) { return; }
+		
 	}
 
 	if(nemu_state == RUNNING) { nemu_state = STOP; }
-	printf("eax: 0x%x\tedx: 0x%x\n",cpu.eax,cpu.edx);
 }
