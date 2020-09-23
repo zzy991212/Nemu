@@ -8,6 +8,8 @@ make_helper(concat(scas_m_, SUFFIX)) {
 
     uint32_t ret = op_dest -> val - op_src -> val;
 
+    if (cpu.DF == 0) reg_l(R_EDI) += DATA_BYTE;
+    else reg_l(R_EDI) -= DATA_BYTE;
 	/* TODO: Update EFLAGS. */
     cpu.ZF = !ret;
     cpu.SF = ret >> ((DATA_BYTE << 3) - 1);
@@ -20,9 +22,6 @@ make_helper(concat(scas_m_, SUFFIX)) {
     ret ^= ret >> 1;
     ret &= 1;
     cpu.PF = !ret;
-
-    if (cpu.DF == 0) reg_l(R_EDI) += DATA_BYTE;
-    else reg_l(R_EDI) -= DATA_BYTE;
 
 	print_asm("scas");
     return 1;
