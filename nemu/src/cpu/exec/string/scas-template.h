@@ -21,9 +21,9 @@ make_helper(concat(scas_m_, SUFFIX)) {
     ret &= 1;
     cpu.PF = !ret;
 
-    int op = 1;
-    if (cpu.DF == 1) op = -1;
-    reg_l(R_EDI) += op * DATA_BYTE;
+    if (cpu.DF == 0) reg_l(R_EDI) += DATA_BYTE;
+    else reg_l(R_EDI) -= DATA_BYTE;
+
 	print_asm("scas");
     return 1;
 }
