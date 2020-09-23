@@ -7,7 +7,8 @@
 #include "data-mov/cltd.h"
 #include "data-mov/leave.h"
 #include "data-mov/movext.h"
-#include "data-mov/movzx.h"
+#include "data-mov/movzb.h"
+#include "data-mov/movzw.h"
 #include "data-mov/movsx.h"
 
 #include "call-jump-ret/call.h"
