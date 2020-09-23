@@ -4,13 +4,13 @@
 
 make_helper(concat(movs_n_, SUFFIX)) {
 
-    swaddr_write(REG(R_EDI),DATA_BYTE,MEM_R(REG(R_ESI)));
+    swaddr_write(reg_l(R_EDI),DATA_BYTE,MEM_R(reg_l(R_ESI)));
 	if (cpu.DF == 0) {
-        REG(R_EDI) += DATA_BYTE;
-        REG(R_ESI) += DATA_BYTE;
+        reg_l(R_EDI) += DATA_BYTE;
+        reg_l(R_ESI) += DATA_BYTE;
     }else {
-        REG(R_EDI) -= DATA_BYTE;
-        REG(R_ESI) -= DATA_BYTE;
+        reg_l(R_EDI) -= DATA_BYTE;
+        reg_l(R_ESI) -= DATA_BYTE;
     }
 	print_asm("movs");
     return 0;
