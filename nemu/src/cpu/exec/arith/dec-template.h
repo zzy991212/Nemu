@@ -9,8 +9,9 @@ static void do_execute () {
 	/* TODO: Update EFLAGS. */
 	cpu.ZF = !ret;
     cpu.SF = ret >> ((DATA_BYTE << 3) - 1);
+    cpu.CF = op_src -> val < 1;
     int tmp1 = (op_src -> val) >> ((DATA_BYTE << 3) - 1);
-    int tmp2 = 1 >> ((DATA_BYTE << 3) - 1);
+    int tmp2 = 0;
     cpu.OF = (tmp1 != tmp2 && tmp2 == cpu.SF);
     ret ^= ret >> 4;
     ret ^= ret >> 2;
