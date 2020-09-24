@@ -58,7 +58,7 @@ void cpu_exec(volatile uint32_t n) {
 			fputc('.', stderr);
 		}
 #endif
-		printf("eip: 0x%x\n",cpu.eip);
+		//printf("eip: 0x%x\n",cpu.eip);
 		/* Execute one instruction, including instruction fetch,
 		 * instruction decode, and the actual execution. */
 		int instr_len = exec(cpu.eip);
@@ -73,7 +73,7 @@ void cpu_exec(volatile uint32_t n) {
 			printf("%s\n", asm_buf);
 		}
 #endif
-		printf("eax: 0x%x\tecx: 0x%x\n",cpu.eax,cpu.ecx);
+		//printf("eax: 0x%x\tecx: 0x%x\n",cpu.eax,cpu.ecx);
 		/* TODO: check watchpoints here. */
 		bool check_flag=false;
 		check_wp(&check_flag);
