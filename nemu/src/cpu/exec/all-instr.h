@@ -23,6 +23,7 @@
 #include "call-jump-ret/jge.h"
 #include "call-jump-ret/ja.h"
 #include "call-jump-ret/js.h"
+#include "call-jump-ret/jns.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
