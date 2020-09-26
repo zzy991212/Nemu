@@ -97,11 +97,12 @@ uint32_t GetMarkValue(char* str,bool* success){
 	return 0;
 }
 
-void GetFunctionAddr(swaddr_t EIP,char* name){
+void GetFunctionAddr(swaddr_t EBP,char* name){
 	int i;
 	for (i = 0; i < nr_symtab_entry; i++){
 		if ((symtab[i].st_info & 0xf) == STT_FUNC){
-			if (EIP >= symtab[i].st_value && symtab[i].st_value + symtab[i].st_size >= EIP){
+			if (EBP >= symtab[i].st_value && symtab[i].st_value + symtab[i].st_size >= EBP){
+				printf("0x%08x\n",symtab[i].st_value);
 				strcpy(name,strtab + symtab[i].st_name);
 				return;
 			}
