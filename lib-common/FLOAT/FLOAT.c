@@ -73,7 +73,7 @@ FLOAT f2F(float a) {
 }
 
 FLOAT Fabs(FLOAT a) {
-	return 0x7fffffff & a;
+	if (a < 0) return -a;else return a;
 }
 
 /* Functions below are already implemented */
