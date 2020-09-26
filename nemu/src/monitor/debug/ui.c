@@ -130,7 +130,7 @@ static int cmd_bt(char* args){
 	char name[32];
 	int cnt = 0;
 	while (EBP){
-		GetFunctionAddr(EBP,name);
+		GetFunctionAddr(RET,name);
 		if (name[0] == '\0') break;
 		printf("#%d\t0x%08x\t",cnt++,RET);
 		printf("%s\t(",name);
