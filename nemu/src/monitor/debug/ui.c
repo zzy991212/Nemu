@@ -139,14 +139,14 @@ static int cmd_bt(char* args){
 	while (addr){
 		GetFunctionAddr(EBP.ret_addr,name);
 		if (name[0] == '\0') break;
-		printf("#%d\t0x%08x",cnt++,EBP.ret_addr);
-		printf("%s\t",name);
+		printf("#%d\t0x%08x\t",cnt++,EBP.ret_addr);
+		printf("%s",name);
 		EBP.prev_ebp = swaddr_read(addr,4);
 		EBP.ret_addr = swaddr_read(addr + 4, 4);
 		printf("(");
 		for (i = 0;i < 4;i ++){
 			EBP.args[i] = swaddr_read(addr + 8 + i * 4, 4);
-			printf("0x%08x\t",EBP.args[i]);
+			printf("0x%08x",EBP.args[i]);
 			if (i == 3) printf(")\n");else printf(", ");
 		}
 		addr = EBP.prev_ebp;
