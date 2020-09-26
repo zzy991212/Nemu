@@ -21,7 +21,6 @@ static struct rule {
 	/* TODO: Add more rules.
 	 * Pay attention to the precedence level of different rules.
 	 */
-	{"\\b[a-zA-Z0-9_]+\\b",MARK},
 	{" +",	NOTYPE},				// spaces
 	{"\\+", '+'},					// plus
 	{"==", EQ},						// equal
@@ -37,6 +36,7 @@ static struct rule {
 	{"/", '/'},						// divide
 	{"\\(", '('},					// left bracket
 	{"\\)", ')'},					// right bracket
+	{"\\b[a-zA-Z0-9_]+\\b",MARK},
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
