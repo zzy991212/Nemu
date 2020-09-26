@@ -8,7 +8,6 @@ long long n[7]={3,2,123212,1,1000000000,5,10};
 long long ans[7];
 long long check[7]={70,77,177177,999999999000000000,999999999,55,10};
 int main(){
-	IO;
 	int T=7;
 	for (int t=0;t<T;t++){
 		long long tmp=a[t]+b[t]-n[t];
