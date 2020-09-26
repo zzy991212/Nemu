@@ -146,7 +146,7 @@ static int cmd_bt(char* args){
 		printf("(");
 		for (i = 0;i < 4;i ++){
 			EBP.args[i] = swaddr_read(addr + 8 + i * 4, 4);
-			printf("0x%08x",EBP.args[i]);
+			printf("0x%x",EBP.args[i]);
 			if (i == 3) printf(")\n");else printf(", ");
 		}
 		addr = EBP.prev_ebp;
