@@ -101,7 +101,7 @@ void GetFunctionAddr(swaddr_t cur_addr,char* name){
 	int i;
 	for (i = 0; i < nr_symtab_entry; i++){
 		if ((symtab[i].st_info & 0xf) == STT_FUNC){
-			printf("0x%08x\n",symtab[i].st_value);
+			// printf("0x%08x\n",symtab[i].st_value);
 			if (cur_addr >= symtab[i].st_value && symtab[i].st_value + symtab[i].st_size >= cur_addr){
 				strcpy(name,strtab + symtab[i].st_name);
 				return;
