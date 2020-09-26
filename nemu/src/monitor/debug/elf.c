@@ -108,4 +108,5 @@ void GetFunctionAddr(swaddr_t EBP,char* name){
 			}
 		}
 	}
+	name[0]='\0';
 }
