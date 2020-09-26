@@ -10,7 +10,13 @@ $(FLOAT): $(FLOAT_A_OBJ)
 
 # TODO: complete the following rules
 
+FLOAT_CFLAGS := -O2 -m32 -fno-builtin -fno-stack-protector -D_FORTIFY_SOURCE=0 -march=i386 -mtune=i386
+
 $(FLOAT_O):
+	mkdir -p obj/lib-common/
+	$(CC) $(FLOAT_CFLAGS) -c lib-common/FLOAT.c -o $(FLOAT_O) -Ilib-common
 
 $(FLOAT_VFPRINTF_O):
+	mkdir -p obj/lib-common/
+	$(CC) $(FLOAT_CFLAGS) -c lib-common/FLOAT_vfprintf.c -o $(FLOAT_VFPRINTF_O) -Ilib-common
 
