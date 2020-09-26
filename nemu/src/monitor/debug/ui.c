@@ -120,28 +120,36 @@ static int cmd_d(char* args) {
 	printf("Succefully Delete!\n");
 	return 0;
 }
+typedef struct {
+	swaddr_t prev_ebp;
+	swaddr_t ret_addr;
+	uint32_t args[4];
+}PartOfStackFrame ;
 static int cmd_bt(char* args){
 	if (args != NULL){
 		printf("Wrong Command!");
 		return 0;
 	}
-	swaddr_t EBP = cpu.ebp;
-	swaddr_t RET = EBP;
+	PartOfStackFrame EBP;
 	char name[32];
 	int cnt = 0;
-	while (EBP){
-		GetFunctionAddr(RET,name);
+	EBP.ret_addr = cpu.eip;
+	swaddr_t addr = cpu.ebp;
+	int i;
+	while (addr){
+		GetFunctionAddr(EBP.ret_addr,name);
 		if (name[0] == '\0') break;
-		printf("#%d\t0x%08x\t",cnt++,RET);
-		printf("%s\t(",name);
-		int i;
-		for (i=0;i<4;i++){
-			printf("%d",swaddr_read(EBP + 8 + i * 4,4));
-			if (i == 3) printf(")");else printf(", ");
+		printf("#%d\t0x%08x",cnt++,EBP.ret_addr);
+		printf("%s\t",name);
+		EBP.prev_ebp = swaddr_read(addr,4);
+		EBP.ret_addr = swaddr_read(addr + 4, 4);
+		printf("(");
+		for (i = 0;i < 4;i ++){
+			EBP.args[i] = swaddr_read(addr + 8 + i * 4, 4);
+			printf("0x%08x\t",EBP.args[i]);
+			if (i == 3) printf(")\n");else printf(", ");
 		}
-		RET = swaddr_read(EBP + 4,4);
-		EBP = swaddr_read(EBP,4);
-		printf("\n");
+		addr = EBP.prev_ebp;
 	}
 	return 0;
 }
