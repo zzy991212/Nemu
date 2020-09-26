@@ -6,10 +6,11 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
+#include <elf.h>
 #define TestCorrect(x) if(x){printf("Invalid Command!\n");return 0;}
 void cpu_exec(uint32_t);
 
+void GetFunctionAddr(swaddr_t EIP,char* name);
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -119,6 +120,32 @@ static int cmd_d(char* args) {
 	printf("Succefully Delete!\n");
 	return 0;
 }
+static int cmd_bt(char* args){
+	if (args != NULL){
+		printf("Wrong Command!");
+		return 0;
+	}
+	swaddr_t EBP = cpu.ebp;
+	swaddr_t RET = EBP;
+	char name[32];
+	int cnt = 0;
+	while (EBP){
+		GetFunctionAddr(EBP,name);
+		if (name[0] == '\0') break;
+		printf("#%d\t0x%08x\t",cnt++,RET);
+		printf("%s\t(",name);
+		int i;
+		for (i=0;i<4;i++){
+			printf("%d",swaddr_read(EBP + 8 + i * 4,4));
+			if (i == 3) printf(")");else printf(", ");
+		}
+		RET = swaddr_read(EBP + 4,4);
+		EBP = swaddr_read(EBP,4);
+		printf("\n");
+	}
+	return 0;
+}
+
 static struct {
 	char *name;
 	char *description;
@@ -133,6 +160,7 @@ static struct {
 	{ "p", "Calculate expressions", cmd_p},
 	{ "w", "Add watchpoint", cmd_w},
 	{ "d", "Delete watchpoint", cmd_d},
+	{ "bt", "Print stack frame chain", cmd_bt}
 	/* TODO: Add more commands */
 
 };
