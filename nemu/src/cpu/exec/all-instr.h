@@ -25,6 +25,7 @@
 #include "call-jump-ret/js.h"
 #include "call-jump-ret/jns.h"
 #include "call-jump-ret/jb.h"
+#include "call-jump-ret/jae.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
