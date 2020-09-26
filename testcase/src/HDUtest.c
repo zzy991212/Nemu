@@ -14,7 +14,6 @@ int min(int x,int y){
 	return y;
 }
 int main(){
-
 	n = 10, m = 7;
 	s[0]=0;
 	int i,j,k;
@@ -39,6 +38,5 @@ int main(){
 		}
 	}
 	nemu_assert(f[n][m][0] == ans);
-	cout<<f[n][m][0]<<endl;
 	return 0;
 }
