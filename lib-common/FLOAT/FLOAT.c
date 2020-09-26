@@ -24,8 +24,8 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	 * out another way to perform the division.
 	 */
 	int op = 1;
-	if ((a>>31) == 1) op *= -1,a = -a;
-	if ((b>>31) == 1) op *= -1,b = -b;
+	if ((a < 0) == 1) op *= -1,a = -a;
+	if ((b < 0) == 1) op *= -1,b = -b;
 
 	int ret = a / b;
 	a %= b;
@@ -34,7 +34,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	for (i = 0;i < 16;i ++){
 		a <<= 1;
 		ret <<= 1;
-		if (a > b) a -= b, ret |= 1;
+		if (a >= b) a -= b, ret |= 1;
 	}
 	return op * ret; 
 
