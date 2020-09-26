@@ -13,3 +13,4 @@
 #undef DATA_BYTE
 
 make_helper_v(call_i)
+make_helper_v(call_rm)
