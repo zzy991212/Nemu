@@ -4,8 +4,10 @@
  */
 #include <sys/types.h>
 #include <regex.h>
+#include <elf.h>
+
 enum {
-	NOTYPE = 256, EQ, NUMBER, HEXNUMBER, REGISTER, NEQ, AND, OR, NOT, MINUS, POINTER
+	NOTYPE = 256, EQ, NUMBER, HEXNUMBER, REGISTER, NEQ, AND, OR, NOT, MINUS, POINTER, MARK
 
 	/* TODO: Add more token types */
 
@@ -19,7 +21,7 @@ static struct rule {
 	/* TODO: Add more rules.
 	 * Pay attention to the precedence level of different rules.
 	 */
-
+	{"\\b[a-zA-Z0-9_]+\\b",MARK},
 	{" +",	NOTYPE},				// spaces
 	{"\\+", '+'},					// plus
 	{"==", EQ},						// equal
@@ -38,6 +40,8 @@ static struct rule {
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
+
+uint32_t GetMarkValue(char *str,bool *success);
 
 static regex_t re[NR_REGEX];
 
@@ -228,7 +232,10 @@ uint32_t eval(int l, int r) {
 	}
 	if (l == r) {
 		uint32_t num = 0;
-		if (tokens[l].type == NUMBER) {
+		if (tokens[l].type == MARK){
+			num = GetMarkValue(tokens[l].str, cando);
+			if (*cando == false) return 0;
+		} else if (tokens[l].type == NUMBER) {
 			sscanf(tokens[l].str, "%d", &num);
 		} else if (tokens[l].type == HEXNUMBER) {
 			sscanf(tokens[l].str, "%x", &num);
