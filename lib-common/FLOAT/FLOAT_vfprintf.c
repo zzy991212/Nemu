@@ -5,6 +5,7 @@
 
 extern char _vfprintf_internal;
 extern char _fpmaxtostr;
+extern char _ppfs_setargs;
 extern int __stdio_fwrite(char *buf, int len, FILE *stream);
 
 __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
@@ -52,7 +53,7 @@ static void modify_vfprintf() {
 	int addr = (int)(&_vfprintf_internal);
 
 	// mprotect((void*)((addr + 0x306 - 100) & 0xfffff000), 4096*2, PROT_READ|PROT_WRITE|PROT_EXEC);
-	
+
 	//fstpt -> push
 	char *hijack = (char*)(addr + 0x306 - 0xa);
 	*hijack = 0xff;//push m32
