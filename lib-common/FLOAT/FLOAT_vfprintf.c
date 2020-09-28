@@ -50,7 +50,9 @@ static void modify_vfprintf() {
 	 * hijack.
 	 */
 	int addr = (int)(&_vfprintf_internal);
-	mprotect((void*)((addr + 0x306 - 100) & 0xfffff000), 4096*2, PROT_READ|PROT_WRITE|PROT_EXEC);
+
+	// mprotect((void*)((addr + 0x306 - 100) & 0xfffff000), 4096*2, PROT_READ|PROT_WRITE|PROT_EXEC);
+	
 	//fstpt -> push
 	char *hijack = (char*)(addr + 0x306 - 0xa);
 	*hijack = 0xff;//push m32
