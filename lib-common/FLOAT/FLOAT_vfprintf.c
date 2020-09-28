@@ -23,12 +23,12 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 
 	int frac = 0;
 	int i;
-	int base=500000000;
+	int base=100000000;//Accuracy
 	for (i = 15; i >= 0;i--){
+		base >>= 1;
 		if (f&(1<<i)){
 			frac += base;
 		}
-		base >>= 1;
 	}
 	int num = f >> 16;
 	int len = 0;
