@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "FLOAT.h"
+#include <sys/mman.h>
 
 extern char _vfprintf_internal;
 extern char _fpmaxtostr;
@@ -16,7 +17,29 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	 */
 
 	char buf[80];
-	int len = sprintf(buf, "0x%08x", f);
+	int op = (f >> 31) & 0x1;
+	if (op) f = (~f) + 1;
+
+
+	int frac = 0;
+	int i;
+	int base=500000000;
+	for (i = 15; i >= 0;i--){
+		if (f&(1<<i)){
+			frac += base;
+		}
+		base >>= 1;
+	}
+	int num = f >> 16;
+	int len = 0;
+	while (frac > 999999) frac /= 10;
+	if (op){
+		len = sprintf(buf,"-%d.%06d",num,frac);
+	}else {
+		len = sprintf(buf,"%d.%06d",num,frac);
+	}
+
+	//int len = sprintf(buf, "0x%08x", f);
 	return __stdio_fwrite(buf, len, stream);
 }
 
@@ -26,7 +49,31 @@ static void modify_vfprintf() {
 	 * is the code section in _vfprintf_internal() relative to the
 	 * hijack.
 	 */
-	int addr = &_vfprintf_internal;
+	int addr = (int)(&_vfprintf_internal);
+	mprotect((void*)((addr + 0x306 - 100) & 0xfffff000), 4096*2, PROT_READ|PROT_WRITE|PROT_EXEC);
+	//fstpt -> push
+	char *hijack = (char*)(addr + 0x306 - 0xa);
+	*hijack = 0xff;//push m32
+	hijack = (char*)(addr + 0x306 - 0x9);
+	*hijack = 0x32;//ModR/M: 00 110 010
+	hijack = (char*)(addr + 0x306 - 0x8);
+	*hijack = 0x90;//nop
+
+	hijack = (char*)(addr + 0x306 - 0xb);
+	*hijack = 0x08;//sub 0x8,%esp
+
+	hijack = (char*)(addr + 0x306 - 0x22);
+	*hijack = 0x90;//fldt -> nop
+
+	hijack = (char*)(addr + 0x306 - 0x21);
+	*hijack = 0x90;//fldt -> nop
+
+	hijack = (char*)(addr + 0x306 - 0x1e);
+	*hijack = 0x90;//fldl -> nop
+
+	hijack = (char*)(addr + 0x306 - 0x1d);
+	*hijack = 0x90;//fldl -> nop
+
 	int *pos = (int*)(addr + 0x307);
 	*pos += (int)format_FLOAT-(int)(&_fpmaxtostr);
 #if 0
