@@ -135,7 +135,7 @@ static int cmd_bt(char* args){
 	int cnt = 0;
 	EBP.ret_addr = cpu.eip;
 	swaddr_t addr = cpu.ebp;
-	printf("%d\n",addr);
+	// printf("%d\n",addr);
 	int i;
 	while (addr){
 		GetFunctionAddr(EBP.ret_addr,name);
