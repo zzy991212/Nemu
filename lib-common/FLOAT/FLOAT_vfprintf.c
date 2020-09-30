@@ -126,7 +126,7 @@ static void modify_ppfs_setargs() {
 	 */
 
 	int addr = (int)(&_ppfs_setargs);
-	int *hijack = (char*)(addr + 0x71);
+	char *hijack = (char*)(addr + 0x71);
 	*hijack = 0xeb;
 	hijack = (char*)(addr + 0x72);
 	*hijack = 0x30;
