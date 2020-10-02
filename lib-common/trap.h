@@ -7,7 +7,7 @@
 #ifndef __ASSEMBLER__
 
 #define HIT_GOOD_TRAP \
-	asm volatile(".byte 0xd6" : : "a" (0))
+	asm volatile(".byte 0xd0" : : "a" (0))
 
 #define HIT_BAD_TRAP \
 	asm volatile(".byte 0xd6" : : "a" (1))
