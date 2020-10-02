@@ -32,7 +32,7 @@ make_helper(nemu_trap) {
 		   	break;
 
 		default:
-			printf("\39[1;31mnemu: HIT %s TRAP\39[0m at eip = 0x%08x\n\n",
+			printf("\33[1;31mnemu: HIT %s TRAP\33[0m at eip = 0x%08x\n\n",
 					(cpu.eax == 0 ? "GOOD" : "BAD"), cpu.eip);
 			nemu_state = END;
 	}
