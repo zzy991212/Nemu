@@ -2,7 +2,7 @@
 
 #define instr movs
 
-make_helper(concat(movs_n_, SUFFIX)) {
+make_helper(concat(movs_, SUFFIX)) {
 
     swaddr_write(reg_l(R_EDI),DATA_BYTE,MEM_R(reg_l(R_ESI)));
 	if (cpu.DF == 0) {

@@ -12,4 +12,4 @@
 #include "scas-template.h"
 #undef DATA_BYTE
 
-make_helper_v(scas_m)
+make_helper_v(scas)

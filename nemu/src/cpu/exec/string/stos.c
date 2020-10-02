@@ -12,4 +12,4 @@
 #include "stos-template.h"
 #undef DATA_BYTE
 
-make_helper_v(stos_m)
+make_helper_v(stos)
