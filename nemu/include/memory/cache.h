@@ -30,6 +30,8 @@ typedef struct{
 
 Cache_L1 cache1[Cache_L1_Size/Cache_L1_Block_Size];
 
+int test_time;
+
 void init_cache();
 int read_cache1(hwaddr_t);
 void write_cache1(hwaddr_t, size_t, uint32_t);
