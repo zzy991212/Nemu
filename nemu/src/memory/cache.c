@@ -34,12 +34,17 @@ int read_cache1(hwaddr_t addr){
     int i,group = group_idx * Cache_L1_Way_Size;
     for (i = group + 0;i < group + Cache_L1_Way_Size;i ++){
         if (cache1[i].valid == 1 && cache1[i].tag == tag){// READ HIT
+
+#ifdef Test
             test_time += 2;
+#endif
             return i;
         }
     }
     // Random
+#ifdef Test
     test_time += 200;
+#endif
     srand(time(0));
     i = group + rand() % Cache_L1_Way_Size;
     int j;

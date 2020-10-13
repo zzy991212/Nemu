@@ -21,6 +21,7 @@ not write allocate
 #define Cache_L1_Group_Size (1 << Cache_L1_Group_Bit)
 #define Cache_L1_Way_Size (1 << Cache_L1_Way_Bit)
 
+#define Test
 
 typedef struct{
     uint8_t data[Cache_L1_Block_Size]; // 64B
@@ -29,9 +30,9 @@ typedef struct{
 }Cache_L1;
 
 Cache_L1 cache1[Cache_L1_Size/Cache_L1_Block_Size];
-
+#ifdef Test
 int test_time;
-
+#endif
 void init_cache();
 int read_cache1(hwaddr_t);
 void write_cache1(hwaddr_t, size_t, uint32_t);
