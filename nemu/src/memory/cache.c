@@ -15,6 +15,9 @@
 // #define Cache_L1_Way_Size 1 << Cache_L1_Way_Bit
 
 void ddr3_read_replace(hwaddr_t addr, void *data);
+void dram_write(hwaddr_t addr, size_t len, uint32_t data);
+
+
 void init_cache(){
     int i;
     for (i = 0;i < Cache_L1_Size / Cache_L1_Block_Size; i ++) {
@@ -31,7 +34,7 @@ int read_cache1(hwaddr_t addr){
 
     int i,group = group_idx * Cache_L1_Group_Size;
     for (i = group + 0;i < group + Cache_L1_Way_Size;i ++){
-        if (cache1[i].valid == 1 && cache1[i].tag == tag){// HIT
+        if (cache1[i].valid == 1 && cache1[i].tag == tag){// READ HIT
             return i;
         }
     }
@@ -48,5 +51,25 @@ int read_cache1(hwaddr_t addr){
 }
 
 void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
+    uint32_t group_idx = (addr >> Cache_L1_Block_Bit) & (Cache_L1_Group_Size - 1);
+    uint32_t tag = (addr >> (Cache_L1_Group_Bit + Cache_L1_Block_Bit));
+    uint32_t offset = addr & (Cache_L1_Block_Size - 1);
 
+    int i,group = group_idx * Cache_L1_Group_Size;
+    for (i = group + 0;i < group + Cache_L1_Way_Size;i ++){
+        if (cache1[i].valid == 1 && cache1[i].tag == tag){// WRITE HIT
+            /*write through*/
+            if (offset + len > Cache_L1_Block_Size){
+                dram_write(addr,Cache_L1_Block_Size - offset,data);
+                memcpy(cache1[i].data + offset, &data, Cache_L1_Block_Size - offset);
+                write_cache1(addr + Cache_L1_Block_Size - offset,len - (Cache_L1_Block_Size - offset),data);
+            }else {
+                dram_write(addr,len,data);
+                memcpy(cache1[i].data + offset, &data, len);
+            }
+            return;
+        }
+    }
+    /*not write allocate*/
+    dram_write(addr,len,data);
 }
