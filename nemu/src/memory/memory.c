@@ -12,7 +12,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	uint32_t offset = addr & (Cache_L1_Block_Size - 1);
 	uint8_t ret[BURST_LEN << 1];
 	if (offset + len > Cache_L1_Block_Size){
-		int l1_2nd_line = read_cache1(addr + len);
+		int l1_2nd_line = read_cache1(addr + Cache_L1_Block_Size - offset);
 		memcpy(ret,cache1[l1_1st_line].data + offset,Cache_L1_Block_Size - offset);
 		memcpy(ret + Cache_L1_Block_Size - offset,cache1[l1_2nd_line].data,len - (Cache_L1_Block_Size - offset));
 	}else {
