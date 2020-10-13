@@ -16,10 +16,10 @@ not write allocate
 #define Cache_L1_Size 64 * 1024
 #define Cache_L1_Block_Size 64
 #define Cache_L1_Way_Bit 3
-#define Cache_Li_Group_Bit 7
+#define Cache_L1_Group_Bit 7
 #define Cache_L1_Block_Bit 6
-#define Cache_L1_Group_Size 1 << Cache_Li_Group_Bit
-#define Cache_L1_Way_Size 1 << Cache_L1_Way_Bit
+#define Cache_L1_Group_Size (1 << Cache_L1_Group_Bit)
+#define Cache_L1_Way_Size (1 << Cache_L1_Way_Bit)
 
 
 typedef struct{
@@ -31,6 +31,6 @@ typedef struct{
 Cache_L1 cache1[Cache_L1_Size/Cache_L1_Block_Size];
 
 void init_cache();
-
+int read_cache1(hwaddr_t);
 #endif
  
