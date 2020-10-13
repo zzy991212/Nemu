@@ -30,7 +30,7 @@ int read_cache1(hwaddr_t addr){
     uint32_t tag = (addr >> (Cache_L1_Group_Bit + Cache_L1_Block_Bit));
     uint32_t block_start = (addr >> Cache_L1_Block_Bit) << Cache_L1_Block_Bit;
 
-    int i,group = group_idx * Cache_L1_Group_Size;
+    int i,group = group_idx * Cache_L1_Way_Size;
     for (i = group + 0;i < group + Cache_L1_Way_Size;i ++){
         if (cache1[i].valid == 1 && cache1[i].tag == tag){// READ HIT
             return i;
