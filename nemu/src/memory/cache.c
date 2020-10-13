@@ -52,8 +52,8 @@ void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
     uint32_t group_idx = (addr >> Cache_L1_Block_Bit) & (Cache_L1_Group_Size - 1);
     uint32_t tag = (addr >> (Cache_L1_Group_Bit + Cache_L1_Block_Bit));
     uint32_t offset = addr & (Cache_L1_Block_Size - 1);
-    printf("%x\n",addr);
-    int i,group = group_idx * Cache_L1_Group_Size;
+
+    int i,group = group_idx * Cache_L1_Way_Size;
     for (i = group + 0;i < group + Cache_L1_Way_Size;i ++){
         if (cache1[i].valid == 1 && cache1[i].tag == tag){// WRITE HIT
             /*write through*/
@@ -70,5 +70,4 @@ void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
     }
     /*not write allocate*/
     dram_write(addr,len,data);
-    printf("%x\n",addr);
 }
