@@ -46,3 +46,7 @@ int read_cache1(hwaddr_t addr){
     cache1[i].tag = tag;
     return i;
 }
+
+void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
+
+}
