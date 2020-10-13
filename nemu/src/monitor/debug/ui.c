@@ -31,6 +31,9 @@ char* rl_gets() {
 
 static int cmd_c(char *args) {
 	cpu_exec(-1);
+#ifdef Test
+	printf("test_time:%d\n",test_time);
+#endif
 	return 0;
 }
 
