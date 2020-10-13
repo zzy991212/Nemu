@@ -70,4 +70,5 @@ void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
     }
     /*not write allocate*/
     dram_write(addr,len,data);
+    printf("%x\n",addr);
 }
