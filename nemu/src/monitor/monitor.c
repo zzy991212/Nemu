@@ -10,7 +10,6 @@ void load_elf_tables(int, char *[]);
 void init_regex();
 void init_wp_pool();
 void init_ddr3();
-void init_cache();
 
 FILE *log_fp = NULL;
 

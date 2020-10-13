@@ -30,6 +30,7 @@ typedef struct{
 
 Cache_L1 cache1[Cache_L1_Size/Cache_L1_Block_Size];
 
+void init_cache();
 
 #endif
  
