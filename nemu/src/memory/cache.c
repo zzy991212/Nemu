@@ -14,14 +14,27 @@
 // #define Cache_L1_Group_Size 1 << Cache_Li_Group_Bit
 // #define Cache_L1_Way_Size 1 << Cache_L1_Way_Bit
 
+// Cache_L2
+// #define Cache_L2_Size 4 * 1024 * 1024
+// #define Cache_L2_Block_Size 64
+// #define Cache_L2_Way_Bit 4
+// #define Cache_L2_Group_Bit 12
+// #define Cache_L2_Block_Bit 6
+// #define Cache_L2_Group_Size (1 << Cache_L2_Group_Bit)
+// #define Cache_L2_Way_Size (1 << Cache_L2_Way_Bit)
+
 void ddr3_read_replace(hwaddr_t addr, void *data);
 void dram_write(hwaddr_t addr, size_t len, uint32_t data);
 
 
 void init_cache(){
     int i;
-    for (i = 0;i < Cache_L1_Size / Cache_L1_Block_Size; i ++) {
+    for (i = 0;i < Cache_L1_Size / Cache_L1_Block_Size;i ++){
         cache1[i].valid = 0;
+    }
+    for (i = 0;i < Cache_L2_Size / Cache_L2_Block_Size;i ++){
+        cache2[i].valid = 0;
+        cache2[i].dirty = 0;
     }
     test_time = 0;
 }
