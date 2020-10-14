@@ -74,6 +74,10 @@ static void load_entry() {
 	fclose(fp);
 }
 
+static void init_cr0(){
+	cpu.cr0.protect_enable = 0;//real mode
+}
+
 static void init_eflags(){
 	cpu.EFLAGS = 0x00000002;
 }
@@ -95,6 +99,9 @@ void restart() {
 	/* Initialize DRAM. */
 	init_ddr3();
 
-	/* INitialize Cache. */
+	/* Initialize Cache. */
 	init_cache();
+
+	/* Initialize CR0. */
+	init_cr0();
 }
