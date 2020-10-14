@@ -87,7 +87,7 @@ int read_cache2(hwaddr_t addr){
         if (cache2[i].valid == 1 && cache2[i].tag == tag){// READ HIT
 
 #ifdef Test
-            test_time += 20;//HIT in Cache2
+            test_time += 10;//HIT in Cache2
 #endif
             return i;
         }
