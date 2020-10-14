@@ -101,6 +101,10 @@ static void ddr3_write(hwaddr_t addr, void *data, uint8_t *mask) {
 	memcpy(dram[rank][bank][row], rowbufs[rank][bank].buf, NR_COL);
 }
 
+void ddr3_write_replace(hwaddr_t addr, void *data, uint8_t *mask){
+	ddr3_write(addr,data,mask);
+}
+
 uint32_t dram_read(hwaddr_t addr, size_t len) {
 	uint32_t offset = addr & BURST_MASK;
 	uint8_t temp[2 * BURST_LEN];
