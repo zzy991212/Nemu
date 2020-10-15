@@ -49,6 +49,8 @@ make_helper(ljmp){
 	cpu.cs.base += sreg_desc -> base2 << 16;
 	cpu.cs.base += sreg_desc -> base3 << 24;
     
+    printf("%x\n",instr_fetch(cpu.eip,1));
+
 	cpu.cs.limit = 0;
 	cpu.cs.limit += sreg_desc -> limit1;
 	cpu.cs.limit += sreg_desc -> limit2 << 16;
