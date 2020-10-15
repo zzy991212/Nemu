@@ -17,9 +17,9 @@ make_instr_helper(i)
 make_instr_helper(rm)
 #if DATA_BYTE == 4
 
+extern Sreg_Descriptor *sreg_desc;
+Sreg_Descriptor new_sreg_desc;
 make_helper(ljmp){
-    extern Sreg_Descriptor *sreg_desc;
-    Sreg_Descriptor new_sreg_desc;
     sreg_desc = &new_sreg_desc;
     uint32_t op1 = instr_fetch(cpu.eip + 1,4);
     uint16_t op2 = instr_fetch(cpu.eip + 1 + 4,2);
