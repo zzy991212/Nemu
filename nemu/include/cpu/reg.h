@@ -115,7 +115,7 @@ Sreg_Descriptor *sreg_desc;
 
 extern CPU_state cpu;
 uint8_t current_sreg;
-void sreg_load();
+void sreg_load(uint8_t);
 
 static inline int check_reg_index(int index) {
 	assert(index >= 0 && index < 8);

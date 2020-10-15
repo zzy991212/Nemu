@@ -42,10 +42,10 @@ void reg_test() {
 	assert(eip_sample == cpu.eip);
 }
 
-void sreg_load(){
+void sreg_load(uint8_t sreg_num){
 	Assert(cpu.cr0.protect_enable,"Not In Protect Mode!");
 
-	uint16_t idx = cpu.sreg[current_sreg].selector >> 3;//index of sreg
+	uint16_t idx = cpu.sreg[sreg_num].selector >> 3;//index of sreg
 
 	Assert((idx << 3) <= cpu.gdtr.limit,"Segement Selector Is Out Of The Limit!");
 
@@ -56,21 +56,21 @@ void sreg_load(){
 	Assert(sreg_desc -> p == 1, "Segement Not Exist!");//p bit, whether sreg_desc exists
 	
 	printf("---%x\n",swaddr_read(cpu.eip+2,1));
-	cpu.sreg[current_sreg].base = 0;
+	cpu.sreg[sreg_num].base = 0;
 	printf("---%x\n",swaddr_read(cpu.eip+2,1));
-	cpu.sreg[current_sreg].base += (sreg_desc -> base1);
+	cpu.sreg[sreg_num].base += (sreg_desc -> base1);
 	printf("---%x\n",swaddr_read(cpu.eip+2,1));
-	cpu.sreg[current_sreg].base += (sreg_desc -> base2)<< 16;
+	cpu.sreg[sreg_num].base += (sreg_desc -> base2)<< 16;
 	printf("---%x\n",swaddr_read(cpu.eip+2,1));
-	cpu.sreg[current_sreg].base += (sreg_desc -> base3) << 24;
+	cpu.sreg[sreg_num].base += (sreg_desc -> base3) << 24;
 
-	printf("%p\n",&(cpu.sreg[current_sreg].base));
+	printf("%p\n",&(cpu.sreg[sreg_num].base));
 
 	printf("---%x\n",swaddr_read(cpu.eip+2,1));
 
-	cpu.sreg[current_sreg].limit = 0;
-	cpu.sreg[current_sreg].limit += sreg_desc -> limit1;
-	cpu.sreg[current_sreg].limit += (sreg_desc -> limit2) << 16;
-	cpu.sreg[current_sreg].limit += (0xfff) << 24;
-	if (sreg_desc -> g == 1) cpu.sreg[current_sreg].limit <<= 12;//G = 0, unit = 1B;G = 1, unit = 4KB
+	cpu.sreg[sreg_num].limit = 0;
+	cpu.sreg[sreg_num].limit += sreg_desc -> limit1;
+	cpu.sreg[sreg_num].limit += (sreg_desc -> limit2) << 16;
+	cpu.sreg[sreg_num].limit += (0xfff) << 24;
+	if (sreg_desc -> g == 1) cpu.sreg[sreg_num].limit <<= 12;//G = 0, unit = 1B;G = 1, unit = 4KB
 }
