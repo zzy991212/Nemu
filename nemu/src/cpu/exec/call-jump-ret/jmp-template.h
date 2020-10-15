@@ -36,6 +36,7 @@ make_helper(ljmp){
 	sreg_desc -> part1 = instr_fetch(chart_addr, 4);
 	sreg_desc -> part2 = instr_fetch(chart_addr + 4, 4);
 
+    current_sreg = R_CS;
 	Assert(sreg_desc -> p == 1, "Segement Not Exist!");//p bit, whether sreg_desc exists
 
 	cpu.cs.base = 0;
