@@ -44,17 +44,21 @@ make_helper(ljmp){
 
 	Assert(sreg_desc -> p == 1, "Segement Not Exist!");//p bit, whether sreg_desc exists
 
-	cpu.cs.base = 0;
-	cpu.cs.base += sreg_desc -> base1;
-	cpu.cs.base += sreg_desc -> base2 << 16;
-	cpu.cs.base += sreg_desc -> base3 << 24;
-    
+    uint32_t bases = 0;
+	
+	bases += ((uint32_t)sreg_desc -> base1);
+	bases += ((uint32_t)sreg_desc -> base2)<< 16;
+	bases += ((uint32_t)sreg_desc -> base3) << 24;
+	cpu.cs.base = bases;
+
+	uint32_t limits = 0;
+	limits += ((uint32_t)sreg_desc -> limit1);
+	limits += ((uint32_t)sreg_desc -> limit2) << 16;
+	limits += ((uint32_t)0xfff) << 24;
+    cpu.cs.limit = limits;
+
     printf("%x\n",instr_fetch(cpu.eip,1));
 
-	cpu.cs.limit = 0;
-	cpu.cs.limit += sreg_desc -> limit1;
-	cpu.cs.limit += sreg_desc -> limit2 << 16;
-	cpu.cs.limit += 0xfff << 24;
 	if (sreg_desc -> g == 1) cpu.cs.limit <<= 12;//G = 0, unit = 1B;G = 1, unit = 4KB
     print_asm("ljump %x %x",op2,op1);
     return 1 + 6;    

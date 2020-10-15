@@ -55,22 +55,21 @@ void sreg_load(uint8_t sreg_num){
 
 	Assert(sreg_desc -> p == 1, "Segement Not Exist!");//p bit, whether sreg_desc exists
 	
-	printf("---%x\n",swaddr_read(cpu.eip+2,1));
+	
 	uint32_t bases = 0;
-	printf("---%x\n",swaddr_read(cpu.eip+2,1));
-	bases += (sreg_desc -> base1);
-	printf("---%x\n",swaddr_read(cpu.eip+2,1));
-	bases += (sreg_desc -> base2)<< 16;
-	printf("---%x\n",swaddr_read(cpu.eip+2,1));
-	bases += (sreg_desc -> base3) << 24;
+	
+	bases += ((uint32_t)sreg_desc -> base1);
+	
+	bases += ((uint32_t)sreg_desc -> base2)<< 16;
+	
+	bases += ((uint32_t)sreg_desc -> base3) << 24;
 	cpu.sreg[sreg_num].base = bases;
 	printf("%p\n",&(cpu.sreg[sreg_num].base));
-	
-	printf("---%x\n",swaddr_read(cpu.eip+2,1));
+
 	uint32_t limits = 0;
-	limits += sreg_desc -> limit1;
-	limits += (sreg_desc -> limit2) << 16;
-	limits += (0xfff) << 24;
+	limits += ((uint32_t)sreg_desc -> limit1);
+	limits += ((uint32_t)sreg_desc -> limit2) << 16;
+	limits += ((uint32_t)0xfff) << 24;
 	cpu.sreg[sreg_num].limit = limits;
 	if (sreg_desc -> g == 1) cpu.sreg[sreg_num].limit <<= 12;//G = 0, unit = 1B;G = 1, unit = 4KB
 }
