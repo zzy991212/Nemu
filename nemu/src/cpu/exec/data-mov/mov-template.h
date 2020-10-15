@@ -70,7 +70,7 @@ make_helper(mov_sreg2rm){
 	cpu.sreg[sreg_num].selector = reg_w(reg_num);
 	current_sreg = sreg_num;
 	sreg_load();
-	print_asm("mov SREG[%d] %s",sreg_num,REG_NAME(reg_num));
+	print_asm("mov SREG[%x] %s",sreg_num,REG_NAME(reg_num));
 	return 2;
 }
 #endif
