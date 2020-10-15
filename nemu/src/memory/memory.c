@@ -12,7 +12,7 @@ extern uint8_t current_sreg;
 lnaddr_t seg_translate(swaddr_t addr,size_t len,uint8_t sreg_id){
 	if (cpu.cr0.protect_enable == 0) return addr;
 	else {
-		Assert(addr + len < cpu.sreg[sreg_id].limit,"Out of limit!");
+		//Assert(addr + len < cpu.sreg[sreg_id].limit,"Out of limit!");
 		return cpu.sreg[sreg_id].base + addr;
 	}
 }
