@@ -48,7 +48,7 @@ make_helper(ljmp){
     
 	if (sreg_desc -> g == 1) cpu.cs.limit <<= 12;//G = 0, unit = 1B;G = 1, unit = 4KB
 
-    printf("%x",cpu.cs.base);
+    printf("%x",cpu.eip);
     print_asm("ljump %x %x",op2,op1);
     return 1 + 6;    
 }
