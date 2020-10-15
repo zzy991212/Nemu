@@ -64,13 +64,14 @@ make_helper(mov_r2cr){
 #if DATA_BYTE == 2
 make_helper(mov_sreg2rm){
 	uint8_t modrm= instr_fetch(eip + 1,1);
-	uint8_t sreg_num = (modrm >> 3) & 7; // reg
-	uint8_t reg_num = modrm & 7; // r/m
+	uint8_t sreg_num = ((modrm >> 3) & 7); // reg
+	uint8_t reg_num = (modrm & 7); // r/m
 	cpu.sreg[sreg_num].selector = reg_w(reg_num);
 
 	current_sreg = sreg_num;
 	printf("sreg:%u reg:%d",sreg_num,reg_num);
 	sreg_load();
+	printf("sreg:%u reg:%d",sreg_num,reg_num);
 	printf("sreg:%u reg:%d",sreg_num,reg_num);
 	print_asm("mov SREG[%u] %s",sreg_num,REG_NAME(reg_num));
 	return 2;
