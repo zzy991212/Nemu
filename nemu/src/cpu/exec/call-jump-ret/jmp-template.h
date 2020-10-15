@@ -30,10 +30,10 @@ make_helper(ljmp){
 
 	Assert((idx << 3) <= cpu.gdtr.limit,"Segement Selector Is Out Of The Limit!");
 
-	lnaddr_t chart_addr = cpu.gdtr.base + (idx << 3);//chart addr
+	swaddr_t chart_addr = cpu.gdtr.base + (idx << 3);//chart addr
+    printf("%x\n",chart_addr);
 	sreg_desc -> part1 = instr_fetch(chart_addr, 4);
 	sreg_desc -> part2 = instr_fetch(chart_addr + 4, 4);
-    printf("%x\n",sreg_desc -> part2);
 	Assert(sreg_desc -> p == 1, "Segement Not Exist!");//p bit, whether sreg_desc exists
 
 	cpu.cs.base = 0;
