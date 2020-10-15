@@ -25,7 +25,7 @@ make_helper(ljmp){
     uint16_t op2 = instr_fetch(eip + 1 + 4,2);
     cpu.eip = op1 - 7;
     cpu.cs.selector = op2;
-
+    printf("%x\n",cpu.eip);
     uint16_t idx = cpu.cs.selector >> 3;//index of sreg
 
 	Assert((idx << 3) <= cpu.gdtr.limit,"Segement Selector Is Out Of The Limit!");
@@ -48,7 +48,6 @@ make_helper(ljmp){
 	cpu.cs.limit += 0xfff << 24;
     
 	if (sreg_desc -> g == 1) cpu.cs.limit <<= 12;//G = 0, unit = 1B;G = 1, unit = 4KB
-    printf("%x",instr_fetch(cpu.eip-6,1));
     print_asm("ljump %x %x",op2,op1);
     return 1 + 6;    
 }
