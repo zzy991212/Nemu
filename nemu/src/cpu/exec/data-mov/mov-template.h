@@ -72,6 +72,7 @@ make_helper(mov_sreg2rm){
 	printf("sreg:%u reg:%d",sreg_num,reg_num);
 	printf("sreg:%u reg:%d",sreg_num,reg_num);
 	sreg_load();
+	printf("sreg:%u reg:%d",sreg_num,reg_num);
 	print_asm("mov SREG[%u] %s",sreg_num,REG_NAME(reg_num));
 	return 2;
 }
