@@ -57,6 +57,7 @@ make_helper(mov_r2cr){
 		default:
 			break;
 	}
+	printf("111\n");
 	return 2;
 }
 #endif
