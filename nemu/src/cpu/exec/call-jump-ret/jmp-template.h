@@ -31,7 +31,7 @@ make_helper(ljmp){
 	Assert((idx << 3) <= cpu.gdtr.limit,"Segement Selector Is Out Of The Limit!");
 
 	swaddr_t chart_addr = cpu.gdtr.base + (idx << 3);//chart addr
-    printf("%x\n",chart_addr);
+    printf("%x\n",cpu.cs.selector);
 	sreg_desc -> part1 = lnaddr_read(chart_addr, 4);
 	sreg_desc -> part2 = lnaddr_read(chart_addr + 4, 4);
     printf("%08x %08x\n",sreg_desc -> part1,sreg_desc -> part2);
