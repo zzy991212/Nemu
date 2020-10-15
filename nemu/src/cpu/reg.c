@@ -56,7 +56,7 @@ void sreg_load(){
 	Assert(sreg_desc -> p == 1, "Segement Not Exist!");//p bit, whether sreg_desc exists
 	
 	printf("---%x\n",swaddr_read(cpu.eip+2,1));
-
+	printf("%x %x\n",sreg_desc -> part1,sreg_desc -> part2);
 	cpu.sreg[current_sreg].base = 0;
 	printf("---%x\n",swaddr_read(cpu.eip+2,1));
 	cpu.sreg[current_sreg].base += (sreg_desc -> base1);
