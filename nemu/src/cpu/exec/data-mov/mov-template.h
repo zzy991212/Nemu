@@ -68,7 +68,7 @@ make_helper(mov_sreg2rm){
 	uint8_t reg_num = modrm & 7; // r/m
 	printf("sreg:%d reg:%d",sreg_num,reg_num);
 	cpu.sreg[sreg_num].selector = reg_w(reg_num);
-	printf("sreg:%d reg:%d",sreg_num,reg_num);
+	//printf("sreg:%d reg:%d",sreg_num,reg_num);
 	current_sreg = sreg_num;
 	sreg_load();
 	print_asm("mov SREG[%d] %s",sreg_num,REG_NAME(reg_num));
