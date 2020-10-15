@@ -3,6 +3,7 @@
 #define instr scas
 
 make_helper(concat(scas_, SUFFIX)) {
+    current_sreg = R_ES;
     uint32_t t2 = MEM_R(reg_l(R_EDI));
     uint32_t t1 = REG(R_EAX);
 

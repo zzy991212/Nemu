@@ -62,4 +62,17 @@ make_helper(mov_r2cr){
 	return 2;
 }
 #endif
+#if DATA_BYTE == 2
+make_helper(mov_sreg2rm){
+	ModR_M modRM;
+	modRM.val = instr_fetch(eip + 1,1);
+	uint8_t sreg_num = modRM.reg; // reg
+	uint8_t reg_num = modRM.R_M; // r/m
+	cpu.sreg[sreg_num].selector = reg_w(reg_num);
+	current_sreg = sreg_num;
+	sreg_load();
+	print_asm("mov SREG[%d] %s",sreg_num,REG_NAME(reg_num));
+	return 2;
+}
+#endif
 #include "cpu/exec/template-end.h"

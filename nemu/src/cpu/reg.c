@@ -42,3 +42,28 @@ void reg_test() {
 	assert(eip_sample == cpu.eip);
 }
 
+void sreg_load(){
+	Assert(cpu.cr0.protect_enable,"Not In Protect Mode!");
+
+	uint16_t idx = cpu.sreg[current_sreg].selector >> 3;//index of sreg
+
+	Assert((idx << 3) < cpu.gdtr.limit,"Segement Selector Is Out Of The Limit!");
+
+	lnaddr_t chart_addr = cpu.gdtr.base + (idx << 3);//chart addr
+	sreg_desc -> part1 = lnaddr_read(chart_addr, 4);
+	sreg_desc -> part2 = lnaddr_read(chart_addr + 4, 4);
+
+	Assert(sreg_desc -> p == 1, "Segement Not Exist!");//p bit, whether sreg_desc exists
+
+	cpu.sreg[current_sreg].base = 0;
+	cpu.sreg[current_sreg].base |= sreg_desc -> base1;
+	cpu.sreg[current_sreg].base |= sreg_desc -> base2 << 16;
+	cpu.sreg[current_sreg].base |= sreg_desc -> base3 << 24;
+
+	cpu.sreg[current_sreg].limit = 0;
+	cpu.sreg[current_sreg].limit |= sreg_desc -> limit1;
+	cpu.sreg[current_sreg].limit |= sreg_desc -> limit2 << 16;
+	cpu.sreg[current_sreg].limit |= 0xfff << 24;
+
+	if (sreg_desc -> g == 1) cpu.sreg[current_sreg].limit <<= 12;//G = 0, unit = 1B;G = 1, unit = 4KB
+}
