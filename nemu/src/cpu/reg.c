@@ -64,7 +64,7 @@ void sreg_load(uint8_t sreg_num){
 	
 	bases += ((uint32_t)sreg_desc -> base3) << 24;
 	cpu.sreg[sreg_num].base = bases;
-	printf("%p\n",&(cpu.sreg[sreg_num].base));
+	//printf("%p\n",&(cpu.sreg[sreg_num].base));
 
 	uint32_t limits = 0;
 	limits += ((uint32_t)sreg_desc -> limit1);

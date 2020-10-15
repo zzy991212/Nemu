@@ -47,15 +47,15 @@ make_helper(ljmp){
 
     uint32_t bases = 0;
 	
-    printf("%x %x %x\n",sreg_desc -> base1,sreg_desc -> base2,sreg_desc -> base3);
+    //printf("%x %x %x\n",sreg_desc -> base1,sreg_desc -> base2,sreg_desc -> base3);
 
 	bases |= ((uint32_t)sreg_desc -> base1);
 	bases |= ((uint32_t)sreg_desc -> base2)<< 16;
 	bases |= ((uint32_t)sreg_desc -> base3)<< 24;
-	printf("%x\n",instr_fetch(cpu.eip,1));
+	//printf("%x\n",instr_fetch(cpu.eip,1));
     cpu.cs.base = bases;
 
-    printf("%x\n",instr_fetch(cpu.eip,1));
+    //printf("%x\n",instr_fetch(cpu.eip,1));
 
 	uint32_t limits = 0;
 	limits |= ((uint32_t)sreg_desc -> limit1);
