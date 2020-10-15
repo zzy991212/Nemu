@@ -23,6 +23,7 @@ make_helper(ljmp){
     uint32_t op1 = instr_fetch(eip + 1,4);
     uint16_t op2 = instr_fetch(eip + 1 + 4,2);
 
+    printf("%08x %08x\n",op1,op2);
     cpu.eip = op1 - 1 - 6;//opcode + 6byte
     cpu.cs.selector = op2;
 
