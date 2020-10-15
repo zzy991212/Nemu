@@ -51,13 +51,12 @@ make_helper(mov_r2cr){
 	uint8_t reg_num = modrm & 7; // r/m
 	switch (cr_num){
 		case 0:
-			print_asm("mov %s CR0",REG_NAME(reg_num));
 			cpu.cr0.val = reg_l(reg_num);
+			print_asm("mov %s CR0",REG_NAME(reg_num));
 			break;
 		default:
 			break;
 	}
-	printf("111\n");
 	return 2;
 }
 #endif
