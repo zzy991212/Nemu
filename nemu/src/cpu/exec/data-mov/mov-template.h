@@ -70,6 +70,7 @@ make_helper(mov_sreg2rm){
 
 	current_sreg = sreg_num;
 	printf("sreg:%u reg:%d",sreg_num,reg_num);
+	printf("sreg:%u reg:%d",sreg_num,reg_num);
 	sreg_load();
 	printf("sreg:%u reg:%d",sreg_num,reg_num);
 	printf("sreg:%u reg:%d",sreg_num,reg_num);
