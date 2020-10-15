@@ -21,9 +21,10 @@ extern Sreg_Descriptor *sreg_desc;
 Sreg_Descriptor new_sreg_desc;
 make_helper(ljmp){
     sreg_desc = &new_sreg_desc;
+    printf("1111\n");
     uint32_t op1 = instr_fetch(cpu.eip + 1,4);
     uint16_t op2 = instr_fetch(cpu.eip + 1 + 4,2);
-    printf("1111\n");
+    
     current_sreg = R_CS;
 
     cpu.eip = op1 - 7;
