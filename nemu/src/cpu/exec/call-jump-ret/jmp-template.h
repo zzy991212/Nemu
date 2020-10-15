@@ -17,7 +17,6 @@ make_instr_helper(i)
 make_instr_helper(rm)
 #if DATA_BYTE == 4
 make_helper(ljmp){
-    printf("%x\n",cpu.cr0.val);
     extern Sreg_Descriptor *sreg_desc;
     Sreg_Descriptor new_sreg_desc;
     sreg_desc = &new_sreg_desc;
@@ -33,8 +32,8 @@ make_helper(ljmp){
 
 	uint32_t chart_addr = cpu.gdtr.base + (idx << 3);//chart addr
     
-	sreg_desc -> part1 = lnaddr_read(chart_addr, 4);
-	sreg_desc -> part2 = lnaddr_read(chart_addr + 4, 4);
+	sreg_desc -> part1 = instr_fetch(chart_addr, 4);
+	sreg_desc -> part2 = instr_fetch(chart_addr + 4, 4);
     
 	Assert(sreg_desc -> p == 1, "Segement Not Exist!");//p bit, whether sreg_desc exists
 
