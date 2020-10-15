@@ -68,6 +68,7 @@ static int cmd_info(char *args) {
 
 static int cmd_x(char *args) {
 	TestCorrect(args == NULL);
+	current_sreg = R_DS;
 	char* tokens = strtok(args, " ");
 	int N, exprs;
 	sscanf(tokens, "%d", &N);
@@ -133,6 +134,7 @@ static int cmd_bt(char* args){
 		printf("Wrong Command!");
 		return 0;
 	}
+	current_sreg = R_SS;
 	PartOfStackFrame EBP;
 	char name[32];
 	int cnt = 0;

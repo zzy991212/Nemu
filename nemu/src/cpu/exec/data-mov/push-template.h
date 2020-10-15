@@ -3,6 +3,7 @@
 #define instr push
 
 static void do_execute() {
+    current_sreg = R_SS;
     if (DATA_BYTE == 2){
         reg_l(R_ESP) -= 2;
         swaddr_write(reg_l(R_ESP), 2, (DATA_TYPE)op_src -> val);

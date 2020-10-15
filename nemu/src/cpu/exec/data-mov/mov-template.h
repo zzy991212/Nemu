@@ -1,5 +1,5 @@
 #include "cpu/exec/template-start.h"
-
+#include "cpu/decode/modrm.h"
 #define instr mov
 
 static void do_execute() {
@@ -14,6 +14,7 @@ make_instr_helper(rm2r)
 
 make_helper(concat(mov_a2moffs_, SUFFIX)) {
 	swaddr_t addr = instr_fetch(eip + 1, 4);
+	current_sreg = R_DS;//A0 A1
 	MEM_W(addr, REG(R_EAX));
 
 	print_asm("mov" str(SUFFIX) " %%%s,0x%x", REG_NAME(R_EAX), addr);
@@ -22,6 +23,7 @@ make_helper(concat(mov_a2moffs_, SUFFIX)) {
 
 make_helper(concat(mov_moffs2a_, SUFFIX)) {
 	swaddr_t addr = instr_fetch(eip + 1, 4);
+	current_sreg = R_DS;//A2 A3
 	REG(R_EAX) = MEM_R(addr);
 
 	print_asm("mov" str(SUFFIX) " 0x%x,%%%s", addr, REG_NAME(R_EAX));
@@ -29,9 +31,10 @@ make_helper(concat(mov_moffs2a_, SUFFIX)) {
 }
 #if DATA_BYTE == 4
 make_helper(mov_cr2r){
-	uint8_t modRM = instr_fetch(eip + 1,1);
-	uint8_t cr_num = (modRM >> 3) & 0x38; // reg
-	uint8_t reg_num = modRM & 0x07; // r/m
+	ModR_M modRM;
+	modRM.val = instr_fetch(eip + 1,1);
+	uint8_t cr_num = modRM.reg; // reg
+	uint8_t reg_num = modRM.R_M; // r/m
 	switch (cr_num){
 		case 0:
 			reg_l(reg_num) = cpu.cr0.val;
@@ -44,9 +47,10 @@ make_helper(mov_cr2r){
 }
 
 make_helper(mov_r2cr){
-	uint8_t modRM = instr_fetch(eip + 1,1);
-	uint8_t cr_num = (modRM >> 3) & 0x38; // reg
-	uint8_t reg_num = modRM & 0x07; // r/m
+	ModR_M modRM;
+	modRM.val = instr_fetch(eip + 1,1);
+	uint8_t cr_num = modRM.reg; // reg
+	uint8_t reg_num = modRM.R_M; // r/m
 	switch (cr_num){
 		case 0:
 			cpu.cr0.val = reg_l(reg_num);

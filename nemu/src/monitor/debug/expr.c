@@ -281,7 +281,7 @@ uint32_t eval(int l, int r) {
 		if (l == pos || tokens[pos].type == NOT || tokens[pos].type == MINUS || tokens[pos].type == POINTER) {
 			uint32_t r_ans = eval(pos + 1, r);
 			switch (tokens[pos].type) {
-			case POINTER: return swaddr_read(r_ans, 4);
+			case POINTER: current_sreg = R_DS;return swaddr_read(r_ans, 4);
 			case NOT: return !r_ans;
 			case MINUS: return -r_ans;
 			default: {*cando = false; return 0;}
