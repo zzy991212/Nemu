@@ -62,7 +62,7 @@ void sreg_load(){
 	cpu.sreg[current_sreg].base += (sreg_desc -> base2 )<< 16;
 	cpu.sreg[current_sreg].base += (sreg_desc -> base3) << 24;
 	
-	printf("%x",(cpu.sreg[current_sreg].base + 0));
+	printf("%x\n",(cpu.sreg[current_sreg].base + 0));
 
 	printf("---%x\n",swaddr_read(cpu.eip+2,1));
 
