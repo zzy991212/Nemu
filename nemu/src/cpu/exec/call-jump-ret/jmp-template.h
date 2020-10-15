@@ -46,15 +46,15 @@ make_helper(ljmp){
 
     uint32_t bases = 0;
 	
-	bases += ((uint32_t)sreg_desc -> base1);
-	bases += ((uint32_t)sreg_desc -> base2)<< 16;
-	bases += ((uint32_t)sreg_desc -> base3) << 24;
+	bases |= ((uint32_t)sreg_desc -> base1);
+	bases |= ((uint32_t)sreg_desc -> base2)<< 16;
+	bases |= ((uint32_t)sreg_desc -> base3) << 24;
 	cpu.cs.base = bases;
 
 	uint32_t limits = 0;
-	limits += ((uint32_t)sreg_desc -> limit1);
-	limits += ((uint32_t)sreg_desc -> limit2) << 16;
-	limits += ((uint32_t)0xfff) << 24;
+	limits |= ((uint32_t)sreg_desc -> limit1);
+	limits |= ((uint32_t)sreg_desc -> limit2) << 16;
+	limits |= ((uint32_t)0xfff) << 24;
     cpu.cs.limit = limits;
 
     printf("%x\n",instr_fetch(cpu.eip,1));
