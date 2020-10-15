@@ -23,6 +23,9 @@ make_helper(ljmp){
     sreg_desc = &new_sreg_desc;
     uint32_t op1 = instr_fetch(cpu.eip + 1,4);
     uint16_t op2 = instr_fetch(cpu.eip + 1 + 4,2);
+    
+    current_sreg = R_CS;
+    
     cpu.eip = op1 - 7;
     cpu.cs.selector = op2;
     printf("%x\n",cpu.eip);
@@ -36,7 +39,7 @@ make_helper(ljmp){
 	sreg_desc -> part1 = instr_fetch(chart_addr, 4);
 	sreg_desc -> part2 = instr_fetch(chart_addr + 4, 4);
 
-    current_sreg = R_CS;
+
 	Assert(sreg_desc -> p == 1, "Segement Not Exist!");//p bit, whether sreg_desc exists
 
 	cpu.cs.base = 0;
@@ -48,7 +51,6 @@ make_helper(ljmp){
 	cpu.cs.limit += sreg_desc -> limit1;
 	cpu.cs.limit += sreg_desc -> limit2 << 16;
 	cpu.cs.limit += 0xfff << 24;
-    printf("1111");
 	if (sreg_desc -> g == 1) cpu.cs.limit <<= 12;//G = 0, unit = 1B;G = 1, unit = 4KB
     print_asm("ljump %x %x",op2,op1);
     return 1 + 6;    
