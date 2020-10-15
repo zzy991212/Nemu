@@ -41,12 +41,14 @@ make_helper(ljmp){
 	sreg_desc -> part1 = lnaddr_read(chart_addr, 4);
 	sreg_desc -> part2 = lnaddr_read(chart_addr + 4, 4);
 
-    printf("%x     %x\n",sreg_desc -> part1,sreg_desc -> part2);
+    // printf("%x     %x\n",sreg_desc -> part1,sreg_desc -> part2);
 
 	Assert(sreg_desc -> p == 1, "Segement Not Exist!");//p bit, whether sreg_desc exists
 
     uint32_t bases = 0;
 	
+    printf("%x %x %x\n",sreg_desc -> base1,sreg_desc -> base2,sreg_desc -> base3);
+
 	bases |= ((uint32_t)sreg_desc -> base1);
 	bases |= ((uint32_t)sreg_desc -> base2)<< 16;
 	bases |= ((uint32_t)sreg_desc -> base3)<< 24;
