@@ -22,7 +22,7 @@ make_helper(ljmp){
     sreg_desc = &new_sreg_desc;
     uint32_t op1 = instr_fetch(eip + 1,4);
     uint16_t op2 = instr_fetch(eip + 1 + 4,2);
-
+    printf("%x %x",op1,op2);
     cpu.eip = op1 - 1 - 6;//opcode + 6byte
     cpu.cs.selector = op2;
 
@@ -46,6 +46,7 @@ make_helper(ljmp){
 	cpu.cs.limit |= sreg_desc -> limit1;
 	cpu.cs.limit |= sreg_desc -> limit2 << 16;
 	cpu.cs.limit |= 0xfff << 24;
+    
 	if (sreg_desc -> g == 1) cpu.cs.limit <<= 12;//G = 0, unit = 1B;G = 1, unit = 4KB
 
     print_asm("ljump %x %x",op2,op1);
