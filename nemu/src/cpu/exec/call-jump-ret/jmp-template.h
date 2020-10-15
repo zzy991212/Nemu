@@ -24,7 +24,6 @@ make_helper(ljmp){
     uint16_t op2 = instr_fetch(eip + 1 + 4,2);
 
 
-    cpu.eip = op1 - 1 - 6;//opcode + 6byte
     cpu.cs.selector = op2;
 
     uint16_t idx = cpu.cs.selector >> 3;//index of sreg
@@ -50,6 +49,7 @@ make_helper(ljmp){
 	if (sreg_desc -> g == 1) cpu.cs.limit <<= 12;//G = 0, unit = 1B;G = 1, unit = 4KB
 
     print_asm("ljump %x %x",op2,op1);
+    cpu.eip = op1 - 1 - 6;//opcode + 6byte
     return 1 + 6;    
 }
 #endif
