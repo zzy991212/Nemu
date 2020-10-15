@@ -10,6 +10,7 @@ extern uint8_t current_sreg;
 
 /* Memory accessing interfaces */
 lnaddr_t seg_translate(swaddr_t addr,size_t len,uint8_t sreg_id){
+	printf("%x\n",sreg_id);
 	if (cpu.cr0.protect_enable == 0) return addr;
 	else {
 		return cpu.sreg[sreg_id].base + addr;
