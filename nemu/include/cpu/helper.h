@@ -9,6 +9,8 @@
 
 static inline uint32_t instr_fetch(swaddr_t addr, size_t len) {
 	current_sreg = R_CS;
+	printf("%x\n",addr);
+	printf("%x\n",swaddr_read(addr, len));
 	return swaddr_read(addr, len);
 }
 
