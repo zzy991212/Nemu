@@ -49,7 +49,6 @@ make_helper(mov_r2cr){
 	uint8_t modrm= instr_fetch(eip + 1,1);
 	uint8_t cr_num = (modrm >> 3) & 7; // reg
 	uint8_t reg_num = modrm & 7; // r/m
-	printf("1111\n");
 	switch (cr_num){
 		case 0:
 			cpu.cr0.val = reg_l(reg_num);
