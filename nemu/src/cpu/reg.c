@@ -57,14 +57,15 @@ void sreg_load(){
 	
 	printf("---%x\n",swaddr_read(cpu.eip+2,1));
 	cpu.sreg[current_sreg].base = 0;
-	cpu.sreg[current_sreg].base |= sreg_desc -> base1;
-	cpu.sreg[current_sreg].base |= sreg_desc -> base2 << 16;
-	cpu.sreg[current_sreg].base |= sreg_desc -> base3 << 24;
-
+	cpu.sreg[current_sreg].base += sreg_desc -> base1;
+	cpu.sreg[current_sreg].base += (sreg_desc -> base2 )<< 16;
+	cpu.sreg[current_sreg].base += (sreg_desc -> base3) << 24;
+	printf("---%x\n",swaddr_read(cpu.eip+2,1));
+	
 	cpu.sreg[current_sreg].limit = 0;
-	cpu.sreg[current_sreg].limit |= sreg_desc -> limit1;
-	cpu.sreg[current_sreg].limit |= sreg_desc -> limit2 << 16;
-	cpu.sreg[current_sreg].limit |= 0xfff << 24;
+	cpu.sreg[current_sreg].limit += sreg_desc -> limit1;
+	cpu.sreg[current_sreg].limit += (sreg_desc -> limit2) << 16;
+	cpu.sreg[current_sreg].limit += (0xfff) << 24;
 	printf("---%x\n",swaddr_read(cpu.eip+2,1));
 	if (sreg_desc -> g == 1) cpu.sreg[current_sreg].limit <<= 12;//G = 0, unit = 1B;G = 1, unit = 4KB
 }
