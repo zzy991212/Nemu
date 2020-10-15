@@ -60,8 +60,10 @@ make_helper(mov_r2cr){
 	return 2;
 }
 #endif
+
 #if DATA_BYTE == 2
 make_helper(mov_sreg2rm){
+	printf("1111\n");
 	uint8_t modrm= instr_fetch(eip + 1,1);
 	uint8_t sreg_num = (modrm >> 3) & 7; // reg
 	uint8_t reg_num = modrm & 7; // r/m
