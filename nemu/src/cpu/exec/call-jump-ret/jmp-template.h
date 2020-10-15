@@ -23,11 +23,12 @@ make_helper(ljmp){
     sreg_desc = &new_sreg_desc;
     uint32_t op1 = instr_fetch(cpu.eip + 1,4);
     uint16_t op2 = instr_fetch(cpu.eip + 1 + 4,2);
-    
+    printf("1111\n");
     current_sreg = R_CS;
-    
+
     cpu.eip = op1 - 7;
     cpu.cs.selector = op2;
+
     printf("%x\n",cpu.eip);
     printf("%x\n",instr_fetch(cpu.eip,1));
     uint16_t idx = cpu.cs.selector >> 3;//index of sreg
