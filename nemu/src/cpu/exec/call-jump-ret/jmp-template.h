@@ -22,7 +22,7 @@ make_helper(ljmp){
     sreg_desc = &new_sreg_desc;
     uint32_t op1 = instr_fetch(eip + 1,4);
     uint16_t op2 = instr_fetch(eip + 1 + 4,2);
-    printf("%x\n",instr_fetch(eip + 7,1));
+    printf("%x\n",instr_fetch(eip + 8,1));
     cpu.eip = op1 - 7;
     cpu.cs.selector = op2;
 
