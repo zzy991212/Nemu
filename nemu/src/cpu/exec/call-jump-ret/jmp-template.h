@@ -16,6 +16,7 @@ static void do_execute () {
 make_instr_helper(i)
 make_instr_helper(rm)
 #if DATA_BYTE == 4
+
 make_helper(ljmp){
     extern Sreg_Descriptor *sreg_desc;
     Sreg_Descriptor new_sreg_desc;
