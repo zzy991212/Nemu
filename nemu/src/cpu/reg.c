@@ -47,7 +47,7 @@ void sreg_load(){
 
 	uint16_t idx = cpu.sreg[current_sreg].selector >> 3;//index of sreg
 
-	Assert((idx << 3) < cpu.gdtr.limit,"Segement Selector Is Out Of The Limit!");
+	Assert((idx << 3) <= cpu.gdtr.limit,"Segement Selector Is Out Of The Limit!");
 
 	lnaddr_t chart_addr = cpu.gdtr.base + (idx << 3);//chart addr
 	sreg_desc -> part1 = lnaddr_read(chart_addr, 4);
