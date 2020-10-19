@@ -39,6 +39,10 @@ make_helper(mov_cr2r){
 			reg_l(reg_num) = cpu.cr0.val;
 			print_asm("mov CR0 %s",REG_NAME(reg_num));
 			break;
+		case 3:
+			reg_l(reg_num) = cpu.cr3.val;
+			print_asm("mov CR3 %s",REG_NAME(reg_num));
+			break;
 		default:
 			break;
 	}
@@ -53,6 +57,10 @@ make_helper(mov_r2cr){
 		case 0:
 			cpu.cr0.val = reg_l(reg_num);
 			print_asm("mov %s CR0",REG_NAME(reg_num));
+			break;
+		case 3:
+			cpu.cr3.val = reg_l(reg_num);
+			print_asm("mov %s CR3",REG_NAME(reg_num));
 			break;
 		default:
 			break;
