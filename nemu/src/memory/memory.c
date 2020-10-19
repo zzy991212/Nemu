@@ -31,7 +31,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 		uint32_t dir_pos = (dir_start << 12) + (dir << 2);
 		Page_Descriptor first_content;
 		first_content.val = hwaddr_read(dir_pos,4);
-		Assert(first_content.p == 1,"Page Cannot Be Used!");
+		Assert(first_content.p == 1,"Dir Cannot Be Used!");
 		// get page position
 		uint32_t page_start = first_content.addr;
 		uint32_t page_pos = (page_start << 12) + (page << 2);
