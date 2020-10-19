@@ -51,6 +51,7 @@
 #include "logic/shrd.h"
 #include "logic/test.h"
 #include "logic/setne.h"
+#include "logic/std.h"
 
 #include "string/rep.h"
 #include "string/movs.h"
