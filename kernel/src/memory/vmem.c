@@ -8,10 +8,6 @@
 /* Use the function to get the start address of user page directory. */
 PDE* get_updir();
 PTE vm_pt[NR_PTE] align_to_page;
-void add_user_mapping(int id,uint32_t addr){
-	uint32_t dir = (addr >> 22) & 0x3ff;
-	uint32_t page = (addr >> 12) & 0x3ff;
-}
 void create_video_mapping() {
 	/* TODO: create an identical mapping from virtual memory area 
 	 * [0xa0000, 0xa0000 + SCR_SIZE) to physical memory area 
