@@ -40,6 +40,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 		// get hwaddr
 		uint32_t addr_start = second_content.addr;
 		hwaddr_t hwaddr = (addr_start << 12) + offset;
+		printf("%x",hwaddr);
 		return hwaddr;
 	}else return addr;
 }
