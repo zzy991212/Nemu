@@ -74,7 +74,11 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 #endif
 	uint32_t now_offset = addr & 0xfff;
 	if (now_offset + len >= 0xfff){
-		Assert(0,"Cross the page boundary");
+		// Assert(0,"Cross the page boundary");
+		uint32_t addr_r = lnaddr_read(addr,0xfff - now_offset);
+		uint32_t addr_l = lnaddr_read(addr + (0xfff - now_offset),len - (0xfff - now_offset));
+		uint32_t val = (addr_l << ((0xfff - now_offset) << 3)) | addr_r;
+		return val;
 	}else {
 		hwaddr_t hwaddr = page_translate(addr);
 		return hwaddr_read(hwaddr,len);
@@ -88,10 +92,12 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 #endif
 	uint32_t now_offset = addr & 0xfff;
 	if (now_offset + len >= 0xfff){
-		Assert(0,"Cross the page boundary");
+		// Assert(0,"Cross the page boundary");
+		lnaddr_write(addr,0xfff - now_offset,data & ((1 << (0xfff - now_offset) << 3) - 1));
+		lnaddr_write(addr + (0xfff - now_offset),len - (0xfff - now_offset),data >> ((0xfff - now_offset) << 3));
 	}else {
 		hwaddr_t hwaddr = page_translate(addr);
-		return hwaddr_write(hwaddr, len, data);
+		hwaddr_write(hwaddr, len, data);
 	}
 	// hwaddr_write(addr, len, data);
 }
