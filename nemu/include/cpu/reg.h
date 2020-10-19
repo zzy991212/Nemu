@@ -80,6 +80,8 @@ typedef struct {
 		};
 	};
 
+	CR3 cr3;
+
 } CPU_state;
 
 
@@ -109,6 +111,24 @@ typedef struct{
 		uint32_t part2;
 	};
 }Sreg_Descriptor;
+
+typedef struct {
+	union {
+		struct {
+			uint32_t p 	:1;
+			uint32_t rw	:1;
+			uint32_t us	:1;
+			uint32_t 	:2;
+			uint32_t a	:1;
+			uint32_t d 	:1;
+			uint32_t 	:2;
+			uint32_t avail	:3;
+			uint32_t addr 	:20;
+		};
+		uint32_t val;
+	};
+}Page_Descriptor;
+
 
 Sreg_Descriptor *sreg_desc;
 
