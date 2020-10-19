@@ -30,8 +30,8 @@ make_helper(ljmp){
 
     //current_sreg = R_CS;
 
-    printf("%x\n",cpu.eip);
-    printf("%x\n",instr_fetch(cpu.eip,1));
+    // printf("%x\n",cpu.eip);
+    // printf("%x\n",instr_fetch(cpu.eip,1));
     uint16_t idx = cpu.cs.selector >> 3;//index of sreg
 
 	Assert((idx << 3) <= cpu.gdtr.limit,"Segement Selector Is Out Of The Limit!");
