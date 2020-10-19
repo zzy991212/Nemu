@@ -38,7 +38,6 @@ hwaddr_t page_translate(lnaddr_t addr){
 		Page_Descriptor second_content;
 		second_content.val =  hwaddr_read(page_pos,4);
 		Assert(second_content.p == 1,"Page Cannot Be Used!");
-		printf("%x\n",second_content.val);
 		// get hwaddr
 		uint32_t addr_start = second_content.addr;
 		hwaddr_t hwaddr = (addr_start << 12) + offset;
