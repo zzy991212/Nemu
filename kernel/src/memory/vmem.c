@@ -6,7 +6,7 @@
 #define SCR_SIZE (320 * 200)
 
 /* Use the function to get the start address of user page directory. */
-// PDE* get_updir();
+ PDE* get_updir();
 // PTE vm_pt[NR_PTE] align_to_page;
 // void create_video_mapping() {
 // 	/* TODO: create an identical mapping from virtual memory area 
@@ -26,6 +26,7 @@
 // 		vm_pt[i].val = make_pte((i+(SCR_SIZE + PT_SIZE -1)/PT_SIZE*NR_PTE)<<12);
 // 	}
 // }
+#define VMEM_SIZE 0x20000
 static PTE vptable[(VMEM_ADDR + VMEM_SIZE) / PAGE_SIZE] align_to_page;
 void create_video_mapping() {
     /* Create an identical mapping from virtual memory area
