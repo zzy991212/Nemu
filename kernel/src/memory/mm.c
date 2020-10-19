@@ -52,7 +52,6 @@ void add_user_mapping(int id,uint32_t addr){
 	uint32_t page = (addr >> 12) & 0x3ff;
 
 	PTE *p = uppage[id];
-	updir[dir].val = make_pde(va_to_pa(p));
-	p[page].val = make_pte(addr);
-	printk("%x",p[page].val);
+	updir[dir].val = make_pde(va_to_pa(p)) + 1;
+	p[page].val = make_pte(addr) + 1;
 }
