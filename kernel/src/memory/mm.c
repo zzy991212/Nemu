@@ -46,12 +46,12 @@ void init_mm() {
 	ucr3.val = (uint32_t)va_to_pa((uint32_t)updir) & ~0xfff;
 }
 
-static PTE uppage[1][NR_PTE];
+static PTE uppage[1][NR_PTE] align_to_page;
 void add_user_mapping(int id,uint32_t addr){
 	uint32_t dir = (addr >> 22) & 0x3ff;
 	uint32_t page = (addr >> 12) & 0x3ff;
 
 	PTE *p = uppage[id];
-	updir[dir].val = make_pde(va_to_pa(p)) + 1;
-	p[page].val = make_pte(addr) + 1;
+	updir[dir].val = make_pde(va_to_pa(p));
+	p[page].val = make_pte(addr);
 }
