@@ -7,10 +7,12 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <elf.h>
+#include "memory.h"
 #define TestCorrect(x) if(x){printf("Invalid Command!\n");return 0;}
 void cpu_exec(uint32_t);
 
 void GetFunctionAddr(swaddr_t EIP,char* name);
+hwaddr_t page_translate(lnaddr_t addr);
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -159,7 +161,13 @@ static int cmd_bt(char* args){
 	}
 	return 0;
 }
-
+static int cmd_page(char* args) {
+	TestCorrect(args == NULL);
+	uint32_t addr;
+	sscanf(args, "%x", &addr);
+	printf("0x%08x\n",page_translate(addr));
+	return 0;
+}
 static struct {
 	char *name;
 	char *description;
@@ -174,7 +182,8 @@ static struct {
 	{ "p", "Calculate expressions", cmd_p},
 	{ "w", "Add watchpoint", cmd_w},
 	{ "d", "Delete watchpoint", cmd_d},
-	{ "bt", "Print stack frame chain", cmd_bt}
+	{ "bt", "Print stack frame chain", cmd_bt},
+	{ "page", "Translate ADDR in PAGE MODE", cmd_page}
 	/* TODO: Add more commands */
 
 };
