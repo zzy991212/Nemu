@@ -87,7 +87,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 }
 
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
-	printf("eip = %x,addr = %x,len = %d\n",cpu.eip,addr,(uint8_t)len);
+	// printf("eip = %x,addr = %x,len = %d\n",cpu.eip,addr,(uint8_t)len);
 // #ifdef DEBUG
 // 	assert(len == 1 || len == 2 || len == 4);
 // #endif
