@@ -17,13 +17,13 @@ void create_video_mapping() {
 
 	PDE *pde = (PDE *)va_to_pa(get_updir());
 
-	pde[VMEM_ADDR/PT_SIZE] = make_pde(va_to_pa(vm_pt));
+	pde[VMEM_ADDR/PT_SIZE].val = make_pde(va_to_pa(vm_pt));
 
 	int tot = SCR_SIZE/PAGE_SIZE;
 	if (SCR_SIZE % PAGE_SIZE != 0) tot++;
 	int i;
 	for (i = VMEM_ADDR/PAGE_SIZE;i < VMEM_ADDR/PAGE_SIZE + tot;i ++){
-		vm_pt[i] = make_pte(i+(SCR_SIZE + PT_SIZE -1)/PT_SIZE*NR_PTE);
+		vm_pt[i].val = make_pte((i+(SCR_SIZE + PT_SIZE -1)/PT_SIZE*NR_PTE)<<12);
 	}
 }
 
