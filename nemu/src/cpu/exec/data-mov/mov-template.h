@@ -42,6 +42,7 @@ make_helper(mov_cr2r){
 			break;
 		case 3:
 			reg_l(reg_num) = cpu.cr3.val;
+			init_tlb();
 			print_asm("mov CR3 %s",REG_NAME(reg_num));
 			break;
 		default:
