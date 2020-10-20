@@ -29,7 +29,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 		uint32_t offset = addr & 0xfff;
 		//read TLB
 		int i = read_tlb(addr);
-		if (i != -1) return (tlb[i].page_num) + offset;
+		if (i != -1) return (tlb[i].page_num << 12) + offset;
 		// get dir position
 		uint32_t dir_start = cpu.cr3.page_directory_base;
 		uint32_t dir_pos = (dir_start << 12) + (dir << 2);

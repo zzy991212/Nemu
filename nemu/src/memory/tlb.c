@@ -13,7 +13,7 @@ void init_tlb(){
 }
 
 int read_tlb(uint32_t addr){
-    int dir = addr >> 22;
+    int dir = addr >> 12;
     int i;
     for (i = 0; i < TLB_SIZE;i++){
         if (tlb[i].tag == dir && tlb[i].valid == 1){
@@ -24,8 +24,8 @@ int read_tlb(uint32_t addr){
 }
 
 void write_tlb(uint32_t lnaddr,uint32_t hwaddr){
-    int dir = lnaddr >> 22;
-    int page = hwaddr >> 22;
+    int dir = lnaddr >> 12;
+    int page = hwaddr >> 12;
     int i;
     for (i = 0; i < TLB_SIZE;i++){
         if (!tlb[i].valid){
