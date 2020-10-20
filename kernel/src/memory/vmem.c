@@ -4,25 +4,27 @@
 
 #define VMEM_ADDR 0xa0000
 #define SCR_SIZE (320 * 200)
-#define VMEM_SIZE 0x20000
+
 /* Use the function to get the start address of user page directory. */
 PDE* get_updir();
-static PTE ptable_video[(VMEM_ADDR + VMEM_SIZE) / PAGE_SIZE] align_to_page;
-
+PTE vm_pt[NR_PTE] align_to_page;
 void create_video_mapping() {
 	/* TODO: create an identical mapping from virtual memory area 
 	 * [0xa0000, 0xa0000 + SCR_SIZE) to physical memory area 
 	 * [0xa0000, 0xa0000 + SCR_SIZE) for user program. You may define
 	 * some page tables to create this mapping.
 	 */
-	PDE* pdir = get_updir();
-	PTE* ptable = (PTE *)va_to_pa(ptable_video);
-	pdir[0].val = make_pde(ptable);
-	memset(ptable_video, 0, sizeof(ptable_video));
-	uint32_t addr = VMEM_ADDR;
-	uint32_t i = VMEM_ADDR / PAGE_SIZE;
-	for (; addr < VMEM_ADDR + VMEM_SIZE; addr += PAGE_SIZE) {
-		ptable_video[i ++].val = make_pte(addr);
+
+	PDE *pde = (PDE *)va_to_pa(get_updir());
+
+	pde[0].page_frame = (uint32_t)va_to_pa(vm_pt) >> 12;
+	pde[0].present = 1;
+	int tot = SCR_SIZE/PAGE_SIZE;
+	if (SCR_SIZE % PAGE_SIZE != 0) tot++;
+	int i;
+	for (i = VMEM_ADDR/PAGE_SIZE;i < VMEM_ADDR/PAGE_SIZE + tot;i ++){
+		vm_pt[i].page_frame = i;
+		vm_pt[i].present = 1;
 	}
 }
 
