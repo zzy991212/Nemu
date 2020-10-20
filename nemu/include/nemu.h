@@ -4,6 +4,7 @@
 #include "common.h"
 #include "memory/memory.h"
 #include "memory/cache.h"
+#include "memory/tlb.h"
 #include "cpu/reg.h"
 
 #endif
