@@ -13,8 +13,8 @@ typedef struct{
 TLB tlb[TLB_SIZE];
 
 void init_tlb();
-hwaddr_t read_tlb(uint32_t addr);
-void write_tlb(uint32_t addr);
+int read_tlb(uint32_t addr);
+void write_tlb(uint32_t lnaddr,uint32_t hwaddr);
 
 #endif
  
