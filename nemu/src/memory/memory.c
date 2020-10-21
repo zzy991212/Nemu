@@ -79,6 +79,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
+printf("ln:%x\n",addr);
 	uint32_t now_offset = addr & 0xfff;
 	if (now_offset + len -1 > 0xfff){
 		// Assert(0,"Cross the page boundary");
