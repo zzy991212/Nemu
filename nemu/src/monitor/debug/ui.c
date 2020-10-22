@@ -13,6 +13,7 @@ void cpu_exec(uint32_t);
 
 void GetFunctionAddr(swaddr_t EIP,char* name);
 hwaddr_t page_translate(lnaddr_t addr);
+hwaddr_t page_translate_additional(lnaddr_t addr,int* flag);
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -165,7 +166,11 @@ static int cmd_page(char* args) {
 	TestCorrect(args == NULL);
 	uint32_t addr;
 	sscanf(args, "%x", &addr);
-	printf("0x%08x\n",page_translate(addr));
+	int flag = 0;
+	uint32_t real_addr = page_translate_additional(addr,&flag);
+	if (flag == 0) printf("0x%08x\n",real_addr);
+	else if (flag == 1) printf("Dir Cannot Be Used!\n");
+	else printf("Page Cannot Be Used!\n");
 	return 0;
 }
 static struct {
