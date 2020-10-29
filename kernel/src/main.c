@@ -15,7 +15,7 @@ void video_mapping_read_test();
 void video_mapping_clear();
 
 void init_cond();
-int x=0;
+//int x=0;
 /* Initialization phase 1
  * The assembly code in start.S will finally jump here.
  */
@@ -26,7 +26,7 @@ void init() {
 	 * is located at 0xc0100000, which is set by the linking options in Makefile.
 	 * Before setting up correct paging, no global variable can be used. */
 	init_page();
-	x=1;
+	//x=1;
 	/* After paging is enabled, transform %esp to virtual address. */
 	asm volatile("addl %0, %%esp" : : "i"(KOFFSET));
 #endif
