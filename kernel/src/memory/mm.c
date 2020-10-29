@@ -35,7 +35,7 @@ uint32_t mm_brk(uint32_t new_brk) {
 
 void init_mm() {
 	PDE *kpdir = get_kpdir();
-
+	assert(0);
 	/* make all PDE invalid */
 	memset(updir, 0, NR_PDE * sizeof(PDE));
 	
