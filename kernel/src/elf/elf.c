@@ -27,7 +27,7 @@ uint32_t loader() {
 #else
 	ramdisk_read(buf, ELF_OFFSET_IN_DISK, 4096);
 #endif
-assert(0);
+
 	elf = (void*)buf;
 
 	/* TODO: fix the magic number with the correct one */
@@ -70,7 +70,7 @@ assert(0);
 
 #ifdef IA32_PAGE
 	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
-
+	assert(0);
 #ifdef HAS_DEVICE
 	create_video_mapping();
 #endif
