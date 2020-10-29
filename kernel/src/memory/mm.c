@@ -35,7 +35,7 @@ uint32_t mm_brk(uint32_t new_brk) {
 
 void init_mm() {
 	PDE *kpdir = get_kpdir();
-	assert(0);
+	
 	/* make all PDE invalid */
 	memset(updir, 0, NR_PDE * sizeof(PDE));
 	
@@ -44,5 +44,5 @@ void init_mm() {
 			(PHY_MEM / PT_SIZE) * sizeof(PDE));
 
 	ucr3.val = (uint32_t)va_to_pa((uint32_t)updir) & ~0xfff;
-	
+	assert(0);
 }
