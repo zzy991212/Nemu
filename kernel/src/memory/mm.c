@@ -44,5 +44,5 @@ void init_mm() {
 			(PHY_MEM / PT_SIZE) * sizeof(PDE));
 
 	ucr3.val = (uint32_t)va_to_pa((uint32_t)updir) & ~0xfff;
-	assert(0);
+	
 }
