@@ -38,10 +38,10 @@ void init_mm() {
 
 	/* make all PDE invalid */
 	memset(updir, 0, NR_PDE * sizeof(PDE));
-	assert(0);
+	
 	/* create the same mapping above 0xc0000000 as the kernel mapping does */
 	memcpy(&updir[KOFFSET / PT_SIZE], &kpdir[KOFFSET / PT_SIZE], 
 			(PHY_MEM / PT_SIZE) * sizeof(PDE));
-
+assert(0);
 	ucr3.val = (uint32_t)va_to_pa((uint32_t)updir) & ~0xfff;
 }
