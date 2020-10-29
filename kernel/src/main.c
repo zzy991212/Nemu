@@ -65,6 +65,7 @@ void init_cond() {
 
 #ifdef IA32_PAGE
 	/* Initialize the memory manager. */
+assert(0);
 	init_mm();
 #endif
 
@@ -92,7 +93,7 @@ void init_cond() {
 	/* Clear the test data we just written in the video memory. */
 	video_mapping_clear();
 #endif
-assert(0);
+
 #ifdef IA32_PAGE
 	/* Set the %esp for user program, which is one of the
 	 * convention of the "advanced" runtime environment. */
