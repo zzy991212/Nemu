@@ -70,12 +70,13 @@ uint32_t loader() {
 
 #ifdef IA32_PAGE
 	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
-	assert(0);
+	
 #ifdef HAS_DEVICE
 	create_video_mapping();
 #endif
 	create_video_mapping();
 	write_cr3(get_ucr3());
+	assert(0);
 #endif
 
 	return entry;
