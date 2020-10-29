@@ -34,7 +34,6 @@ void init() {
 	/* Jump to init_cond() to continue initialization. */
 	//asm volatile("jmp *%0" : : "r"(init_cond));
 	init_cond();
-	assert(0);
 	panic("should not reach here");
 }
 
@@ -93,7 +92,7 @@ void init_cond() {
 	/* Clear the test data we just written in the video memory. */
 	video_mapping_clear();
 #endif
-
+assert(0);
 #ifdef IA32_PAGE
 	/* Set the %esp for user program, which is one of the
 	 * convention of the "advanced" runtime environment. */
