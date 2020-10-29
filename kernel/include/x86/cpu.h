@@ -21,6 +21,7 @@ write_cr0(uint32_t cr0) {
 /* write CR3, notice that CR3 is never read */
 static inline void
 write_cr3(uint32_t cr3) {
+	assert(0);
 	asm volatile("movl %0, %%cr3" : : "r"(cr3));
 }
 
