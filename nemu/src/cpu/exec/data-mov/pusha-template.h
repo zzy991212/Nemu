@@ -20,7 +20,6 @@ make_helper(concat(pusha_,SUFFIX)){
     current_sreg = R_SS;
     DATA_TYPE tmp = REG(R_ESP);
     concat(push_,SUFFIX)(REG(R_EAX));
-    concat(push_,SUFFIX)(REG(R_EAX));
     concat(push_,SUFFIX)(REG(R_ECX));
     concat(push_,SUFFIX)(REG(R_EDX));
     concat(push_,SUFFIX)(REG(R_EBX));
