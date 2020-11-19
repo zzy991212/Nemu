@@ -29,7 +29,7 @@ void raise_intr(uint8_t NO){
 	/* TODO: Trigger an interrupt/exception with ``NO''.
 	 * That is, use ``NO'' to index the IDT.
 	 */
-	printf("%d %d\n",NO,cpu.idtr.limit);
+	// printf("%d %d\n",NO,cpu.idtr.limit);
 	Assert((NO<<3)<=cpu.idtr.limit,"Wrong Interrupt id!");
 	Gate_Descriptor now_gate;
 	idt_desc = &now_gate;
