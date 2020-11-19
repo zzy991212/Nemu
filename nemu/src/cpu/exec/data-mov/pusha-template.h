@@ -29,7 +29,7 @@ make_helper(concat(pusha_,SUFFIX)){
     concat(push_,SUFFIX)(REG(R_ESI));
     concat(push_,SUFFIX)(REG(R_EDI));
     print_asm_template1();
-    return 0;
+    return 1;
 }
 
 
