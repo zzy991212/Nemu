@@ -20,36 +20,36 @@ void raise_intr(uint8_t);
 /* Used with exception handling. */
 jmp_buf jbuf;
 
-static inline void push_r2stack(int val){
-	current_sreg = R_SS;
-	reg_l(R_ESP) -= 4;
-	swaddr_write(reg_l(R_ESP),4,val);
-}
-void raise_intr(uint8_t NO){
-	/* TODO: Trigger an interrupt/exception with ``NO''.
-	 * That is, use ``NO'' to index the IDT.
-	 */
-	printf("%d\n",NO);
-	Assert((NO<<3)<=cpu.idtr.limit,"Wrong Interrupt id!");
-	Gate_Descriptor now_gate;
-	idt_desc = &now_gate;
+// static inline void push_r2stack(int val){
+// 	current_sreg = R_SS;
+// 	reg_l(R_ESP) -= 4;
+// 	swaddr_write(reg_l(R_ESP),4,val);
+// }
+// void raise_intr(uint8_t NO){
+// 	/* TODO: Trigger an interrupt/exception with ``NO''.
+// 	 * That is, use ``NO'' to index the IDT.
+// 	 */
+// 	printf("%d\n",NO);
+// 	Assert((NO<<3)<=cpu.idtr.limit,"Wrong Interrupt id!");
+// 	Gate_Descriptor now_gate;
+// 	idt_desc = &now_gate;
 
-	lnaddr_t addr = cpu.idtr.base + (NO << 3);
-	idt_desc -> part1 = lnaddr_read(addr,4);
-	idt_desc -> part2 = lnaddr_read(addr+4,4);
+// 	lnaddr_t addr = cpu.idtr.base + (NO << 3);
+// 	idt_desc -> part1 = lnaddr_read(addr,4);
+// 	idt_desc -> part2 = lnaddr_read(addr+4,4);
 	
-	push_r2stack(cpu.EFLAGS);
-	push_r2stack(cpu.cs.selector);
-	push_r2stack(cpu.eip);
+// 	push_r2stack(cpu.EFLAGS);
+// 	push_r2stack(cpu.cs.selector);
+// 	push_r2stack(cpu.eip);
 
-	cpu.cs.selector = idt_desc -> selector;
+// 	cpu.cs.selector = idt_desc -> selector;
 
-	current_sreg = R_CS;
-	sreg_load(R_CS);
-	cpu.eip = cpu.cs.base + idt_desc -> offset1 + (idt_desc -> offset2 << 16);
-	 /* Jump back to cpu_exec() */
-    longjmp(jbuf, 1);
-}
+// 	current_sreg = R_CS;
+// 	sreg_load(R_CS);
+// 	cpu.eip = cpu.cs.base + idt_desc -> offset1 + (idt_desc -> offset2 << 16);
+// 	 /* Jump back to cpu_exec() */
+//     longjmp(jbuf, 1);
+// }
 void print_bin_instr(swaddr_t eip, int len) {
 	int i;
 	int l = sprintf(asm_buf, "%8x:   ", eip);
