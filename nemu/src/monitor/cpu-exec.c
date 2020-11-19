@@ -29,6 +29,7 @@ void raise_intr(uint8_t NO){
 	/* TODO: Trigger an interrupt/exception with ``NO''.
 	 * That is, use ``NO'' to index the IDT.
 	 */
+	 printf("%x\n",cpu.eip);
 	Assert((NO<<3)<=cpu.idtr.limit,"Wrong Interrupt id!");
 	Gate_Descriptor now_gate;
 	idt_desc = &now_gate;
@@ -46,7 +47,6 @@ void raise_intr(uint8_t NO){
 	current_sreg = R_CS;
 	sreg_load(R_CS);
 	cpu.eip = cpu.cs.base + idt_desc -> offset1 + (idt_desc -> offset2 << 16);
-	printf("%x\n",cpu.eip);
 	 /* Jump back to cpu_exec() */
     longjmp(jbuf, 1);
 }
