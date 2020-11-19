@@ -2,7 +2,7 @@
 #include "cpu/helper.h"
 #include "monitor/watchpoint.h"
 #include <setjmp.h>
-
+#include "cpu/reg.h"
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
  * This is useful when you use the `si' command.
@@ -16,10 +16,39 @@ int exec(swaddr_t);
 
 char assembly[80];
 char asm_buf[128];
-
+void raise_intr(uint8_t);
 /* Used with exception handling. */
 jmp_buf jbuf;
 
+static inline void push_r2stack(uint32_t val){
+	current_sreg = R_SS;
+	reg_l(R_EIP) -= 4;
+	swaddr_read(reg_l(R_EIP),4,val);
+}
+void raise_intr(uint8_t NO){
+	/* TODO: Trigger an interrupt/exception with ``NO''.
+	 * That is, use ``NO'' to index the IDT.
+	 */
+	Assert((NO<<3)<=cpu.idtr.limit,"Wrong Interrupt id!");
+	Gate_Descriptor now_gate;
+	idt_desc = &now_gate;
+
+	lnaddr_t addr = cpu.idtr.base + (NO << 3);
+	idt_desc -> part1 = lnaddr_read(addr,4);
+	idt_desc -> part2 = lnaddr_read(addr+4,4);
+	
+	push_r2stack(cpu.EFLAGS);
+	push_r2stack(cpu.cs.selector);
+	push_r2stack(cpu.eip);
+
+	cpu.cs.selector = idt_desc -> selector;
+
+	current_sreg = R_CS;
+	sreg_load(R_CS);
+	cpu.eip = cpu.cs.base + idt_desc -> offsent1 + (idt_desc -> offsent2 << 16);
+	 /* Jump back to cpu_exec() */
+    longjmp(jbuf, 1);
+}
 void print_bin_instr(swaddr_t eip, int len) {
 	int i;
 	int l = sprintf(asm_buf, "%8x:   ", eip);

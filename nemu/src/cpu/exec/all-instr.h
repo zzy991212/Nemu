@@ -11,6 +11,7 @@
 #include "data-mov/movzw.h"
 #include "data-mov/movsx.h"
 #include "data-mov/lgdt.h"
+#include "data-mov/lidt.h"
 
 #include "call-jump-ret/call.h"
 #include "call-jump-ret/je.h"
@@ -63,3 +64,5 @@
 #include "misc/misc.h"
 
 #include "special/special.h"
+
+#include "intr/intr.h"
