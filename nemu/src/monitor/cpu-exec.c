@@ -22,8 +22,8 @@ jmp_buf jbuf;
 
 static inline void push_r2stack(uint32_t val){
 	current_sreg = R_SS;
-	reg_l(R_EIP) -= 4;
-	swaddr_read(reg_l(R_EIP),4,val);
+	reg_l(R_ESP) -= 4;
+	swaddr_write(reg_l(R_ESP),4,val);
 }
 void raise_intr(uint8_t NO){
 	/* TODO: Trigger an interrupt/exception with ``NO''.
@@ -45,7 +45,7 @@ void raise_intr(uint8_t NO){
 
 	current_sreg = R_CS;
 	sreg_load(R_CS);
-	cpu.eip = cpu.cs.base + idt_desc -> offsent1 + (idt_desc -> offsent2 << 16);
+	cpu.eip = cpu.cs.base + idt_desc -> offset1 + (idt_desc -> offset2 << 16);
 	 /* Jump back to cpu_exec() */
     longjmp(jbuf, 1);
 }

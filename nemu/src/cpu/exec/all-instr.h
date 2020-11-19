@@ -12,6 +12,8 @@
 #include "data-mov/movsx.h"
 #include "data-mov/lgdt.h"
 #include "data-mov/lidt.h"
+#include "data-mov/pusha.h"
+#include "data-mov/popa.h"
 
 #include "call-jump-ret/call.h"
 #include "call-jump-ret/je.h"
