@@ -46,6 +46,7 @@ void raise_intr(uint8_t NO){
 	current_sreg = R_CS;
 	sreg_load(R_CS);
 	cpu.eip = cpu.cs.base + idt_desc -> offset1 + (idt_desc -> offset2 << 16);
+	printf("%x\n",cpu.eip);
 	 /* Jump back to cpu_exec() */
     longjmp(jbuf, 1);
 }
@@ -118,5 +119,5 @@ void cpu_exec(volatile uint32_t n) {
 	}
 
 	if(nemu_state == RUNNING) { nemu_state = STOP; }
-	
+
 }
