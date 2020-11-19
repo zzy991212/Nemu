@@ -20,7 +20,7 @@ void raise_intr(uint8_t);
 /* Used with exception handling. */
 jmp_buf jbuf;
 
-static inline void push_r2stack(uint32_t val){
+static inline void push_r2stack(int val){
 	current_sreg = R_SS;
 	reg_l(R_ESP) -= 4;
 	swaddr_write(reg_l(R_ESP),4,val);

@@ -13,8 +13,7 @@ make_helper(iret) {
 		cpu.eip = popfromstack();
 		cpu.cs.selector = popfromstack();
 		cpu.EFLAGS = popfromstack();
-	}
-	else{
+	}else{
 		current_sreg = R_SS;
 		cpu.eip = popfromstack();
 		cpu.cs.selector = popfromstack();

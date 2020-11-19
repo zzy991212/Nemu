@@ -153,17 +153,17 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 }
 
 uint32_t swaddr_read(swaddr_t addr, size_t len) {
-#ifdef DEBUG
-	assert(len == 1 || len == 2 || len == 4);
-#endif
+// #ifdef DEBUG
+// 	assert(len == 1 || len == 2 || len == 4);
+// #endif
 	lnaddr_t lnaddr = seg_translate(addr,len,current_sreg);
 	return lnaddr_read(lnaddr, len);
 }
 
 void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
-#ifdef DEBUG
-	assert(len == 1 || len == 2 || len == 4);
-#endif
+// #ifdef DEBUG
+// 	assert(len == 1 || len == 2 || len == 4);
+// #endif
 	lnaddr_t lnaddr = seg_translate(addr,len,current_sreg);
 	lnaddr_write(lnaddr, len, data);
 }
