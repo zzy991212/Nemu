@@ -55,7 +55,7 @@ void init_cond() {
 
 	/* Initialize the serial port. After that, you can use printk() to output messages. */
 	init_serial();
-	Log("Out successfully implement!");	
+	// Log("Out successfully implement!");	
 	/* Initialize the IDE driver. */
 	init_ide();
 
