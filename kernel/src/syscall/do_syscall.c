@@ -19,7 +19,7 @@ static void sys_write(TrapFrame *tf){
 	uint32_t fd = tf -> ebx;
 	char* buf = (char*) tf -> ecx;
 	uint32_t len = tf -> edx;
-	if (fd == 1 || fd == 2){
+	if (fd == 2){
 		while (len --)
 			serial_printc(*(buf++));
 	}
