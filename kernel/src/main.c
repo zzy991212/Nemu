@@ -42,7 +42,7 @@ void init_cond() {
 #ifdef IA32_INTR
 	/* Reset the GDT, since the old GDT in start.S cannot be used in the future. */
 	init_segment();
-	set_bp();
+	
 	/* Set the IDT by setting up interrupt and exception handlers.
 	 * Note that system call is the only exception implemented in NEMU.
 	 */
@@ -50,9 +50,10 @@ void init_cond() {
 #endif
 
 #ifdef HAS_DEVICE
+	set_bp();
 	/* Initialize the intel 8259 PIC (Programmable interrupt controller). */
 	init_i8259();
-
+	set_bp();
 	/* Initialize the serial port. After that, you can use printk() to output messages. */
 	init_serial();
 	
