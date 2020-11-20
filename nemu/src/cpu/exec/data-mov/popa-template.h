@@ -5,9 +5,9 @@
 #if DATA_BYTE == 2
 static uint32_t pops(){
     current_sreg = R_SS;
-    uint32_t ret = swaddr_read(reg_l(R_ESP),4);
-    swaddr_write(reg_l(R_ESP),4,0);
-    reg_l(R_ESP) += 4;
+    uint32_t ret = swaddr_read(reg_l(R_ESP),DATA_BYTE);
+    swaddr_write(reg_l(R_ESP),DATA_BYTE,0);
+    reg_l(R_ESP) += DATA_BYTE;
     return ret;
 }
 #endif
