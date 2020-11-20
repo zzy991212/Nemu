@@ -24,7 +24,7 @@ make_helper(lea) {
 	return 1 + len;
 }
 make_helper(hlt){
-	if (!cpu.INTR) cpu.eip --;
-	print_asm("hlt");
+	while (!cpu.IF || !cpu.INTR)
+		print_asm("hlt");
 	return 1;
 }
