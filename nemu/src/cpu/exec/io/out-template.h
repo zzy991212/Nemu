@@ -5,7 +5,9 @@
 void pio_write(ioaddr_t, size_t, uint32_t);
 
 static void do_execute () {
+	printf("%x\n",op_dest -> addr);
 	pio_write(op_dest -> addr,DATA_BYTE,op_src -> val);
+	printf("%x\n",op_dest -> addr);
 	print_asm_template2();
 }
 
