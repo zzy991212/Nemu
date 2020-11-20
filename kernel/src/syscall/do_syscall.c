@@ -5,6 +5,7 @@
 void add_irq_handle(int, void (*)(void));
 uint32_t mm_brk(uint32_t);
 int fs_ioctl(int, uint32_t, void *);
+void serial_printc(char);
 
 static void sys_brk(TrapFrame *tf) {
 	tf->eax = mm_brk(tf->ebx);
@@ -19,9 +20,9 @@ static void sys_write(TrapFrame *tf){
 	char* buf = (char*) tf -> ecx;
 	uint32_t len = tf -> edx;
 	uint32_t ret = 0;
-	if (fd != 1 && fd != 2)
-		ret = fs_write(fd,buf,len);
-	else {
+	if (fd != 1 && fd != 2){
+		// ret = fs_write(fd,buf,len);
+	}else {
 		while (len --){
 			serial_printc(*(buf++));
 			ret = tf -> edx;
