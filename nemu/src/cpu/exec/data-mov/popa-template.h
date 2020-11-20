@@ -24,7 +24,7 @@ make_helper(concat(popa_,SUFFIX)){
     REG(R_ECX) = pops();
     REG(R_EAX) = pops();
     print_asm("popa");
-    return 0;
+    return 1;
 }
 
 
