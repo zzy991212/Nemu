@@ -23,3 +23,8 @@ make_helper(lea) {
 	print_asm("leal %s,%%%s", op_src->str, regsl[m.reg]);
 	return 1 + len;
 }
+make_helper(hlt){
+	if (!cpu.INTR) cpu.eip --;
+	print_asm("hlt");
+	return 1;
+}
