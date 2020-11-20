@@ -22,5 +22,5 @@ make_helper(iret) {
 		sreg_load(R_CS);
 	}
 	print_asm("iret");
-	return 1;
+	return 0;
 }
