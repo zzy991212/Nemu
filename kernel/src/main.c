@@ -39,6 +39,7 @@ void init() {
 
 /* Initialization phase 2 */
 void init_cond() {
+	set_bp();
 #ifdef IA32_INTR
 	/* Reset the GDT, since the old GDT in start.S cannot be used in the future. */
 	init_segment();
