@@ -22,10 +22,17 @@ static void welcome() {
 	printf("Welcome to NEMU!\nThe executable is %s.\nFor help, type \"help\"\n",
 			exec_file);
 }
+static void init_device(){
 
+}
+
+static void init_sdl(){
+
+}
 void init_monitor(int argc, char *argv[]) {
 	/* Perform some global initialization */
-
+	init_device();
+	init_sdl();
 	/* Open the log file. */
 	init_log();
 
