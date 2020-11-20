@@ -2,7 +2,7 @@
 #include <nemu.h>
 
 uint32_t popfromstack(){
-    uint32_t ret = swaddr_read(reg_l(R_ESP),4);
+    int ret = swaddr_read(reg_l(R_ESP),4);
     swaddr_write(reg_l(R_ESP),4,0);
     reg_l(R_ESP) += 4;
     return ret;
