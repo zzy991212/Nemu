@@ -70,3 +70,6 @@
 #include "special/special.h"
 
 #include "intr/intr.h"
+
+#include "io/in.h"
+#include "io/out.h"
