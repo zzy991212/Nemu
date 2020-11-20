@@ -40,6 +40,10 @@ void raise_intr(uint8_t NO){
 	idt_desc -> part2 = lnaddr_read(addr+4,4);
 	
 	push_r2stack(cpu.EFLAGS);
+	// if (cpu.cr0.protect_enable == 0){
+	// 	cpu.IF = 0;
+	// 	cpu.TF = 0;
+	// }
 	push_r2stack(cpu.cs.selector);
 	push_r2stack(cpu.eip);
 
@@ -121,7 +125,7 @@ void cpu_exec(volatile uint32_t n) {
 
 	if(nemu_state == RUNNING) { nemu_state = STOP; }
 
-	if (cpu.INTR && cpu.IF){
+	if (cpu.INTR & cpu.IF){
 		uint32_t intr_no = i8259_query_intr();
 		i8259_ack_intr();
 		raise_intr(intr_no);
