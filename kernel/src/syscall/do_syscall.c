@@ -19,13 +19,11 @@ static void sys_write(TrapFrame *tf){
 	uint32_t fd = tf -> ebx;
 	char* buf = (char*) tf -> ecx;
 	uint32_t len = tf -> edx;
-	uint32_t ret = 0;
 	if (fd == 1 || fd == 2){
 		while (len --)
 			serial_printc(*(buf++));
-		ret = tf -> edx;
 	}
-	tf -> eax = ret;
+	tf -> eax = tf -> edx;
 
 }
 void do_syscall(TrapFrame *tf) {
