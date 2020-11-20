@@ -1,7 +1,7 @@
 #include "cpu/exec/helper.h"
 #include <nemu.h>
 
-uint32_t popfromstack(){
+int popfromstack(){
     int ret = swaddr_read(reg_l(R_ESP),4);
     swaddr_write(reg_l(R_ESP),4,0);
     reg_l(R_ESP) += 4;
