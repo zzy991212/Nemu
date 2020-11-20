@@ -49,7 +49,11 @@ uint32_t loader() {
 			
 			ph -> p_vaddr = mm_malloc(ph -> p_vaddr,ph -> p_memsz);
 			
+#ifdef HAS_DEVICE
+			ide_read((void*)(ph -> p_vaddr),ph -> p_offset,ph -> p_filesz);
+#else
 			ramdisk_read((void*)(ph -> p_vaddr),ph -> p_offset,ph -> p_filesz);
+#endif
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
@@ -74,8 +78,6 @@ uint32_t loader() {
 #ifdef HAS_DEVICE
 	create_video_mapping();
 #endif
-	create_video_mapping();
-	
 	write_cr3(get_ucr3());
 	
 #endif
