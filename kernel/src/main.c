@@ -48,14 +48,14 @@ void init_cond() {
 	 */
 	init_idt();
 #endif
-
+Log("Out successfully implement!");
 #ifdef HAS_DEVICE
 	/* Initialize the intel 8259 PIC (Programmable interrupt controller). */
 	init_i8259();
-	
+
 	/* Initialize the serial port. After that, you can use printk() to output messages. */
 	init_serial();
-	Log("Out successfully implement!");
+	
 	/* Initialize the IDE driver. */
 	init_ide();
 
