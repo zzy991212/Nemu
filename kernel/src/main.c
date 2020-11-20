@@ -48,7 +48,7 @@ void init_cond() {
 	 */
 	init_idt();
 #endif
-set_bp();
+
 #ifdef HAS_DEVICE
 	/* Initialize the intel 8259 PIC (Programmable interrupt controller). */
 	init_i8259();
