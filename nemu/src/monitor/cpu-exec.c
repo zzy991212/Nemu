@@ -40,10 +40,10 @@ void raise_intr(uint8_t NO){
 	idt_desc -> part2 = lnaddr_read(addr+4,4);
 	
 	push_r2stack(cpu.EFLAGS);
-	if (cpu.cr0.protect_enable == 0){
-		cpu.IF = 0;
-		cpu.TF = 0;
-	}
+	// if (cpu.cr0.protect_enable == 0){
+	// 	cpu.IF = 0;
+	// 	cpu.TF = 0;
+	// }
 	push_r2stack(cpu.cs.selector);
 	push_r2stack(cpu.eip);
 
