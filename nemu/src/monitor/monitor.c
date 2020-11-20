@@ -10,6 +10,8 @@ void load_elf_tables(int, char *[]);
 void init_regex();
 void init_wp_pool();
 void init_ddr3();
+void init_device();
+void init_sdl();
 
 FILE *log_fp = NULL;
 
@@ -22,13 +24,7 @@ static void welcome() {
 	printf("Welcome to NEMU!\nThe executable is %s.\nFor help, type \"help\"\n",
 			exec_file);
 }
-static void init_device(){
 
-}
-
-static void init_sdl(){
-
-}
 void init_monitor(int argc, char *argv[]) {
 	/* Perform some global initialization */
 	init_device();
