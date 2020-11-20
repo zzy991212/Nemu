@@ -6,6 +6,9 @@
 #include "nemu.h"
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
+int is_mmio(hwaddr_t);
+uint32_t mmio_read(hwaddr_t, size_t, int);
+void mmio_write(hwaddr_t, size_t, uint32_t, int);
 
 extern uint8_t current_sreg;
 
@@ -88,6 +91,12 @@ hwaddr_t page_translate_additional(lnaddr_t addr,int* flag){
 
 /////////////////////////////////////////////////////////
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
+	// IO
+	int io_idx = is_mmio(addr);
+	if (io_idx != -1){
+		return mmio_read(addr,len,io_idx);
+	}
+	//origin code
 	int l1_1st_line = read_cache1(addr);
 	uint32_t offset = addr & (Cache_L1_Block_Size - 1);
 	uint8_t ret[BURST_LEN << 1];
@@ -106,7 +115,13 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
-	write_cache1(addr,len,data);
+	//IO
+	int io_idx = is_mmio(addr);
+	if (io_idx != -1){
+		mmio_write(addr,len,data,io_idx);
+	}else {
+		write_cache1(addr,len,data);
+	}
 	//dram_write(addr, len, data);
 }
 
