@@ -90,11 +90,11 @@ void init_cond() {
 	 * the test data is written sucessfully.
 	 */
 	video_mapping_read_test();
-	set_bp();
+
 	/* Clear the test data we just written in the video memory. */
 	video_mapping_clear();
 #endif
-
+set_bp();
 #ifdef IA32_PAGE
 	/* Set the %esp for user program, which is one of the
 	 * convention of the "advanced" runtime environment. */
