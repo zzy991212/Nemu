@@ -24,7 +24,7 @@ static void sys_write(TrapFrame *tf){
 			serial_printc(*(buf++));
 	}
 	tf -> eax = tf -> edx;
-
+	set_bp();
 }
 void do_syscall(TrapFrame *tf) {
 	
