@@ -23,9 +23,12 @@ make_helper(lea) {
 	print_asm("leal %s,%%%s", op_src->str, regsl[m.reg]);
 	return 1 + len;
 }
+void device_update();
 make_helper(hlt){
-	while (!cpu.IF || !cpu.INTR)
-		print_asm("hlt");
+	while (!cpu.IF || !cpu.INTR){
+		device_update();
+	}
+	print_asm("hlt");
 	return 1;
 }
 make_helper(sti){
