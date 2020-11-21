@@ -16,9 +16,11 @@ static void sys_ioctl(TrapFrame *tf) {
 }
 
 static void sys_write(TrapFrame *tf){
-	uint32_t fd = tf -> ebx;
-	char* buf = (char*) tf -> ecx;
 	set_bp();
+	uint32_t fd = tf -> ebx;
+	set_bp();
+	char* buf = (char*) tf -> ecx;
+	
 	uint32_t len = tf -> edx;
 	if (fd == 2){
 		while (len --)
