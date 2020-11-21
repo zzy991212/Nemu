@@ -22,7 +22,7 @@ static void sys_write(TrapFrame *tf){
 	char* buf = (char*) tf -> ecx;
 	
 	uint32_t len = tf -> edx;
-	if (fd == 2){
+	if (fd == 1 || fd == 2){
 		while (len --)
 			serial_printc(*(buf++));
 	}
