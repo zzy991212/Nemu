@@ -16,7 +16,7 @@ static void sys_ioctl(TrapFrame *tf) {
 }
 
 static void sys_write(TrapFrame *tf){
-	Log("sys_write");
+	
 	uint32_t fd = tf -> ebx;
 	
 	char* buf = (char*) tf -> ecx;
@@ -30,7 +30,7 @@ static void sys_write(TrapFrame *tf){
 	
 }
 void do_syscall(TrapFrame *tf) {
-	Log("do_syscall");
+	
 	switch(tf->eax) {
 		/* The `add_irq_handle' system call is artificial. We use it to
 		 * let user program register its interrupt handlers. But this is
@@ -38,6 +38,7 @@ void do_syscall(TrapFrame *tf) {
 		 * system call never exists in GNU/Linux.
 		 */
 		case 0: 
+			Log("do_sys 0");
 			cli();
 			add_irq_handle(tf->ebx, (void*)tf->ecx);
 			sti();
