@@ -1,26 +1,12 @@
 #include "cpu/exec/helper.h"
-#include <nemu.h>
 
-int popfromstack(){
-    int ret = swaddr_read(reg_l(R_ESP),4);
-    swaddr_write(reg_l(R_ESP),4,0);
-    reg_l(R_ESP) += 4;
-    return ret;
-}
 
-make_helper(iret) {
-	if (cpu.cr0.protect_enable == 0){
-		cpu.eip = popfromstack();
-		cpu.cs.selector = popfromstack();
-		cpu.EFLAGS = popfromstack();
-	}else{
-		current_sreg = R_SS;
-		cpu.eip = popfromstack();
-		cpu.cs.selector = popfromstack();
-		cpu.EFLAGS = popfromstack();
-		current_sreg = R_CS;
-		sreg_load(R_CS);
-	}
-	print_asm("iret");
-	return 0;
-}
+#define DATA_BYTE 2
+#include "iret-template.h"
+#undef DATA_BYTE
+
+#define DATA_BYTE 4
+#include "iret-template.h"
+#undef DATA_BYTE
+
+make_helper_v(iret);
