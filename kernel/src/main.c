@@ -90,7 +90,6 @@ void init_cond() {
 	 * the test data is written sucessfully.
 	 */
 	video_mapping_read_test();
-	Log("video_mapping_read_test end");
 	/* Clear the test data we just written in the video memory. */
 	video_mapping_clear();
 #endif
@@ -104,10 +103,9 @@ void init_cond() {
 	/* Keep the `bt' command happy. */
 	asm volatile("movl $0, %ebp");
 	asm volatile("subl $16, %esp");
-	
+	Log("good?");
 	/* Here we go! */
 	((void(*)(void))eip)();
-	Log("good?");
 
 	HIT_GOOD_TRAP;
 
