@@ -39,13 +39,13 @@ hwaddr_t page_translate(lnaddr_t addr){
 		Page_Descriptor first_content;
 		first_content.val = hwaddr_read(dir_pos,4);
 		printf("dir:%x,con:%x\n",dir_pos,first_content.val);
-		Assert(first_content.p == 1,"Dir Cannot Be Used!");
+		// Assert(first_content.p == 1,"Dir Cannot Be Used!");
 		// get page position
 		uint32_t page_start = first_content.addr;
 		uint32_t page_pos = (page_start << 12) + (page << 2);
 		Page_Descriptor second_content;
 		second_content.val =  hwaddr_read(page_pos,4);
-		Assert(second_content.p == 1,"Page Cannot Be Used!");
+		// Assert(second_content.p == 1,"Page Cannot Be Used!");
 		// get hwaddr
 		uint32_t addr_start = second_content.addr;
 		hwaddr_t hwaddr = (addr_start << 12) + offset;
