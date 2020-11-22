@@ -39,14 +39,14 @@ hwaddr_t page_translate(lnaddr_t addr){
 		Page_Descriptor first_content;
 		first_content.val = hwaddr_read(dir_pos,4);
 		// printf("dir:%x,con:%x\n",dir_pos,first_content.val);
-		printf("%d\n",is_mmio(dir_pos));
+		// printf("%d\n",is_mmio(dir_pos));
 		Assert(first_content.p == 1,"Dir Cannot Be Used!");
 		// get page position
 		uint32_t page_start = first_content.addr;
 		uint32_t page_pos = (page_start << 12) + (page << 2);
 		Page_Descriptor second_content;
 		second_content.val =  hwaddr_read(page_pos,4);
-		// Assert(second_content.p == 1,"Page Cannot Be Used!");
+		Assert(second_content.p == 1,"Page Cannot Be Used!");
 		// get hwaddr
 		uint32_t addr_start = second_content.addr;
 		hwaddr_t hwaddr = (addr_start << 12) + offset;
@@ -92,11 +92,11 @@ hwaddr_t page_translate_additional(lnaddr_t addr,int* flag){
 
 /////////////////////////////////////////////////////////
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-	// IO
-	int io_idx = is_mmio(addr);
-	if (io_idx != -1){
-		return mmio_read(addr,len,io_idx);
-	}
+	// // IO
+	// int io_idx = is_mmio(addr);
+	// if (io_idx != -1){
+	// 	return mmio_read(addr,len,io_idx);
+	// }
 	//origin code
 	int l1_1st_line = read_cache1(addr);
 	uint32_t offset = addr & (Cache_L1_Block_Size - 1);
@@ -117,12 +117,12 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	//IO
-	int io_idx = is_mmio(addr);
-	if (io_idx != -1){
-		mmio_write(addr,len,data,io_idx);
-	}else {
+	// int io_idx = is_mmio(addr);
+	// if (io_idx != -1){
+	// 	mmio_write(addr,len,data,io_idx);
+	// }else {
 		write_cache1(addr,len,data);
-	}
+	// }
 	//dram_write(addr, len, data);
 }
 
@@ -169,6 +169,11 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 }
 
 uint32_t swaddr_read(swaddr_t addr, size_t len) {
+	// IO
+	int io_idx = is_mmio(addr);
+	if (io_idx != -1){
+		return mmio_read(addr,len,io_idx);
+	}
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
@@ -177,6 +182,12 @@ uint32_t swaddr_read(swaddr_t addr, size_t len) {
 }
 
 void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
+	//IO
+	int io_idx = is_mmio(addr);
+	if (io_idx != -1){
+		mmio_write(addr,len,data,io_idx);
+		return;
+	}
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
