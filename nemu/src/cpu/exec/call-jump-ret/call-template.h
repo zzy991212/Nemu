@@ -17,7 +17,6 @@ make_helper(concat(call_rm_, SUFFIX)){
 	reg_l(R_ESP) -= DATA_BYTE;
 	swaddr_write(reg_l(R_ESP) , 4, cpu.eip + len + 1);
 	DATA_TYPE_S imm = op_src -> val;
-    printf("%x\n",imm);
 	print_asm("call %x",imm);
 	cpu.eip = imm - len - 1;
 	return len + 1;

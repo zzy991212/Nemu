@@ -40,6 +40,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 		first_content.val = hwaddr_read(dir_pos,4);
 		// printf("dir:%x,con:%x\n",dir_pos,first_content.val);
 		// printf("%d\n",is_mmio(dir_pos));
+		printf("lnaddr:%x\n",addr);
 		Assert(first_content.p == 1,"Dir Cannot Be Used!");
 		// get page position
 		uint32_t page_start = first_content.addr;
