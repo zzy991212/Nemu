@@ -85,7 +85,7 @@ void cpu_exec(volatile uint32_t n) {
 	setjmp(jbuf);
 	int ttt=0;
 	for(; n > 0; n --) {
-		if ((cpu.eax & 0xffff) == 0x8089 && ttt<=100) ttt++,printf("%x\teax:%x\n",cpu.eip,cpu.eax);
+		if ((cpu.esi & 0xffff) == 0x8089 && ttt<=100) ttt++,printf("%x\tesi:%x\n",cpu.eip,cpu.eax);
 		// if (cpu.eip != 0xc0101cea)printf("%x\n",cpu.ebx);
 		// 	else break;
 #ifdef DEBUG
