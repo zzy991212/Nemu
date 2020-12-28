@@ -126,7 +126,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	}else {
 		write_cache1(addr,len,data);
 	}
-	dram_write(addr, len, data);
+	// dram_write(addr, len, data);
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
@@ -173,10 +173,10 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 
 uint32_t swaddr_read(swaddr_t addr, size_t len) {
 	// IO
-	int io_idx = is_mmio(addr);
-	if (io_idx != -1){
-		return mmio_read(addr,len,io_idx);
-	}
+	// int io_idx = is_mmio(addr);
+	// if (io_idx != -1){
+	// 	return mmio_read(addr,len,io_idx);
+	// }
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
@@ -189,11 +189,11 @@ void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
 	// if (addr==0xa0000) {
 	// 	printf("1111111111111111\n");
 	// }
-	int io_idx = is_mmio(addr);
-	if (io_idx != -1){
-		mmio_write(addr,len,data,io_idx);
-		return;
-	}
+	// int io_idx = is_mmio(addr);
+	// if (io_idx != -1){
+	// 	mmio_write(addr,len,data,io_idx);
+	// 	return;
+	// }
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
