@@ -1,8 +1,6 @@
 #include "cpu/exec/template-start.h"
-
+#include "device/port-io.h"
 #define instr out
-
-void pio_write(ioaddr_t, size_t, uint32_t);
 
 // static void do_execute () {
 
