@@ -187,7 +187,7 @@ uint32_t swaddr_read(swaddr_t addr, size_t len) {
 void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
 	//IO
 	if (addr==0xa0000) {
-		printf("1111111111111111");
+		printf("1111111111111111\n");
 	}
 	int io_idx = is_mmio(addr);
 	if (io_idx != -1){
@@ -198,7 +198,7 @@ void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
 	assert(len == 1 || len == 2 || len == 4);
 #endif
 	if (addr==0xa0000) {
-		printf("1111111111111111");
+		printf("1111111111111111\n");
 	}
 	lnaddr_t lnaddr = seg_translate(addr,len,current_sreg);
 	lnaddr_write(lnaddr, len, data);
