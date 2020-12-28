@@ -85,8 +85,8 @@ void cpu_exec(volatile uint32_t n) {
 	setjmp(jbuf);
 
 	for(; n > 0; n --) {
-		if (cpu.eip != 0xc0101cea)printf("%x\n",cpu.ebx);
-			else break;
+		// if (cpu.eip != 0xc0101cea)printf("%x\n",cpu.ebx);
+		// 	else break;
 #ifdef DEBUG
 		swaddr_t eip_temp = cpu.eip;
 		if((n & 0xffff) == 0) {
