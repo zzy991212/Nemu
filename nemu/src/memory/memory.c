@@ -95,6 +95,7 @@ hwaddr_t page_translate_additional(lnaddr_t addr,int* flag){
 /////////////////////////////////////////////////////////
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	// IO
+
 	printf("%x\n",addr);
 	int io_idx = is_mmio(addr);
 	if (io_idx != -1){
@@ -186,6 +187,9 @@ uint32_t swaddr_read(swaddr_t addr, size_t len) {
 
 void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
 	//IO
+	if (addr==0xa0000) {
+		printf("1111111111111111");
+	}
 	int io_idx = is_mmio(addr);
 	if (io_idx != -1){
 		mmio_write(addr,len,data,io_idx);
