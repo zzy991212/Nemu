@@ -197,6 +197,9 @@ void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
+	if (addr==0xa0000) {
+		printf("1111111111111111");
+	}
 	lnaddr_t lnaddr = seg_translate(addr,len,current_sreg);
 	lnaddr_write(lnaddr, len, data);
 }
