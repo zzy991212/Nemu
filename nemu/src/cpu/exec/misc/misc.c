@@ -25,11 +25,13 @@ make_helper(lea) {
 }
 void device_update();
 make_helper(hlt){
-	while (!cpu.IF || !cpu.INTR){
-		device_update();
-	}
+	if(!cpu.INTR){
+        return 0;
+    }
 	print_asm("hlt");
-	return 1;
+    return 1;
+	// print_asm("hlt");
+	// return 1;
 }
 make_helper(sti){
 	cpu.IF = 1;
