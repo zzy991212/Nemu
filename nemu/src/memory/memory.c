@@ -94,11 +94,11 @@ hwaddr_t page_translate_additional(lnaddr_t addr,int* flag){
 
 /////////////////////////////////////////////////////////
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-	// // IO
-	// int io_idx = is_mmio(addr);
-	// if (io_idx != -1){
-	// 	return mmio_read(addr,len,io_idx);
-	// }
+	// IO
+	int io_idx = is_mmio(addr);
+	if (io_idx != -1){
+		return mmio_read(addr,len,io_idx);
+	}
 	//origin code
 	int l1_1st_line = read_cache1(addr);
 	uint32_t offset = addr & (Cache_L1_Block_Size - 1);
@@ -119,13 +119,13 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	//IO
-	// int io_idx = is_mmio(addr);
-	// if (io_idx != -1){
-	// 	mmio_write(addr,len,data,io_idx);
-	// }else {
+	int io_idx = is_mmio(addr);
+	if (io_idx != -1){
+		mmio_write(addr,len,data,io_idx);
+	}else {
 		write_cache1(addr,len,data);
-	// }
-	//dram_write(addr, len, data);
+	}
+	dram_write(addr, len, data);
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
