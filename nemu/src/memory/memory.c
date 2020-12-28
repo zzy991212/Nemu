@@ -95,6 +95,7 @@ hwaddr_t page_translate_additional(lnaddr_t addr,int* flag){
 /////////////////////////////////////////////////////////
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	// IO
+	printf("%x\n",addr);
 	int io_idx = is_mmio(addr);
 	if (io_idx != -1){
 		return mmio_read(addr,len,io_idx);
