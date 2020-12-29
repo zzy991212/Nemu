@@ -128,8 +128,9 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	if (io_idx != -1){
 		mmio_write(addr,len,data,io_idx);
 	}else {
-		uint32_t ans = hwaddr_read(addr,len);
-		printf("%x\t",ans);
+		// uint32_t ans = hwaddr_read(addr,len);
+		uint32_t tmpp = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+		printf("%x\t",tmpp);
 		write_cache1(addr,len,data);
 		// uint32_t ans = hwaddr_read(addr,len);
 		// uint32_t tmpp = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
