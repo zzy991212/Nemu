@@ -109,14 +109,14 @@ void restart() {
 	/* Initialize DRAM. */
 	init_ddr3();
 
+	/* Initialize Cache. */
+	init_cache();
+	
 	/* Initialize CR0. */
 	init_cr0();
 
 	/* Initialize CS. */
 	init_CS();
-	
-	/* Initialize Cache. */
-	init_cache();
 	
 	/* Initialize TLB. */
 	init_tlb();

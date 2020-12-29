@@ -5,7 +5,6 @@
 
 static void do_execute() {
 	DATA_TYPE ret = (op_src -> val) & 0xff;
-	ret = (uint8_t)ret;
 	OPERAND_W(op_dest, ret);
 	// Log_write("movzb:%x\n",op_src -> val);
 	print_asm_template2();
