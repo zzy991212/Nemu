@@ -39,7 +39,7 @@ void init_cache(){
     test_time = 0;
 }
 int read_cache1(hwaddr_t addr){
-    printf("%x\n",addr);
+
     uint32_t group_idx = (addr >> Cache_L1_Block_Bit) & (Cache_L1_Group_Size - 1);
     uint32_t tag = (addr >> (Cache_L1_Group_Bit + Cache_L1_Block_Bit));
     // uint32_t block_start = (addr >> Cache_L1_Block_Bit) << Cache_L1_Block_Bit;
