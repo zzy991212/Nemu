@@ -18,7 +18,7 @@ void ide_read(uint8_t *buf, uint32_t offset, uint32_t len) {
 	uint32_t i;
 	for (i = 0; i < 10; i ++) {
 		buf[i] = read_byte(offset + i);
-		Log("%d\t%x",i,buf[i]);
+		Log("%d %x",i,buf[i]);
 	}
 }
 
