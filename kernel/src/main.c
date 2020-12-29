@@ -39,10 +39,7 @@ void init() {
 
 /* Initialization phase 2 */
 void init_cond() {
-	uint32_t i;
-	for (i = 0; i < 28; i ++) {
-		Log("%x",read_byte(i));
-	}
+
 #ifdef IA32_INTR
 	/* Reset the GDT, since the old GDT in start.S cannot be used in the future. */
 	init_segment();
