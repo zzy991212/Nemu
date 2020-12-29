@@ -117,7 +117,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	printf("eip:%x\t%x\t%d\tv:%x\n",cpu.eip,addr,(int)len,ans);
 	uint32_t tmpp = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	Assert(ans==tmpp,"11111:ans:%x,tmpp:%x",ans,tmpp);
-	if (cpu.eip > 0x1022a4) assert(0);
+	if (cpu.eip > 0x1022a3) assert(0);
 	// printf("%x\t%x\n",0x7ffff9c,tmpp);
 	return ans;
 	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
