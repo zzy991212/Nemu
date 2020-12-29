@@ -27,8 +27,7 @@ static void welcome() {
 
 void init_monitor(int argc, char *argv[]) {
 	/* Perform some global initialization */
-	init_device();
-	init_sdl();
+
 	/* Open the log file. */
 	init_log();
 
@@ -40,7 +39,8 @@ void init_monitor(int argc, char *argv[]) {
 
 	/* Initialize the watchpoint pool. */
 	init_wp_pool();
-
+	init_device();
+	init_sdl();
 
 	/* Display welcome message. */
 	welcome();
