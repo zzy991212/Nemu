@@ -81,10 +81,6 @@ static void load_entry() {
 static void init_CS(){
 	cpu.cs.base = 0;
 	cpu.cs.limit = 0xffffffff;
-	cpu.ds.base = 0;
-	cpu.ds.limit = 0xffffffff;
-	cpu.gdtr.base = 0;
-	cpu.gdtr.limit = 0x3ff;
 }
 
 static void init_cr0(){
