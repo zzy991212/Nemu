@@ -127,7 +127,7 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		if(nemu_state != RUNNING) { return; }
-		if (cpu.INTR & cpu.IF){
+		if (cpu.INTR && cpu.IF){
 			uint32_t intr_no = i8259_query_intr();
 			i8259_ack_intr();
 			raise_intr(intr_no);
