@@ -100,7 +100,7 @@ int read_cache2(hwaddr_t addr){
     i = group + rand() % Cache_L2_Way_Size;
     /*write back*/
     if (cache2[i].valid == 1 && cache2[i].dirty == 1){
-        printf(" write back in Cache2 ");
+        // printf(" write back in Cache2 ");
         // uint8_t ret[BURST_LEN << 1];
         uint32_t block_st = (cache2[i].tag << (Cache_L2_Group_Bit + Cache_L2_Block_Bit)) | (group_idx << Cache_L2_Block_Bit);
         // int w;
