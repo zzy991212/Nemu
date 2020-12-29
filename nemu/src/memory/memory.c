@@ -99,6 +99,8 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	int io_idx = is_mmio(addr);
 	if (io_idx != -1){
 		return mmio_read(addr,len,io_idx);
+	}else {
+		return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	}
 	//origin code
 	int l1_1st_line = read_cache1(addr);
@@ -129,9 +131,9 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	if (io_idx != -1){
 		mmio_write(addr,len,data,io_idx);
 	}else {
-		write_cache1(addr,len,data);
+		// write_cache1(addr,len,data);
 		
-	// dram_write(addr, len, data);
+	dram_write(addr, len, data);
 	}
 }
 
