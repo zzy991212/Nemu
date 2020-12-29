@@ -130,14 +130,14 @@ void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
         if (cache1[i].valid == 1 && cache1[i].tag == tag){// WRITE HIT
             /*write through*/
             if (offset + len > Cache_L1_Block_Size){
-                dram_write(addr,Cache_L1_Block_Size - offset,data);
+                // dram_write(addr,Cache_L1_Block_Size - offset,data);
                 memcpy(cache1[i].data + offset, &data, Cache_L1_Block_Size - offset);
                 /*Update Cache2*/
                 write_cache2(addr,Cache_L1_Block_Size - offset,data);
 
                 write_cache1(addr + Cache_L1_Block_Size - offset,len - (Cache_L1_Block_Size - offset),data >> (Cache_L1_Block_Size - offset));
             }else {
-                dram_write(addr,len,data);
+                // dram_write(addr,len,data);
                 memcpy(cache1[i].data + offset, &data, len);
                 /*Update Cache2*/
                 write_cache2(addr,len,data);
