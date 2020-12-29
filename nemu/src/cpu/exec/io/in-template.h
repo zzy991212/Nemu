@@ -15,7 +15,7 @@ make_helper(concat(in_si2a_,SUFFIX)){
 	return 2;
 }
 make_helper(concat(in_r2rm_,SUFFIX)){
-	REG(R_EAX) = pio_read(reg_w(R_EDX),DATA_BYTE);
+	REG(R_EAX) = pio_read((ioaddr_t)reg_w(R_EDX),DATA_BYTE);
 	print_asm("in");
 	return 1;
 }
