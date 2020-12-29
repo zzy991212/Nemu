@@ -17,7 +17,7 @@ void create_video_mapping();
 uint32_t get_ucr3();
 
 uint32_t loader() {
-	set_bp();
+	// set_bp();
 	Elf32_Ehdr *elf;
 	Elf32_Phdr *ph = NULL;
 
@@ -81,6 +81,6 @@ uint32_t loader() {
 	write_cr3(get_ucr3());
 	
 #endif
-	Log("%x",entry);
+	// Log("%x",entry);
 	return entry;
 }

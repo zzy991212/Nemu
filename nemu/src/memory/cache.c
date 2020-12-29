@@ -125,7 +125,7 @@ int read_cache2(hwaddr_t addr){
 }
 
 void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
-    Log_write("write_cache:addr->%x\tlen->%d\tdata->%x\n",addr,(int)len,data);
+    // Log_write("write_cache:addr->%x\tlen->%d\tdata->%x\n",addr,(int)len,data);
     uint32_t group_idx = (addr >> Cache_L1_Block_Bit) & (Cache_L1_Group_Size - 1);
     uint32_t tag = (addr >> (Cache_L1_Group_Bit + Cache_L1_Block_Bit));
     uint32_t offset = addr & (Cache_L1_Block_Size - 1);
@@ -170,7 +170,7 @@ void write_cache2(hwaddr_t addr, size_t len, uint32_t data){
             if (offset + len > Cache_L2_Block_Size){
                 memcpy(cache2[i].data + offset, &data, Cache_L2_Block_Size - offset);
                 // dram_write(addr,Cache_L2_Block_Size - offset,data);
-                write_cache2(addr + Cache_L2_Block_Size - offset,len - (Cache_L2_Block_Size - offset),data >> (Cache_L2_Block_Size - offset));
+                write_cache2(addr + Cache_L2_Block_Size - offset,len - (Cache_L2_Block_Size - offset),data >> (8*(Cache_L2_Block_Size - offset)));
             }else {
                 memcpy(cache2[i].data + offset, &data, len);
                 // dram_write(addr,len,data);
