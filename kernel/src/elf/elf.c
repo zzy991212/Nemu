@@ -59,7 +59,6 @@ uint32_t loader() {
 			 */
 			memset((void*)(ph -> p_vaddr + ph -> p_filesz),0,ph -> p_memsz - ph -> p_filesz);
 
-			ph ++;
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use. */
@@ -67,6 +66,7 @@ uint32_t loader() {
 			uint32_t new_brk = ph->p_vaddr + ph->p_memsz - 1;
 			if(cur_brk < new_brk) { max_brk = cur_brk = new_brk; }
 #endif
+			ph += i * elf->e_phentsize;
 		}
 	}
 
