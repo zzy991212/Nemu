@@ -154,7 +154,9 @@ void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
     // dram_write(addr,len,data);
 
     // PA3 optional task1
-    write_cache2(addr,len,data);
+    read_cache1(addr);
+    write_cache1(addr,len,data);
+    
 }
 
 void write_cache2(hwaddr_t addr, size_t len, uint32_t data){
