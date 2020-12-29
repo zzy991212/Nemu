@@ -103,18 +103,14 @@ void restart() {
 	/* Read the file with name `argv[1]' into ramdisk. */
 	init_ramdisk();
 #endif
-
+	/* Initialize Cache. */
+	init_cache();
 	/* Read the entry code into memory. */
 	load_entry();
 
 	/* Set the initial instruction pointer. */
 	cpu.eip = ENTRY_START;
 
-	/* Initialize DRAM. */
-	init_ddr3();
-
-	/* Initialize Cache. */
-	init_cache();
 
 	/* Initialize CR0. */
 	init_cr0();
@@ -122,6 +118,8 @@ void restart() {
 	/* Initialize CS. */
 	init_CS();
 
+	/* Initialize DRAM. */
+	init_ddr3();
 	/* Initialize TLB. */
 	init_tlb();
 }
