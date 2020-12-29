@@ -5,7 +5,7 @@
 
 static void do_execute() {
 	OPERAND_W(op_dest, op_src->val);
-	// Log_write("%x\n", op_src->val);
+	Log_write("v:%x\n", op_src->val);
 	print_asm_template2();
 }
 
