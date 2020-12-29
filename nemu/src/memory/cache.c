@@ -54,7 +54,7 @@ int read_cache1(hwaddr_t addr){
             return i;
         }
     }
-    
+    printf(" Read in Cache2 ");
     // Find in Cache2
     int pl = read_cache2(addr);   
     srand(time(0));
