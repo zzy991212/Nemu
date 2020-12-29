@@ -114,6 +114,7 @@ int read_ModR_M(swaddr_t eip, Operand *rm, Operand *reg) {
 		}else {//data
 			current_sreg = R_DS;
 		}
+		Log_write("didi:%x\n",rm->addr);
 		rm->val = swaddr_read(rm->addr, rm->size);
 		return instr_len;
 	}
