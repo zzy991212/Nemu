@@ -115,8 +115,8 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	int tmp = 0;
 	uint32_t ans = unalign_rw(ret + tmp, 4) & (~0u >> ((4 - len) << 3));
 	printf("%x\t%d\tv:%x\n",addr,(int)len,ans);
-	uint32_t tmpp = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	Assert(ans==tmpp,"ans:%x,tmpp:%x",ans,tmpp);
+	// uint32_t tmpp = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+	// Assert(ans==tmpp,"ans:%x,tmpp:%x",ans,tmpp);
 	// printf("%x\t%x\n",0x7ffff9c,tmpp);
 	return ans;
 	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
@@ -128,7 +128,14 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	if (io_idx != -1){
 		mmio_write(addr,len,data,io_idx);
 	}else {
+		uint32_t ans = hwaddr_read(addr,len);
+		printf("%x\t",ans);
 		write_cache1(addr,len,data);
+		ans = hwaddr_read(addr,len);
+		uint32_t tmpp = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+		printf("%x\t%x\n",ans,tmpp);
+		printf("-----\n");
+		Assert(ans==tmpp,"ans:%x,tmpp:%x",ans,tmpp);
 	// dram_write(addr, len, data);
 	}
 }
