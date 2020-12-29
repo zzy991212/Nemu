@@ -3,6 +3,7 @@
 #include "monitor/watchpoint.h"
 #include <setjmp.h>
 #include "cpu/reg.h"
+#include "device/i8259.h"
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
  * This is useful when you use the `si' command.
@@ -11,8 +12,7 @@
 #define MAX_INSTR_TO_PRINT 5000//new 9.1
 
 int nemu_state = STOP;
-uint8_t i8259_query_intr();
-void i8259_ack_intr();
+
 int exec(swaddr_t);
 
 char assembly[80];
