@@ -125,7 +125,7 @@ int read_cache2(hwaddr_t addr){
 }
 
 void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
-    printf("%x\n",data);
+    Log_write("write_cache:%x\n",data);
     uint32_t group_idx = (addr >> Cache_L1_Block_Bit) & (Cache_L1_Group_Size - 1);
     uint32_t tag = (addr >> (Cache_L1_Group_Bit + Cache_L1_Block_Bit));
     uint32_t offset = addr & (Cache_L1_Block_Size - 1);
