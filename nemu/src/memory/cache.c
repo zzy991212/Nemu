@@ -101,12 +101,16 @@ int read_cache2(hwaddr_t addr){
     i = group + rand() % Cache_L2_Way_Size;
     /*write back*/
     if (cache2[i].valid == 1 && cache2[i].dirty == 1){
-        uint8_t ret[BURST_LEN << 1];
+        // uint8_t ret[BURST_LEN << 1];
         uint32_t block_st = (cache2[i].tag << (Cache_L2_Group_Bit + Cache_L2_Block_Bit)) | (group_idx << Cache_L2_Block_Bit);
-        int w;
-        memset(ret,1,sizeof ret);
-        for (w = 0;w < Cache_L2_Block_Size / BURST_LEN; w++){
-            ddr3_write_replace(block_st + BURST_LEN * w, cache2[i].data + BURST_LEN * w,ret);
+        // int w;
+        // memset(ret,1,sizeof ret);
+        // for (w = 0;w < Cache_L2_Block_Size / BURST_LEN; w++){
+        //     ddr3_write_replace(block_st + BURST_LEN * w, cache2[i].data + BURST_LEN * w,ret);
+        // }
+        uint32_t w;
+        for (w = 0; w < Cache_L2_Block_Size;w++){
+            dram_write(block_st + w,1,(uint32_t)cache2[i].data[w]);
         }
     }
     /*new content*/
@@ -130,14 +134,14 @@ void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
         if (cache1[i].valid == 1 && cache1[i].tag == tag){// WRITE HIT
             /*write through*/
             if (offset + len > Cache_L1_Block_Size){
-                // dram_write(addr,Cache_L1_Block_Size - offset,data);
+                dram_write(addr,Cache_L1_Block_Size - offset,data);
                 memcpy(cache1[i].data + offset, &data, Cache_L1_Block_Size - offset);
                 /*Update Cache2*/
                 write_cache2(addr,Cache_L1_Block_Size - offset,data);
 
                 write_cache1(addr + Cache_L1_Block_Size - offset,len - (Cache_L1_Block_Size - offset),data >> (Cache_L1_Block_Size - offset));
             }else {
-                // dram_write(addr,len,data);
+                dram_write(addr,len,data);
                 memcpy(cache1[i].data + offset, &data, len);
                 /*Update Cache2*/
                 write_cache2(addr,len,data);
@@ -164,11 +168,11 @@ void write_cache2(hwaddr_t addr, size_t len, uint32_t data){
             cache2[i].dirty = 1;
             if (offset + len > Cache_L2_Block_Size){
                 memcpy(cache2[i].data + offset, &data, Cache_L2_Block_Size - offset);
-                dram_write(addr,Cache_L2_Block_Size - offset,data);
+                // dram_write(addr,Cache_L2_Block_Size - offset,data);
                 write_cache2(addr + Cache_L2_Block_Size - offset,len - (Cache_L2_Block_Size - offset),data >> (Cache_L2_Block_Size - offset));
             }else {
                 memcpy(cache2[i].data + offset, &data, len);
-                dram_write(addr,len,data);
+                // dram_write(addr,len,data);
             }
             return;
         }
