@@ -115,7 +115,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	int tmp = 0;
 	uint32_t ans = unalign_rw(ret + tmp, 4) & (~0u >> ((4 - len) << 3));
 	printf("%x\t%d\tv:%x\n",addr,(int)len,ans);
-	uint32_t tmpp = dram_read(0x7ffff9c, 4) & (~0u >> ((4 - len) << 3));
+	uint32_t tmpp = dram_read(0x7ffff9c, 4) & (~0u >> ((4 - 4) << 3));
 	printf("%x\t%x\n",0x7ffff9c,tmpp);
 	return ans;
 	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
