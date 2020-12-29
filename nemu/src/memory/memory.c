@@ -129,6 +129,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 		mmio_write(addr,len,data,io_idx);
 	}else {
 		// uint32_t ans = hwaddr_read(addr,len);
+		if (cpu.eip == 0x1022a2) assert(0);
 		uint32_t tmpp = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 		printf("%x\t",tmpp);
 		write_cache1(addr,len,data);
