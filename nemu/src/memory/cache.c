@@ -99,6 +99,7 @@ int read_cache2(hwaddr_t addr){
     srand(time(0));
     i = group + rand() % Cache_L2_Way_Size;
     /*write back*/
+    printf(" New ");
     if (cache2[i].valid == 1 && cache2[i].dirty == 1){
         printf(" write back in Cache2 ");
         // uint8_t ret[BURST_LEN << 1];
