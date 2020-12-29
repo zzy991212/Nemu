@@ -20,7 +20,7 @@ void ide_read(uint8_t *buf, uint32_t offset, uint32_t len) {
 		buf[i] = read_byte(offset + i);
 		//Log("%x",buf[i]);
 	}
-	set_bp();
+	// set_bp();
 }
 
 void ide_write(uint8_t *buf, uint32_t offset, uint32_t len) {
