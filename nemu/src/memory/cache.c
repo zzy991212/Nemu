@@ -151,11 +151,11 @@ void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
     }
     // /*not write allocate*/
     // PA3 task1
-    // dram_write(addr,len,data);
+    dram_write(addr,len,data);
 
     // PA3 optional task1
-    read_cache1(addr);
-    write_cache1(addr,len,data);
+    // read_cache1(addr);
+    // write_cache1(addr,len,data);
     
 }
 
