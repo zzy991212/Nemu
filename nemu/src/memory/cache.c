@@ -163,9 +163,11 @@ void write_cache2(hwaddr_t addr, size_t len, uint32_t data){
         if (cache2[i].valid == 1 && cache2[i].tag == tag){// WRITE HIT
             cache2[i].dirty = 1;
             if (offset + len > Cache_L2_Block_Size){
+                dram_write(addr,Cache_L2_Block_Size - offset,data);
                 memcpy(cache2[i].data + offset, &data, Cache_L2_Block_Size - offset);
                 write_cache2(addr + Cache_L2_Block_Size - offset,len - (Cache_L2_Block_Size - offset),data >> (Cache_L2_Block_Size - offset));
             }else {
+                dram_write(addr,len,data);
                 memcpy(cache2[i].data + offset, &data, len);
             }
             return;

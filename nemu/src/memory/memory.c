@@ -117,7 +117,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	uint32_t tmpp = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	printf("eip:%x\t%x\t%d\tv1:%x\tv2:%x\n",cpu.eip,addr,(int)len,ans,tmpp);
 	Assert(ans==tmpp,"11111:ans:%x,tmpp:%x",ans,tmpp);
-	if (cpu.eip > 0x1022a3) assert(0);
+	// if (cpu.eip > 0x1022a3) assert(0);
 	// printf("%x\t%x\n",0x7ffff9c,tmpp);
 	return ans;
 	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
@@ -129,12 +129,12 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	if (io_idx != -1){
 		mmio_write(addr,len,data,io_idx);
 	}else {
-		uint32_t ans = hwaddr_read(addr,len);
+		// uint32_t ans = hwaddr_read(addr,len);
 		// uint32_t tmpp = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-		printf("%x\t",ans);
+		// printf("%x\t",ans);
 		write_cache1(addr,len,data);
-		ans = hwaddr_read(addr,len);
-		printf("%x\n",ans);
+		// ans = hwaddr_read(addr,len);
+		// printf("%x\n",ans);
 		// uint32_t tmpp = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 		// printf("%x\t%x\n",ans,tmpp);
 		// printf("-----\n");
