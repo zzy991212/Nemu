@@ -38,9 +38,9 @@ uint32_t loader() {
 	/* Load each program segment */
 	// panic("please implement me");
 	int i;
-	ph = (void*)(buf + elf -> e_phoff);
 	for(i = 0; i < elf -> e_phnum; i ++) {
 		/* Scan the program header table, load each segment into memory */
+		ph = (void*)(buf + elf->e_phoff + i * elf->e_phentsize);
 		if(ph->p_type == PT_LOAD) {
 
 			/* TODO: read the content of the segment from the ELF file 
@@ -66,7 +66,6 @@ uint32_t loader() {
 			uint32_t new_brk = ph->p_vaddr + ph->p_memsz - 1;
 			if(cur_brk < new_brk) { max_brk = cur_brk = new_brk; }
 #endif
-			ph += i * elf->e_phentsize;
 		}
 	}
 
