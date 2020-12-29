@@ -32,6 +32,10 @@ void raise_intr(uint8_t NO){
 	 */
 	// printf("%d %d\n",NO,cpu.idtr.limit);
 	Assert((NO<<3)<=cpu.idtr.limit,"Wrong Interrupt id!");
+	if (cpu.cr0.protect_enable == 0){
+		cpu.IF = 0;
+		cpu.TF = 0;
+	}
 	Gate_Descriptor now_gate;
 	idt_desc = &now_gate;
 
@@ -40,10 +44,10 @@ void raise_intr(uint8_t NO){
 	idt_desc -> part2 = lnaddr_read(addr+4,4);
 	
 	push_r2stack(cpu.EFLAGS);
-	if (cpu.cr0.protect_enable == 0){
-		cpu.IF = 0;
-		cpu.TF = 0;
-	}
+	// if (cpu.cr0.protect_enable == 0){
+	// 	cpu.IF = 0;
+	// 	cpu.TF = 0;
+	// }
 	push_r2stack(cpu.cs.selector);
 	push_r2stack(cpu.eip);
 
@@ -123,14 +127,15 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		if(nemu_state != RUNNING) { return; }
-		
+		if (cpu.INTR & cpu.IF){
+			uint32_t intr_no = i8259_query_intr();
+			i8259_ack_intr();
+			raise_intr(intr_no);
+		}
 	}
 
+	
 	if(nemu_state == RUNNING) { nemu_state = STOP; }
 
-	if (cpu.INTR & cpu.IF){
-		uint32_t intr_no = i8259_query_intr();
-		i8259_ack_intr();
-		raise_intr(intr_no);
-	}
+
 }
