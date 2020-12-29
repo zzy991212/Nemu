@@ -57,7 +57,7 @@ void init_cond() {
 	
 	// Log("Out successfully implement!");	
 	/* Initialize the IDE driver. */
-	init_ide();
+	// init_ide();
 
 	/* Enable interrupts. */
 	sti();
