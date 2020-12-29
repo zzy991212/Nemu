@@ -52,7 +52,7 @@ uint32_t loader() {
 			#endif
 #ifdef HAS_DEVICE
 			ide_read((void*)(ph -> p_vaddr),ph -> p_offset,ph -> p_filesz);
-			Log("qaq:%x",(ph->p_filesz));
+
 #else
 			ramdisk_read((void*)(ph -> p_vaddr),ph -> p_offset,ph -> p_filesz);
 #endif
