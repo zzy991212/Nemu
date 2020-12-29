@@ -140,7 +140,7 @@ void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
                 /*Update Cache2*/
                 // write_cache2(addr,Cache_L1_Block_Size - offset,data);
                 Log_write("kuayuebianjie!");
-                write_cache1(addr + Cache_L1_Block_Size - offset,len - (Cache_L1_Block_Size - offset),data >>(4>>(Cache_L1_Block_Size - offset)));
+                write_cache1(addr + Cache_L1_Block_Size - offset,len - (Cache_L1_Block_Size - offset),data >>(8>>(Cache_L1_Block_Size - offset)));
             }else {
                 dram_write(addr,len,data);
                 memcpy(cache1[i].data + offset, &data, len);
