@@ -128,7 +128,9 @@ void cpu_exec(volatile uint32_t n) {
 
 		if(nemu_state != RUNNING) { return; }
 		if (cpu.INTR && cpu.IF){
+			Log_write("Start query!\n");
 			uint32_t intr_no = i8259_query_intr();
+			Log_write("Finish query!\n");
 			i8259_ack_intr();
 			raise_intr(intr_no);
 		}
