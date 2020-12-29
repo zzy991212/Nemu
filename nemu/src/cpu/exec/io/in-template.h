@@ -9,7 +9,7 @@
 // }
 
 make_helper(concat(in_si2a_,SUFFIX)){
-	ioaddr_t imm8 = instr_fetch(cpu.eip+1,1);
+	uint8_t imm8 = instr_fetch(cpu.eip+1,1);
 	REG(R_EAX) = pio_read(imm8,DATA_BYTE);
 	print_asm("in\t%x",imm8);
 	return 2;
