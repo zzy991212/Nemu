@@ -48,7 +48,10 @@ void init_cond() {
 	 */
 	init_idt();
 #endif
-
+uint32_t i;
+	for (i = 0; i < 28; i ++) {
+		Log("%x",read_byte(i));
+	}
 #ifdef HAS_DEVICE
 	/* Initialize the intel 8259 PIC (Programmable interrupt controller). */
 	init_i8259();
@@ -58,10 +61,6 @@ void init_cond() {
 	// Log("Out successfully implement!");	
 	/* Initialize the IDE driver. */
 	init_ide();
-	uint32_t i;
-	for (i = 0; i < 28; i ++) {
-		Log("%x",read_byte(i));
-	}
 	/* Enable interrupts. */
 	sti();
 #endif
