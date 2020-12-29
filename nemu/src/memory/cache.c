@@ -85,7 +85,7 @@ int read_cache2(hwaddr_t addr){
     int i,group = group_idx * Cache_L2_Way_Size;
     for (i = group + 0;i < group + Cache_L2_Way_Size;i ++){
         if (cache2[i].valid == 1 && cache2[i].tag == tag){// READ HIT
-            printf(" HIT! ");
+            // printf(" HIT! ");
 #ifdef Test
             test_time += 10;//HIT in Cache2
 #endif
