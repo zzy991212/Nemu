@@ -9,7 +9,7 @@ void init_segment();
 void init_idt();
 void init_mm();
 uint32_t loader();
-
+uint8_t read_byte(uint32_t);
 void video_mapping_write_test();
 void video_mapping_read_test();
 void video_mapping_clear();
@@ -57,8 +57,11 @@ void init_cond() {
 	
 	// Log("Out successfully implement!");	
 	/* Initialize the IDE driver. */
-	// init_ide();
-
+	init_ide();
+	uint32_t i;
+	for (i = 0; i < 28; i ++) {
+		Log("%x",read_byte(i));
+	}
 	/* Enable interrupts. */
 	sti();
 #endif
