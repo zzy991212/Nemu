@@ -42,7 +42,7 @@ int read_cache1(hwaddr_t addr){
 
     uint32_t group_idx = (addr >> Cache_L1_Block_Bit) & (Cache_L1_Group_Size - 1);
     uint32_t tag = (addr >> (Cache_L1_Group_Bit + Cache_L1_Block_Bit));
-    uint32_t block_start = (addr >> Cache_L1_Block_Bit) << Cache_L1_Block_Bit;
+    //uint32_t block_start = (addr >> Cache_L1_Block_Bit) << Cache_L1_Block_Bit;
 
     int i,group = group_idx * Cache_L1_Way_Size;
     for (i = group + 0;i < group + Cache_L1_Way_Size;i ++){
@@ -54,24 +54,24 @@ int read_cache1(hwaddr_t addr){
             return i;
         }
     }
-    // Find in Cache2
-    // int pl = read_cache2(addr);   
-    // srand(time(0));
-    // i = group + rand() % Cache_L1_Way_Size;
-    // memcpy(cache1[i].data,cache2[pl].data,Cache_L1_Block_Size);
+    //Find in Cache2
+    int pl = read_cache2(addr);   
+    srand(time(0));
+    i = group + rand() % Cache_L1_Way_Size;
+    memcpy(cache1[i].data,cache2[pl].data,Cache_L1_Block_Size);
 
 
     // Random (PA3 task1)
-#ifdef Test
-    test_time += 200;
-#endif
-    srand(time(0));
-    i = group + rand() % Cache_L1_Way_Size;
-    /*new content*/
-    int j;
-    for (j = 0;j < Cache_L1_Block_Size / BURST_LEN;j ++){
-        ddr3_read_replace(block_start + BURST_LEN * j, cache1[i].data + BURST_LEN * j);
-    }
+// #ifdef Test
+//     test_time += 200;
+// #endif
+//     srand(time(0));
+//     i = group + rand() % Cache_L1_Way_Size;
+//     /*new content*/
+//     int j;
+//     for (j = 0;j < Cache_L1_Block_Size / BURST_LEN;j ++){
+//         ddr3_read_replace(block_start + BURST_LEN * j, cache1[i].data + BURST_LEN * j);
+//     }
     cache1[i].valid = 1;
     cache1[i].tag = tag;
     return i;
@@ -138,25 +138,23 @@ void write_cache1(hwaddr_t addr, size_t len, uint32_t data){
                 dram_write(addr,Cache_L1_Block_Size - offset,data);
                 memcpy(cache1[i].data + offset, &data, Cache_L1_Block_Size - offset);
                 /*Update Cache2*/
-                // write_cache2(addr,Cache_L1_Block_Size - offset,data);
-                Log_write("kuayuebianjie!");
+                write_cache2(addr,Cache_L1_Block_Size - offset,data);
                 write_cache1(addr + Cache_L1_Block_Size - offset,len - (Cache_L1_Block_Size - offset),data >>(8*(Cache_L1_Block_Size - offset)));
             }else {
                 dram_write(addr,len,data);
                 memcpy(cache1[i].data + offset, &data, len);
                 /*Update Cache2*/
-                // write_cache2(addr,len,data);
+                write_cache2(addr,len,data);
             }
             return;
         }
     }
     // /*not write allocate*/
     // PA3 task1
-    dram_write(addr,len,data);
+    // dram_write(addr,len,data);
 
     // PA3 optional task1
-    // read_cache1(addr);
-    // write_cache1(addr,len,data);
+    write_cache2(addr,len,data);
     
 }
 
