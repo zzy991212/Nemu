@@ -1,6 +1,6 @@
 #include "cpu/exec/template-start.h"
-#ifndef abc
-#define abc
+#ifndef def
+#define def
 static inline bool check_cc_e(){
 	return cpu.ZF;
 }
