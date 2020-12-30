@@ -9,7 +9,7 @@ make_helper(cmove_v);
 //make_helper(cmovne_v);
 //make_helper(cmovbe_v);
 //make_helper(cmova_v);
-//make_helper(cmovs_v);
+make_helper(cmovs_v);
 //make_helper(cmovns_v);
 //make_helper(cmovp_v);
 //make_helper(cmovnp_v);
