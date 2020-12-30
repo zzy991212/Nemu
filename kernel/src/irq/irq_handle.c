@@ -38,7 +38,6 @@ void irq_handle(TrapFrame *tf) {
 	int irq = tf->irq;
 
 	if (irq < 0) {
-		return;
 		panic("Unhandled exception!");
 	} else if (irq == 0x80) {
 		do_syscall(tf);
